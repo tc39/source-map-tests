@@ -1,0 +1,155 @@
+From 73df7e9d5816bbfbb4f1b1609bc27dba7e66676d Mon Sep 17 00:00:00 2001
+From: Asumu Takikawa <asumu@igalia.com>
+Date: Tue, 27 Feb 2024 18:22:45 -0800
+Subject: [PATCH] WIP Firefox source map spec tests
+
+---
+ .../test/browser/browser.toml                 |  2 ++
+ .../test/browser/browser_spec-source-map.js   | 19 +++++++++++++++++++
+ .../browser/fixtures/version-not-a-number.js  |  1 +
+ .../fixtures/version-not-a-number.js.map      |  6 ++++++
+ .../test/browser/fixtures/version-numbers.js  |  6 ++++++
+ .../test/browser/fixtures/version-too-high.js |  1 +
+ .../browser/fixtures/version-too-high.js.map  |  6 ++++++
+ .../test/browser/fixtures/version-too-low.js  |  1 +
+ .../browser/fixtures/version-too-low.js.map   |  6 ++++++
+ .../test/browser/fixtures/version-valid.js    |  1 +
+ .../browser/fixtures/version-valid.js.map     |  6 ++++++
+ 11 files changed, 55 insertions(+)
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js.map
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js.map
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js.map
+
+diff --git a/devtools/client/shared/source-map-loader/test/browser/browser.toml b/devtools/client/shared/source-map-loader/test/browser/browser.toml
+index 5a602e9eeb893..a670ab0acee89 100644
+--- a/devtools/client/shared/source-map-loader/test/browser/browser.toml
++++ b/devtools/client/shared/source-map-loader/test/browser/browser.toml
+@@ -19,3 +19,5 @@ skip-if = [
+   "http3", # Bug 1829298
+   "http2",
+ ]
++
++["browser_spec-source-map.js"]
+diff --git a/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js b/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
+new file mode 100644
+index 0000000000000..fc481b2b5b3ec
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
+@@ -0,0 +1,19 @@
++"use strict";
++
++async function isValidSourceMap(base) {
++  try {
++    await fetchFixtureSourceMap(base);
++  } catch (exn) {
++    return false;
++  }
++  return true;
++}
++
++add_task(async function testSourceMapVersion() {
++
++  Assert.equal(true, await isValidSourceMap("version-valid"));
++  Assert.equal(false, await isValidSourceMap("version-not-a-number"));
++  Assert.equal(false, await isValidSourceMap("version-too-low"));
++  Assert.equal(false, await isValidSourceMap("version-too-high"));
++
++});
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js
+new file mode 100644
+index 0000000000000..5382a716e3a21
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=version-not-a-number.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map
+new file mode 100644
+index 0000000000000..a584d6e695117
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3foo",
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js
+new file mode 100644
+index 0000000000000..e79993b659db6
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js
+@@ -0,0 +1,6 @@
++// Test that invalid version numbers are rejected.
++
++assert(isValidSourceMap("./version-valid.map"));
++assert(!isValidSourceMap("./version-not-a-number.map"));
++assert(!isValidSourceMap("./version-too-low.map"));
++assert(!isValidSourceMap("./version-too-high.map"));
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js
+new file mode 100644
+index 0000000000000..04bfe7f62b7b9
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=version-too-high.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js.map
+new file mode 100644
+index 0000000000000..ee23be32ff278
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 4,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js
+new file mode 100644
+index 0000000000000..54b3526c6b5e2
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=version-too-low.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js.map
+new file mode 100644
+index 0000000000000..64ca7a6e2e928
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 2,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js
+new file mode 100644
+index 0000000000000..f8541f9efdc71
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=version-valid.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js.map
+new file mode 100644
+index 0000000000000..1a163052d8fc8
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+-- 
+2.39.2
+
