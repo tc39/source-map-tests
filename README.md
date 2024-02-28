@@ -16,6 +16,6 @@ These test cases are still a work-in-progress 🚧.
 
 How to run in Firefox:
   * Check out mozilla-unified
-  * git am <this-repo>/0001-WIP-Firefox-source-map-spec-tests.patch
-  * mach build
-  * mach-with firefox test devtools/client/shared/source-map-loader/
+  * `git am <this-repo>/0001-WIP-Firefox-source-map-spec-tests.patch`
+  * `mach build`
+  * `mach-with firefox test devtools/client/shared/source-map-loader/`
