@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "baseFile": "version-valid.js",
+      "sourceMapFile": "version-valid.js.map",
+      "sourceMapIsValid": true
+    },
+    {
+      "baseFile": "version-not-a-number.js",
+      "sourceMapFile": "version-not-a-number.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "baseFile": "version-too-high.js",
+      "sourceMapFile": "version-too-high.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "baseFile": "version-too-low.js",
+      "sourceMapFile": "version-too-low.js.map",
+      "sourceMapIsValid": false
+    }
+  ]
+}
