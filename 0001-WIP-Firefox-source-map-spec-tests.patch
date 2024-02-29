@@ -1,22 +1,24 @@
-From 73df7e9d5816bbfbb4f1b1609bc27dba7e66676d Mon Sep 17 00:00:00 2001
+From 763e1e0ce78d6dcd3b94e428b9f399b6c92cdf34 Mon Sep 17 00:00:00 2001
 From: Asumu Takikawa <asumu@igalia.com>
 Date: Tue, 27 Feb 2024 18:22:45 -0800
 Subject: [PATCH] WIP Firefox source map spec tests
 
 ---
- .../test/browser/browser.toml                 |  2 ++
- .../test/browser/browser_spec-source-map.js   | 19 +++++++++++++++++++
+ .../test/browser/browser.toml                 |  2 +
+ .../test/browser/browser_spec-source-map.js   | 44 +++++++++++++++++++
+ .../fixtures/source-map-spec-tests.json       | 28 ++++++++++++
  .../browser/fixtures/version-not-a-number.js  |  1 +
- .../fixtures/version-not-a-number.js.map      |  6 ++++++
- .../test/browser/fixtures/version-numbers.js  |  6 ++++++
+ .../fixtures/version-not-a-number.js.map      |  6 +++
+ .../test/browser/fixtures/version-numbers.js  |  6 +++
  .../test/browser/fixtures/version-too-high.js |  1 +
- .../browser/fixtures/version-too-high.js.map  |  6 ++++++
+ .../browser/fixtures/version-too-high.js.map  |  6 +++
  .../test/browser/fixtures/version-too-low.js  |  1 +
- .../browser/fixtures/version-too-low.js.map   |  6 ++++++
+ .../browser/fixtures/version-too-low.js.map   |  6 +++
  .../test/browser/fixtures/version-valid.js    |  1 +
- .../browser/fixtures/version-valid.js.map     |  6 ++++++
- 11 files changed, 55 insertions(+)
+ .../browser/fixtures/version-valid.js.map     |  6 +++
+ 12 files changed, 108 insertions(+)
  create mode 100644 devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/source-map-spec-tests.json
  create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js
  create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map
  create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js
@@ -39,10 +41,10 @@ index 5a602e9eeb893..a670ab0acee89 100644
 +["browser_spec-source-map.js"]
 diff --git a/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js b/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
 new file mode 100644
-index 0000000000000..fc481b2b5b3ec
+index 0000000000000..4145268b8d542
 --- /dev/null
 +++ b/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,44 @@
 +"use strict";
 +
 +async function isValidSourceMap(base) {
@@ -54,14 +56,73 @@ index 0000000000000..fc481b2b5b3ec
 +  return true;
 +}
 +
-+add_task(async function testSourceMapVersion() {
++const SPEC_TESTS_URI = `${URL_ROOT_SSL}fixtures/source-map-spec-tests.json`
++const testDescriptions = JSON.parse(read(SPEC_TESTS_URI));
 +
-+  Assert.equal(true, await isValidSourceMap("version-valid"));
-+  Assert.equal(false, await isValidSourceMap("version-not-a-number"));
-+  Assert.equal(false, await isValidSourceMap("version-too-low"));
-+  Assert.equal(false, await isValidSourceMap("version-too-high"));
++for (const testCase of testDescriptions.tests) {
++  async function testFunction() {
++      const baseName = testCase.baseFile.substring(0, testCase.baseFile.indexOf(".js"));
++      Assert.equal(testCase.sourceMapIsValid, await isValidSourceMap(baseName));
++  };
++  Object.defineProperty(testFunction, "name", { value: testCase.name });
++  add_task(testFunction);
++}
 +
-+});
++function read(srcChromeURL) {
++  const scriptableStream = Cc[
++    "@mozilla.org/scriptableinputstream;1"
++  ].getService(Ci.nsIScriptableInputStream);
++
++  const channel = NetUtil.newChannel({
++    uri: srcChromeURL,
++    loadUsingSystemPrincipal: true,
++  });
++  const input = channel.open();
++  scriptableStream.init(input);
++
++  let data = "";
++  while (input.available()) {
++    data = data.concat(scriptableStream.read(input.available()));
++  }
++  scriptableStream.close();
++  input.close();
++
++  return data;
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/source-map-spec-tests.json b/devtools/client/shared/source-map-loader/test/browser/fixtures/source-map-spec-tests.json
+new file mode 100644
+index 0000000000000..086f41ae34a35
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/source-map-spec-tests.json
+@@ -0,0 +1,28 @@
++{
++  "tests": [
++    {
++      "name": "versionValid",
++      "baseFile": "version-valid.js",
++      "sourceMapFile": "version-valid.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "versionNotANumber",
++      "baseFile": "version-not-a-number.js",
++      "sourceMapFile": "version-not-a-number.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooHigh",
++      "baseFile": "version-too-high.js",
++      "sourceMapFile": "version-too-high.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooLow",
++      "baseFile": "version-too-low.js",
++      "sourceMapFile": "version-too-low.js.map",
++      "sourceMapIsValid": false
++    }
++  ]
++}
 diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js
 new file mode 100644
 index 0000000000000..5382a716e3a21
