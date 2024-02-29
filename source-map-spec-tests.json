@@ -29,6 +29,32 @@
       "baseFile": "unrecognized-property.js",
       "sourceMapFile": "unrecognized-property.js.map",
       "sourceMapIsValid": true
+    },
+    {
+      "name": "basicMapping",
+      "baseFile": "basic-mapping.js",
+      "sourceMapFile": "basic-mapping.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 9,
+          "generatedLine": 0,
+          "generatedColumn": 9,
+          "mappedName": "foo"
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "originalLine": 3,
+          "originalColumn": 9,
+          "generatedLine": 0,
+          "generatedColumn": 34,
+          "mappedName": "bar"
+        }
+      ]
     }
   ]
 }

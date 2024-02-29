@@ -1,5 +1,9 @@
 "use strict";
 
+const {
+  generatedToOriginalId,
+} = require("resource://devtools/client/shared/source-map-loader/utils/index.js");
+
 async function isValidSourceMap(base) {
   try {
     await fetchFixtureSourceMap(base);
@@ -9,6 +13,19 @@ async function isValidSourceMap(base) {
   return true;
 }
 
+async function checkMapping(testCase, action) {
+  const originalId = generatedToOriginalId(testCase.baseFile, `${URL_ROOT_SSL}fixtures/${action.originalSource}`);
+  const generatedLoc = await gSourceMapLoader.getGeneratedLocation({
+    sourceId: originalId,
+    line: action.originalLine + 1,
+    column: action.originalColumn,
+  });
+  Assert.ok(generatedLoc !== null, "Location lookup should not return null");
+  Assert.equal(testCase.baseFile, generatedLoc.sourceId);
+  Assert.equal(action.generatedLine + 1, generatedLoc.line);
+  Assert.equal(action.generatedColumn, generatedLoc.column);
+}
+
 const SPEC_TESTS_URI = `${URL_ROOT_SSL}fixtures/source-map-spec-tests.json`
 const testDescriptions = JSON.parse(read(SPEC_TESTS_URI));
 
@@ -16,6 +33,13 @@ for (const testCase of testDescriptions.tests) {
   async function testFunction() {
       const baseName = testCase.baseFile.substring(0, testCase.baseFile.indexOf(".js"));
       Assert.equal(testCase.sourceMapIsValid, await isValidSourceMap(baseName));
+
+      if (testCase.testActions) {
+        for (const action of testCase.testActions) {
+          if (action.actionType === "checkMapping")
+            await checkMapping(testCase, action);
+        }
+      }
   };
   Object.defineProperty(testFunction, "name", { value: testCase.name });
   add_task(testFunction);
