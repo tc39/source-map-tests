@@ -23,6 +23,12 @@
       "baseFile": "version-too-low.js",
       "sourceMapFile": "version-too-low.js.map",
       "sourceMapIsValid": false
+    },
+    {
+      "name": "unrecognizedProperty",
+      "baseFile": "unrecognized-property.js",
+      "sourceMapFile": "unrecognized-property.js.map",
+      "sourceMapIsValid": true
     }
   ]
 }
