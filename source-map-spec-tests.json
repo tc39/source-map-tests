@@ -13,6 +13,12 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "versionNumericString",
+      "baseFile": "version-numeric-string.js",
+      "sourceMapFile": "version-numeric-string.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "versionTooHigh",
       "baseFile": "version-too-high.js",
       "sourceMapFile": "version-too-high.js.map",
