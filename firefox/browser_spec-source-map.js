@@ -30,18 +30,18 @@ const SPEC_TESTS_URI = `${URL_ROOT_SSL}fixtures/source-map-spec-tests.json`
 const testDescriptions = JSON.parse(read(SPEC_TESTS_URI));
 
 for (const testCase of testDescriptions.tests) {
-  async function testFunction() {
-      const baseName = testCase.baseFile.substring(0, testCase.baseFile.indexOf(".js"));
-      Assert.equal(testCase.sourceMapIsValid, await isValidSourceMap(baseName));
+  // The following uses a hack to ensure the test case name is used in stack traces.
+  const testFunction = {[testCase.name]: async function() {
+    const baseName = testCase.baseFile.substring(0, testCase.baseFile.indexOf(".js"));
+    Assert.equal(testCase.sourceMapIsValid, await isValidSourceMap(baseName));
 
-      if (testCase.testActions) {
-        for (const action of testCase.testActions) {
-          if (action.actionType === "checkMapping")
-            await checkMapping(testCase, action);
-        }
+    if (testCase.testActions) {
+      for (const action of testCase.testActions) {
+        if (action.actionType === "checkMapping")
+          await checkMapping(testCase, action);
       }
-  };
-  Object.defineProperty(testFunction, "name", { value: testCase.name });
+    }
+  }}[testCase.name];
   add_task(testFunction);
 }
 
