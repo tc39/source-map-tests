@@ -1,0 +1,402 @@
+From 7b5cfb32770099d368aed4b4340dae3074541e91 Mon Sep 17 00:00:00 2001
+From: Asumu Takikawa <asumu@igalia.com>
+Date: Mon, 11 Mar 2024 13:41:31 -0700
+Subject: [PATCH] Add harness for source maps spec tests
+
+Need a short description (OOPS!).
+Need the bug URL (OOPS!).
+
+Reviewed by NOBODY (OOPS!).
+
+Explanation of why this fixes the bug (OOPS!).
+
+* LayoutTests/inspector/model/resources/basic-mapping-original.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/basic-mapping.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/basic-mapping.js.map: Added.
+* LayoutTests/inspector/model/resources/source-map-spec-tests.json: Added.
+* LayoutTests/inspector/model/resources/unrecognized-property.js: Added.
+* LayoutTests/inspector/model/resources/unrecognized-property.js.map: Added.
+* LayoutTests/inspector/model/resources/version-not-a-number.js: Added.
+* LayoutTests/inspector/model/resources/version-not-a-number.js.map: Added.
+* LayoutTests/inspector/model/resources/version-numeric-string.js: Added.
+* LayoutTests/inspector/model/resources/version-numeric-string.js.map: Added.
+* LayoutTests/inspector/model/resources/version-too-high.js: Added.
+* LayoutTests/inspector/model/resources/version-too-high.js.map: Added.
+* LayoutTests/inspector/model/resources/version-too-low.js: Added.
+* LayoutTests/inspector/model/resources/version-too-low.js.map: Added.
+* LayoutTests/inspector/model/resources/version-valid.js: Added.
+* LayoutTests/inspector/model/resources/version-valid.js.map: Added.
+* LayoutTests/inspector/model/source-map-spec-expected.txt: Added.
+* LayoutTests/inspector/model/source-map-spec.html: Added.
+---
+ .../model/resources/basic-mapping-original.js |  8 +++
+ .../model/resources/basic-mapping.js          |  2 +
+ .../model/resources/basic-mapping.js.map      |  6 ++
+ .../resources/source-map-spec-tests.json      | 66 +++++++++++++++++
+ .../model/resources/unrecognized-property.js  |  1 +
+ .../resources/unrecognized-property.js.map    |  8 +++
+ .../model/resources/version-not-a-number.js   |  1 +
+ .../resources/version-not-a-number.js.map     |  6 ++
+ .../model/resources/version-numeric-string.js |  1 +
+ .../resources/version-numeric-string.js.map   |  6 ++
+ .../model/resources/version-too-high.js       |  1 +
+ .../model/resources/version-too-high.js.map   |  6 ++
+ .../model/resources/version-too-low.js        |  1 +
+ .../model/resources/version-too-low.js.map    |  6 ++
+ .../model/resources/version-valid.js          |  1 +
+ .../model/resources/version-valid.js.map      |  6 ++
+ .../model/source-map-spec-expected.txt        | 22 ++++++
+ .../inspector/model/source-map-spec.html      | 70 +++++++++++++++++++
+ 18 files changed, 218 insertions(+)
+ create mode 100644 LayoutTests/inspector/model/resources/basic-mapping-original.js
+ create mode 100644 LayoutTests/inspector/model/resources/basic-mapping.js
+ create mode 100644 LayoutTests/inspector/model/resources/basic-mapping.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/source-map-spec-tests.json
+ create mode 100644 LayoutTests/inspector/model/resources/unrecognized-property.js
+ create mode 100644 LayoutTests/inspector/model/resources/unrecognized-property.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-not-a-number.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-not-a-number.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-numeric-string.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-numeric-string.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-too-high.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-too-high.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-too-low.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-too-low.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-valid.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-valid.js.map
+ create mode 100644 LayoutTests/inspector/model/source-map-spec-expected.txt
+ create mode 100644 LayoutTests/inspector/model/source-map-spec.html
+
+diff --git a/LayoutTests/inspector/model/resources/basic-mapping-original.js b/LayoutTests/inspector/model/resources/basic-mapping-original.js
+new file mode 100644
+index 000000000000..301b186cb15e
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/basic-mapping-original.js
+@@ -0,0 +1,8 @@
++function foo() {
++  return 42;
++}
++function bar() {
++  return 24;
++}
++foo();
++bar();
+diff --git a/LayoutTests/inspector/model/resources/basic-mapping.js b/LayoutTests/inspector/model/resources/basic-mapping.js
+new file mode 100644
+index 000000000000..2e479a4175b8
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/basic-mapping.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=basic-mapping.js.map
+diff --git a/LayoutTests/inspector/model/resources/basic-mapping.js.map b/LayoutTests/inspector/model/resources/basic-mapping.js.map
+new file mode 100644
+index 000000000000..12dc9679a4b1
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/basic-mapping.js.map
+@@ -0,0 +1,6 @@
++{
++  "version":3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings":"AAAA,SAASA,MACP,OAAO,EACT,CACA,SAASC,MACP,OAAO,EACT,CACAD,MACAC"
++}
+diff --git a/LayoutTests/inspector/model/resources/source-map-spec-tests.json b/LayoutTests/inspector/model/resources/source-map-spec-tests.json
+new file mode 100644
+index 000000000000..a9f1c149f102
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/source-map-spec-tests.json
+@@ -0,0 +1,66 @@
++{
++  "tests": [
++    {
++      "name": "versionValid",
++      "baseFile": "version-valid.js",
++      "sourceMapFile": "version-valid.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "versionNotANumber",
++      "baseFile": "version-not-a-number.js",
++      "sourceMapFile": "version-not-a-number.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionNumericString",
++      "baseFile": "version-numeric-string.js",
++      "sourceMapFile": "version-numeric-string.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooHigh",
++      "baseFile": "version-too-high.js",
++      "sourceMapFile": "version-too-high.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooLow",
++      "baseFile": "version-too-low.js",
++      "sourceMapFile": "version-too-low.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "unrecognizedProperty",
++      "baseFile": "unrecognized-property.js",
++      "sourceMapFile": "unrecognized-property.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "basicMapping",
++      "baseFile": "basic-mapping.js",
++      "sourceMapFile": "basic-mapping.js.map",
++      "sourceMapIsValid": true,
++      "testActions": [
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 9,
++          "generatedLine": 0,
++          "generatedColumn": 9,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 3,
++          "originalColumn": 9,
++          "generatedLine": 0,
++          "generatedColumn": 34,
++          "mappedName": "bar"
++        }
++      ]
++    }
++  ]
++}
+diff --git a/LayoutTests/inspector/model/resources/unrecognized-property.js b/LayoutTests/inspector/model/resources/unrecognized-property.js
+new file mode 100644
+index 000000000000..19dfb0e2e6c7
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/unrecognized-property.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=unrecognized-property.js.map
+diff --git a/LayoutTests/inspector/model/resources/unrecognized-property.js.map b/LayoutTests/inspector/model/resources/unrecognized-property.js.map
+new file mode 100644
+index 000000000000..40bee558a4ff
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/unrecognized-property.js.map
+@@ -0,0 +1,8 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": "",
++  "foobar": 42,
++  "unusedProperty": [1, 2, 3, 4]
++}
+diff --git a/LayoutTests/inspector/model/resources/version-not-a-number.js b/LayoutTests/inspector/model/resources/version-not-a-number.js
+new file mode 100644
+index 000000000000..ae2342e2ffe5
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-not-a-number.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-not-a-number.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-not-a-number.js.map b/LayoutTests/inspector/model/resources/version-not-a-number.js.map
+new file mode 100644
+index 000000000000..a584d6e69511
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-not-a-number.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3foo",
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/version-numeric-string.js b/LayoutTests/inspector/model/resources/version-numeric-string.js
+new file mode 100644
+index 000000000000..a55170885da6
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-numeric-string.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-numeric-string.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-numeric-string.js.map b/LayoutTests/inspector/model/resources/version-numeric-string.js.map
+new file mode 100644
+index 000000000000..dbe52a7d0df6
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-numeric-string.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3",
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/version-too-high.js b/LayoutTests/inspector/model/resources/version-too-high.js
+new file mode 100644
+index 000000000000..55f4e1a298fa
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-too-high.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-too-high.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-too-high.js.map b/LayoutTests/inspector/model/resources/version-too-high.js.map
+new file mode 100644
+index 000000000000..ee23be32ff27
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-too-high.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 4,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/version-too-low.js b/LayoutTests/inspector/model/resources/version-too-low.js
+new file mode 100644
+index 000000000000..d9642920b313
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-too-low.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-too-low.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-too-low.js.map b/LayoutTests/inspector/model/resources/version-too-low.js.map
+new file mode 100644
+index 000000000000..64ca7a6e2e92
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-too-low.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 2,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/version-valid.js b/LayoutTests/inspector/model/resources/version-valid.js
+new file mode 100644
+index 000000000000..82d0bfa1eb2a
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-valid.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-valid.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-valid.js.map b/LayoutTests/inspector/model/resources/version-valid.js.map
+new file mode 100644
+index 000000000000..1a163052d8fc
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-valid.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/source-map-spec-expected.txt b/LayoutTests/inspector/model/source-map-spec-expected.txt
+new file mode 100644
+index 000000000000..c74ab5bcfb32
+--- /dev/null
++++ b/LayoutTests/inspector/model/source-map-spec-expected.txt
+@@ -0,0 +1,22 @@
++Ensure a source map loads for resources with sourceMappingURLs.
++
++
++== Running test suite: SourceMapSpec
++-- Running test case: SourceMapSpec
++PASS: Resource should have loaded 1 SourceMap.
++PASS: SourceMap should be a WI.SourceMap instance.
++PASS: Resource may or may not load a SourceMap.
++PASS: Resource may or may not load a SourceMap.
++PASS: Resource may or may not load a SourceMap.
++PASS: Resource may or may not load a SourceMap.
++PASS: Resource should have loaded 1 SourceMap.
++PASS: SourceMap should be a WI.SourceMap instance.
++PASS: Resource should have loaded 1 SourceMap.
++PASS: SourceMap should be a WI.SourceMap instance.
++PASS: expectEqual(0, 0)
++PASS: expectEqual(9, 9)
++PASS: expectEqual("basic-mapping-original.js", "basic-mapping-original.js")
++PASS: expectEqual(3, 3)
++PASS: expectEqual(9, 9)
++PASS: expectEqual("basic-mapping-original.js", "basic-mapping-original.js")
++
+diff --git a/LayoutTests/inspector/model/source-map-spec.html b/LayoutTests/inspector/model/source-map-spec.html
+new file mode 100644
+index 000000000000..9763c9294ef5
+--- /dev/null
++++ b/LayoutTests/inspector/model/source-map-spec.html
+@@ -0,0 +1,70 @@
++<!DOCTYPE html>
++<html>
++<head>
++<script src="../../http/tests/inspector/resources/inspector-test.js"></script>
++<script>
++function triggerScriptResource(scriptName) {
++    let script = document.createElement("script");
++    script.src = `resources/${scriptName}`;
++    document.body.appendChild(script);
++}
++
++async function setup()
++{
++    const response = await fetch("resources/source-map-spec-tests.json");
++    const json = await response.json();
++    TestPage.dispatchEventToFrontend("TestDescriptionsFetched", {json});
++}
++
++
++function test()
++{
++    function checkMapping(resource, testCase, action)
++    {
++        const location = resource.createSourceCodeLocation(action.generatedLine, action.generatedColumn);
++        InspectorTest.expectEqual(location.displayLineNumber, action.originalLine);
++        InspectorTest.expectEqual(location.displayColumnNumber, action.originalColumn);
++        InspectorTest.expectEqual(location.displaySourceCode.displayName, action.originalSource);
++    }
++
++    let suite = InspectorTest.createAsyncSuite("SourceMapSpec");
++
++    suite.addTestCase({
++        name: "SourceMapSpec",
++        description: "Run test cases from the source maps spec test suite",
++        async test(resolve, reject) {
++            InspectorTest.evaluateInPage("setup()");
++            const event = await InspectorTest.awaitEvent("TestDescriptionsFetched");
++            const testDescriptions = event.data.json;
++
++            for (const testCase of testDescriptions.tests) {
++                InspectorTest.evaluateInPage(`triggerScriptResource('${testCase.baseFile}')`);
++                let resourceEvent = await WI.Frame.awaitEvent(WI.Frame.Event.ResourceWasAdded);
++                let resource = resourceEvent.data.resource;
++                let sourceMapEvent = await resource.awaitEvent(WI.SourceCode.Event.SourceMapAdded);
++
++                if (testCase.sourceMapIsValid) {
++                    InspectorTest.expectEqual(resource.sourceMaps.length, 1, "Resource should have loaded 1 SourceMap.");
++                    InspectorTest.expectThat(resource.sourceMaps[0] instanceof WI.SourceMap, "SourceMap should be a WI.SourceMap instance.");
++                    const loadedSourceMap = resource.sourceMaps[0];
++                } else
++                    InspectorTest.expectLessThanOrEqual(resource.sourceMaps.length, 1, "Resource may or may not load a SourceMap.");
++
++                if (testCase.testActions) {
++                  for (const action of testCase.testActions) {
++                    if (action.actionType === "checkMapping")
++                      checkMapping(resource, testCase, action);
++                  }
++                }
++            }
++        }
++    });
++
++    suite.runTestCasesAndFinish();
++}
++</script>
++</head>
++<body onload="runTest()">
++<p>Ensure a source map loads for resources with sourceMappingURLs.</p>
++</body>
++</html>
+-- 
+2.39.2
+
