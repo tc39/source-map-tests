@@ -37,6 +37,30 @@
       "sourceMapIsValid": true
     },
     {
+      "name": "invalidVLQDueToNonBase64Character",
+      "baseFile": "invalid-vlq-non-base64-char.js",
+      "sourceMapFile": "invalid-vlq-non-base64-char.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentBadSeparator",
+      "baseFile": "invalid-mapping-bad-separator.js",
+      "sourceMapFile": "invalid-mapping-bad-separator.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithTwoFields",
+      "baseFile": "invalid-mapping-segment-with-two-fields.js",
+      "sourceMapFile": "invalid-mapping-segment-with-two-fields.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithThreeFields",
+      "baseFile": "invalid-mapping-segment-with-three-fields.js",
+      "sourceMapFile": "invalid-mapping-segment-with-three-fields.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "basicMapping",
       "baseFile": "basic-mapping.js",
       "sourceMapFile": "basic-mapping.js.map",

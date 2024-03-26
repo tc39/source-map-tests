@@ -4,13 +4,16 @@ const {
   generatedToOriginalId,
 } = require("resource://devtools/client/shared/source-map-loader/utils/index.js");
 
-async function isValidSourceMap(base) {
+async function checkValidity(isValid, base, testCase) {
   try {
     await fetchFixtureSourceMap(base);
+    const originalId = generatedToOriginalId(testCase.baseFile, "unused");
+    await gSourceMapLoader.getOriginalRanges(originalId);
   } catch (exn) {
-    return false;
+    Assert.ok(!isValid, "Source map loading failed with " + exn.message);
+    return;
   }
-  return true;
+  Assert.ok(isValid, "Source map loading should have failed but did not");
 }
 
 async function checkMapping(testCase, action) {
@@ -33,7 +36,7 @@ for (const testCase of testDescriptions.tests) {
   // The following uses a hack to ensure the test case name is used in stack traces.
   const testFunction = {[testCase.name]: async function() {
     const baseName = testCase.baseFile.substring(0, testCase.baseFile.indexOf(".js"));
-    Assert.equal(testCase.sourceMapIsValid, await isValidSourceMap(baseName));
+    await checkValidity(testCase.sourceMapIsValid, baseName, testCase);
 
     if (testCase.testActions) {
       for (const action of testCase.testActions) {
