@@ -2,96 +2,112 @@
   "tests": [
     {
       "name": "versionValid",
+      "description": "Test a simple source map with a valid version number",
       "baseFile": "version-valid.js",
       "sourceMapFile": "version-valid.js.map",
       "sourceMapIsValid": true
     },
     {
       "name": "versionNotANumber",
+      "description": "Test a source map with a version field that is not a number",
       "baseFile": "version-not-a-number.js",
       "sourceMapFile": "version-not-a-number.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "versionNumericString",
+      "description": "Test a source map with a version field that is a number as a string",
       "baseFile": "version-numeric-string.js",
       "sourceMapFile": "version-numeric-string.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "versionTooHigh",
+      "description": "Test a source map with an integer version field that is too high",
       "baseFile": "version-too-high.js",
       "sourceMapFile": "version-too-high.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "versionTooLow",
+      "description": "Test a source map with an integer version field that is too low",
       "baseFile": "version-too-low.js",
       "sourceMapFile": "version-too-low.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "unrecognizedProperty",
+      "description": "Test a source map that has an extra field not explicitly encoded in the spec",
       "baseFile": "unrecognized-property.js",
       "sourceMapFile": "unrecognized-property.js.map",
       "sourceMapIsValid": true
     },
     {
       "name": "invalidVLQDueToNonBase64Character",
+      "description": "Test a source map that has a mapping with an invalid non-base64 character",
       "baseFile": "invalid-vlq-non-base64-char.js",
       "sourceMapFile": "invalid-vlq-non-base64-char.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "invalidMappingSegmentBadSeparator",
+      "description": "Test a source map that uses separator characters not recognized in the spec",
       "baseFile": "invalid-mapping-bad-separator.js",
       "sourceMapFile": "invalid-mapping-bad-separator.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "invalidMappingSegmentWithTwoFields",
+      "description": "Test a source map that has the wrong number (two) of segments fields",
       "baseFile": "invalid-mapping-segment-with-two-fields.js",
       "sourceMapFile": "invalid-mapping-segment-with-two-fields.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "invalidMappingSegmentWithThreeFields",
+      "description": "Test a source map that has the wrong number (three) of segments fields",
       "baseFile": "invalid-mapping-segment-with-three-fields.js",
       "sourceMapFile": "invalid-mapping-segment-with-three-fields.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "invalidMappingSegmentWithNegativeColumn",
+      "description": "Test a source map that has an invalid negative non-relative column field",
       "baseFile": "invalid-mapping-segment-negative-column.js",
       "sourceMapFile": "invalid-mapping-segment-negative-column.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "invalidMappingSegmentWithNegativeSourceIndex",
+      "description": "Test a source map that has an invalid negative non-relative source index field",
       "baseFile": "invalid-mapping-segment-negative-source-index.js",
       "sourceMapFile": "invalid-mapping-segment-negative-source-index.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "invalidMappingSegmentWithNegativeOriginalLine",
+      "description": "Test a source map that has an invalid negative non-relative original line field",
       "baseFile": "invalid-mapping-segment-negative-original-line.js",
       "sourceMapFile": "invalid-mapping-segment-negative-original-line.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "invalidMappingSegmentWithNegativeOriginalColumn",
+      "description": "Test a source map that has an invalid negative non-relative original column field",
       "baseFile": "invalid-mapping-segment-negative-original-column.js",
       "sourceMapFile": "invalid-mapping-segment-negative-original-column.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "invalidMappingSegmentWithNegativeNameIndex",
+      "description": "Test a source map that has an invalid negative non-relative name index field",
       "baseFile": "invalid-mapping-segment-negative-name-index.js",
       "sourceMapFile": "invalid-mapping-segment-negative-name-index.js.map",
       "sourceMapIsValid": false
     },
     {
       "name": "basicMapping",
+      "description": "Test a simple source map that has several valid mappings",
       "baseFile": "basic-mapping.js",
       "sourceMapFile": "basic-mapping.js.map",
       "sourceMapIsValid": true,
