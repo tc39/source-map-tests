@@ -61,6 +61,36 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidMappingSegmentWithNegativeColumn",
+      "baseFile": "invalid-mapping-segment-negative-column.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-column.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNegativeSourceIndex",
+      "baseFile": "invalid-mapping-segment-negative-source-index.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-source-index.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNegativeOriginalLine",
+      "baseFile": "invalid-mapping-segment-negative-original-line.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-original-line.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNegativeOriginalColumn",
+      "baseFile": "invalid-mapping-segment-negative-original-column.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-original-column.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNegativeNameIndex",
+      "baseFile": "invalid-mapping-segment-negative-name-index.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-name-index.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "basicMapping",
       "baseFile": "basic-mapping.js",
       "sourceMapFile": "basic-mapping.js.map",
