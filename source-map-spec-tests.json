@@ -50,6 +50,20 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidMappingNotAString1",
+      "description": "Test a source map that has an invalid mapping that is not a string (number)",
+      "baseFile": "invalid-mapping-not-a-string-1.js",
+      "sourceMapFile": "invalid-mapping-not-a-string-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingNotAString2",
+      "description": "Test a source map that has an invalid mapping that is not a string (array)",
+      "baseFile": "invalid-mapping-not-a-string-2.js",
+      "sourceMapFile": "invalid-mapping-not-a-string-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "invalidMappingSegmentBadSeparator",
       "description": "Test a source map that uses separator characters not recognized in the spec",
       "baseFile": "invalid-mapping-bad-separator.js",
@@ -145,6 +159,13 @@
       "description": "Test a source map that has segment fields with max values representable in 32 bits",
       "baseFile": "valid-mapping-boundary-values.js",
       "sourceMapFile": "valid-mapping-boundary-values.js.map",
+      "sourceMapIsValid": true
+    },
+    {
+      "name": "validMappingLargeVLQ",
+      "description": "Test a source map that has a segment field VLQ that is very long but within 32-bits",
+      "baseFile": "valid-mapping-large-vlq.js",
+      "sourceMapFile": "valid-mapping-large-vlq.js.map",
       "sourceMapIsValid": true
     },
     {
