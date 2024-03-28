@@ -71,6 +71,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidMappingSegmentWithZeroFields",
+      "description": "Test a source map that has the wrong number (zero) of segments fields",
+      "baseFile": "invalid-mapping-segment-with-zero-fields.js",
+      "sourceMapFile": "invalid-mapping-segment-with-zero-fields.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "invalidMappingSegmentWithTwoFields",
       "description": "Test a source map that has the wrong number (two) of segments fields",
       "baseFile": "invalid-mapping-segment-with-two-fields.js",
