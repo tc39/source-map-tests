@@ -176,6 +176,13 @@
       "sourceMapIsValid": true
     },
     {
+      "name": "validMappingEmptyGroups",
+      "description": "Test a source map with a mapping that has many empty groups",
+      "baseFile": "valid-mapping-empty-groups.js",
+      "sourceMapFile": "valid-mapping-empty-groups.js.map",
+      "sourceMapIsValid": true
+    },
+    {
       "name": "basicMapping",
       "description": "Test a simple source map that has several valid mappings",
       "baseFile": "basic-mapping.js",
