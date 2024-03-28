@@ -106,6 +106,48 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidMappingSegmentWithColumnExceeding32Bits",
+      "description": "Test a source map that has a column field that exceeds 32 bits",
+      "baseFile": "invalid-mapping-segment-column-too-large.js",
+      "sourceMapFile": "invalid-mapping-segment-column-too-large.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithSourceIndexExceeding32Bits",
+      "description": "Test a source map that has a source index field that exceeds 32 bits",
+      "baseFile": "invalid-mapping-segment-source-index-too-large.js",
+      "sourceMapFile": "invalid-mapping-segment-source-index-too-large.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithOriginalLineExceeding32Bits",
+      "description": "Test a source map that has a original line field that exceeds 32 bits",
+      "baseFile": "invalid-mapping-segment-original-line-too-large.js",
+      "sourceMapFile": "invalid-mapping-segment-original-line-too-large.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithOriginalColumnExceeding32Bits",
+      "description": "Test a source map that has an original column field that exceeds 32 bits",
+      "baseFile": "invalid-mapping-segment-original-column-too-large.js",
+      "sourceMapFile": "invalid-mapping-segment-original-column-too-large.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNameIndexExceeding32Bits",
+      "description": "Test a source map that has a name index field that exceeds 32 bits",
+      "baseFile": "invalid-mapping-segment-name-index-too-large.js",
+      "sourceMapFile": "invalid-mapping-segment-name-index-too-large.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "validMappingFieldsWith32BitMaxValues",
+      "description": "Test a source map that has segment fields with max values representable in 32 bits",
+      "baseFile": "valid-mapping-boundary-values.js",
+      "sourceMapFile": "valid-mapping-boundary-values.js.map",
+      "sourceMapIsValid": true
+    },
+    {
       "name": "basicMapping",
       "description": "Test a simple source map that has several valid mappings",
       "baseFile": "basic-mapping.js",
