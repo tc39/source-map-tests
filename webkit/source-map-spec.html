@@ -27,6 +27,13 @@ function test()
         InspectorTest.expectEqual(location.displaySourceCode.displayName, action.originalSource);
     }
 
+    function withTimeout(promise, seconds)
+    {
+        return Promise.race([promise, new Promise((resolve, reject) => {
+            setTimeout(resolve, seconds);
+        })]);
+    }
+
     let suite = InspectorTest.createAsyncSuite("SourceMapSpec");
 
     suite.addTestCase({
@@ -38,17 +45,21 @@ function test()
             const testDescriptions = event.data.json;
 
             for (const testCase of testDescriptions.tests) {
+                console.log(testCase.name);
                 InspectorTest.evaluateInPage(`triggerScriptResource('${testCase.baseFile}')`);
                 let resourceEvent = await WI.Frame.awaitEvent(WI.Frame.Event.ResourceWasAdded);
                 let resource = resourceEvent.data.resource;
-                let sourceMapEvent = await resource.awaitEvent(WI.SourceCode.Event.SourceMapAdded);
+                let sourceMapEvent = await withTimeout(resource.awaitEvent(WI.SourceCode.Event.SourceMapAdded), 50);
 
                 if (testCase.sourceMapIsValid) {
                     InspectorTest.expectEqual(resource.sourceMaps.length, 1, "Resource should have loaded 1 SourceMap.");
                     InspectorTest.expectThat(resource.sourceMaps[0] instanceof WI.SourceMap, "SourceMap should be a WI.SourceMap instance.");
                     const loadedSourceMap = resource.sourceMaps[0];
-                } else
-                    InspectorTest.expectLessThanOrEqual(resource.sourceMaps.length, 1, "Resource may or may not load a SourceMap.");
+                } else {
+                    const hasFailedSourceMap = WI.networkManager.isSourceMapURL(absoluteURL(testCase.sourceMapFile, resource.displayURL));
+                    InspectorTest.expectThat(hasFailedSourceMap, "Expected that there is an associated failed source map URL");
+                    InspectorTest.expectEqual(resource.sourceMaps.length, 0, "Expected no source map resource loaded");
+                }
 
                 if (testCase.testActions) {
                   for (const action of testCase.testActions) {
