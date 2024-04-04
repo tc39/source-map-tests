@@ -36,6 +36,34 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "sourcesNotAList1",
+      "description": "Test a source map with a sources field that is not a valid list (string)",
+      "baseFile": "sources-not-a-list-1.js",
+      "sourceMapFile": "sources-not-a-list-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "sourcesNotAList2",
+      "description": "Test a source map with a sources field that is not a valid list (object)",
+      "baseFile": "sources-not-a-list-2.js",
+      "sourceMapFile": "sources-not-a-list-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "namesNotAList1",
+      "description": "Test a source map with a names field that is not a valid list (string)",
+      "baseFile": "names-not-a-list-1.js",
+      "sourceMapFile": "names-not-a-list-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "namesNotAList2",
+      "description": "Test a source map with a names field that is not a valid list (object)",
+      "baseFile": "names-not-a-list-2.js",
+      "sourceMapFile": "names-not-a-list-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "unrecognizedProperty",
       "description": "Test a source map that has an extra field not explicitly encoded in the spec",
       "baseFile": "unrecognized-property.js",
