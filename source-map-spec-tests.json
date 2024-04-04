@@ -92,6 +92,20 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidMappingSegmentWithSourceIndexOutOfBounds",
+      "description": "Test a source map that has a source index field that is out of bounds of the sources field",
+      "baseFile": "invalid-mapping-segment-source-index-out-of-bounds.js",
+      "sourceMapFile": "invalid-mapping-segment-source-index-out-of-bounds.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNameIndexOutOfBounds",
+      "description": "Test a source map that has a name index field that is out of bounds of the names field",
+      "baseFile": "invalid-mapping-segment-name-index-out-of-bounds.js",
+      "sourceMapFile": "invalid-mapping-segment-name-index-out-of-bounds.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "invalidMappingSegmentWithNegativeColumn",
       "description": "Test a source map that has an invalid negative non-relative column field",
       "baseFile": "invalid-mapping-segment-negative-column.js",

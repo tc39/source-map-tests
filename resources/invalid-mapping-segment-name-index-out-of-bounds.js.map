@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "names": ["foo"],
+  "sources": ["invalid-mapping-segment-name-index-out-of-bounds.js"],
+  "mappings": "AAAAC"
+}
