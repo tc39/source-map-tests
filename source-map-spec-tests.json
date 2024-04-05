@@ -36,6 +36,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "sourcesMissing",
+      "description": "Test a source map that is missing a necessary sources field",
+      "baseFile": "sources-missing.js",
+      "sourceMapFile": "sources-missing.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "sourcesNotAList1",
       "description": "Test a source map with a sources field that is not a valid list (string)",
       "baseFile": "sources-not-a-list-1.js",
@@ -47,6 +54,13 @@
       "description": "Test a source map with a sources field that is not a valid list (object)",
       "baseFile": "sources-not-a-list-2.js",
       "sourceMapFile": "sources-not-a-list-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "namesMissing",
+      "description": "Test a source map that is missing a necessary names field",
+      "baseFile": "names-missing.js",
+      "sourceMapFile": "names-missing.js.map",
       "sourceMapIsValid": false
     },
     {
