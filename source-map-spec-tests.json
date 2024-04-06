@@ -356,6 +356,123 @@
       ]
     },
     {
+      "name": "basicMappingWithIndexMap",
+      "description": "Test a version of basic-mapping.js.map that is split into sections with an index map",
+      "baseFile": "basic-mapping-as-index-map.js",
+      "sourceMapFile": "basic-mapping-as-index-map.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 0,
+          "originalSource": "basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 9,
+          "originalSource": "basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 9,
+          "mappedName": "foo"
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 15,
+          "originalLine": 1,
+          "originalColumn": 2,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 22,
+          "originalLine": 1,
+          "originalColumn": 9,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 24,
+          "originalLine": 2,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 25,
+          "originalLine": 3,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 34,
+          "originalSource": "basic-mapping-original.js",
+          "originalLine": 3,
+          "originalColumn": 9,
+          "mappedName": "bar"
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 40,
+          "originalLine": 4,
+          "originalColumn": 2,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 47,
+          "originalLine": 4,
+          "originalColumn": 9,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 49,
+          "originalLine": 5,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 50,
+          "originalLine": 6,
+          "originalColumn": 0,
+          "mappedName": "foo"
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 56,
+          "originalLine": 7,
+          "originalColumn": 0,
+          "mappedName": "bar"
+        }
+      ]
+    },
+    {
       "name": "validMappingNullSources",
       "description": "Test a source map that has null sources",
       "baseFile": "valid-mapping-null-sources.js",

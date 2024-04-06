@@ -1,0 +1,23 @@
+{
+  "version": "3",
+  "sections": [
+    {
+      "offset": { "line": 0, "column": 0 },
+      "map": {
+        "version": "3",
+        "names": ["foo","bar"],
+        "sources": ["basic-mapping-original.js"],
+        "mappings": "AAAA,SAASA,MACP,OAAO,EACT,CACA"
+      }
+    },
+    {
+      "offset": { "line": 0, "column": 34 },
+      "map": {
+        "version": "3",
+        "names": ["foo","bar"],
+        "sources": ["basic-mapping-original.js"],
+        "mappings": "AAGSC,MACP,OAAO,EACT,CACAD,MACAC"
+      }
+    }
+  ]
+}
