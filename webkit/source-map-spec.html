@@ -22,9 +22,9 @@ function test()
     function checkMapping(resource, testCase, action)
     {
         const location = resource.createSourceCodeLocation(action.generatedLine, action.generatedColumn);
-        InspectorTest.expectEqual(location.displayLineNumber, action.originalLine);
-        InspectorTest.expectEqual(location.displayColumnNumber, action.originalColumn);
-        InspectorTest.expectEqual(location.displaySourceCode.displayName, action.originalSource);
+        InspectorTest.expectEqual(location.displayLineNumber, action.originalLine, "Original line should match");
+        InspectorTest.expectEqual(location.displayColumnNumber, action.originalColumn, "Original column should match");
+        InspectorTest.expectEqual(location.displaySourceCode.displayName, action.originalSource, "Original source should match");
     }
 
     function withTimeout(promise, seconds)
@@ -45,7 +45,7 @@ function test()
             const testDescriptions = event.data.json;
 
             for (const testCase of testDescriptions.tests) {
-                console.log(testCase.name);
+                InspectorTest.log(testCase.name);
                 InspectorTest.evaluateInPage(`triggerScriptResource('${testCase.baseFile}')`);
                 let resourceEvent = await WI.Frame.awaitEvent(WI.Frame.Event.ResourceWasAdded);
                 let resource = resourceEvent.data.resource;
@@ -54,7 +54,9 @@ function test()
                 if (testCase.sourceMapIsValid) {
                     InspectorTest.expectEqual(resource.sourceMaps.length, 1, "Resource should have loaded 1 SourceMap.");
                     InspectorTest.expectThat(resource.sourceMaps[0] instanceof WI.SourceMap, "SourceMap should be a WI.SourceMap instance.");
-                    const loadedSourceMap = resource.sourceMaps[0];
+                    if (!(resource.sourceMaps[0] instanceof WI.SourceMap)) {
+                        continue;
+                    }
                 } else {
                     const hasFailedSourceMap = WI.networkManager.isSourceMapURL(absoluteURL(testCase.sourceMapFile, resource.displayURL));
                     InspectorTest.expectThat(hasFailedSourceMap, "Expected that there is an associated failed source map URL");
