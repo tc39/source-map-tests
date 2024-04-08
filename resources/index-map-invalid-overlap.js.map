@@ -1,10 +1,10 @@
 {
-  "version": "3",
+  "version": 3,
   "sections": [
     {
       "offset": { "line": 0, "column": 0 },
       "map": {
-        "version": "3",
+        "version": 3,
         "names": [],
         "sources": ["empty-original.js"],
         "mappings": "AAAA"
@@ -13,7 +13,7 @@
     {
       "offset": { "line": 0, "column": 0 },
       "map": {
-        "version": "3",
+        "version": 3,
         "names": [],
         "sources": ["empty-original.js"],
         "mappings": "AAAA"
