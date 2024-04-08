@@ -260,6 +260,55 @@
       "sourceMapIsValid": true
     },
     {
+      "name": "indexMapInvalidBaseMapings",
+      "description": "Test that an index map cannot also have a regular mappings field",
+      "baseFile": "index-map-invalid-base-mappings.js",
+      "sourceMapFile": "index-map-invalid-base-mappings.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapInvalidOverlap",
+      "description": "Test that an invalid index map with multiple sections that overlap",
+      "baseFile": "index-map-invalid-overlap.js",
+      "sourceMapFile": "index-map-invalid-overlap.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapMissingOffset",
+      "description": "Test that an index map that is missing a section offset",
+      "baseFile": "index-map-missing-offset.js",
+      "sourceMapFile": "index-map-missing-offset.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapMissingOffsetLine",
+      "description": "Test that an index map that is missing a section offset's line field",
+      "baseFile": "index-map-missing-offset-line.js",
+      "sourceMapFile": "index-map-missing-offset-line.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapMissingOffsetColumn",
+      "description": "Test that an index map that is missing a section offset's column field",
+      "baseFile": "index-map-missing-offset-column.js",
+      "sourceMapFile": "index-map-missing-offset-column.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapOffsetLineWrongType",
+      "description": "Test that an index map that has an offset line field with the wrong type of value",
+      "baseFile": "index-map-offset-line-wrong-type.js",
+      "sourceMapFile": "index-map-offset-line-wrong-type.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapOffsetColumnWrongType",
+      "description": "Test that an index map that has an offset column field with the wrong type of value",
+      "baseFile": "index-map-offset-column-wrong-type.js",
+      "sourceMapFile": "index-map-offset-column-wrong-type.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "basicMapping",
       "description": "Test a simple source map that has several valid mappings",
       "baseFile": "basic-mapping.js",
