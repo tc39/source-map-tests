@@ -8,6 +8,13 @@
       "sourceMapIsValid": true
     },
     {
+      "name": "versionMissing",
+      "description": "Test a source map that is missing a version field",
+      "baseFile": "version-missing.js",
+      "sourceMapFile": "version-missing.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "versionNotANumber",
       "description": "Test a source map with a version field that is not a number",
       "baseFile": "version-not-a-number.js",
@@ -57,6 +64,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "sourcesNotStringOrNull",
+      "description": "Test a source map with a sources list that has non-string and non-null items",
+      "baseFile": "sources-not-string-or-null.js",
+      "sourceMapFile": "sources-not-string-or-null.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "namesMissing",
       "description": "Test a source map that is missing a necessary names field",
       "baseFile": "names-missing.js",
@@ -75,6 +89,13 @@
       "description": "Test a source map with a names field that is not a valid list (object)",
       "baseFile": "names-not-a-list-2.js",
       "sourceMapFile": "names-not-a-list-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "namesNotString",
+      "description": "Test a source map with a names list that has non-string items",
+      "baseFile": "names-not-string.js",
+      "sourceMapFile": "names-not-string.js.map",
       "sourceMapIsValid": false
     },
     {
