@@ -260,7 +260,7 @@
       "sourceMapIsValid": true
     },
     {
-      "name": "indexMapInvalidBaseMapings",
+      "name": "indexMapInvalidBaseMappings",
       "description": "Test that an index map cannot also have a regular mappings field",
       "baseFile": "index-map-invalid-base-mappings.js",
       "sourceMapFile": "index-map-invalid-base-mappings.js.map",
@@ -271,6 +271,13 @@
       "description": "Test that an invalid index map with multiple sections that overlap",
       "baseFile": "index-map-invalid-overlap.js",
       "sourceMapFile": "index-map-invalid-overlap.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapInvalidOrder",
+      "description": "Test that an invalid index map with multiple sections in the wrong order",
+      "baseFile": "index-map-invalid-order.js",
+      "sourceMapFile": "index-map-invalid-order.js.map",
       "sourceMapIsValid": false
     },
     {
