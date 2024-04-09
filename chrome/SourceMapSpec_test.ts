@@ -32,7 +32,6 @@ interface TestAction {
 const testCases = await loadTestCasesFromFixture('source-map-spec-tests.json');
 
 describeWithEnvironment.only('SourceMapSpec', async () => {
-  console.log(testCases);
   testCases.forEach(async ({
     baseFile,
     sourceMapFile,
@@ -79,7 +78,6 @@ describeWithEnvironment.only('SourceMapSpec', async () => {
 });
 
 async function loadTestCasesFromFixture(filename: string): Promise<TestSpec[]> {
-  console.log('!!!!loading test cases');
   const testSpec = await getFixtureFileContents<{ tests: TestSpec[] }>(filename);
   return testSpec?.tests ?? [];
 };
