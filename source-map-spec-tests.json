@@ -260,6 +260,27 @@
       "sourceMapIsValid": true
     },
     {
+      "name": "indexMapWrongTypeSections",
+      "description": "Test an index map with a sections field with the wrong type",
+      "baseFile": "index-map-wrong-type-sections.js",
+      "sourceMapFile": "index-map-wrong-type-sections.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapWrongTypeOffset",
+      "description": "Test an index map with an offset field with the wrong type",
+      "baseFile": "index-map-wrong-type-offset.js",
+      "sourceMapFile": "index-map-wrong-type-offset.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapWrongTypeMap",
+      "description": "Test an index map with a map field with the wrong type",
+      "baseFile": "index-map-wrong-type-map.js",
+      "sourceMapFile": "index-map-wrong-type-map.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "indexMapInvalidBaseMappings",
       "description": "Test that an index map cannot also have a regular mappings field",
       "baseFile": "index-map-invalid-base-mappings.js",
@@ -278,6 +299,13 @@
       "description": "Test that an invalid index map with multiple sections in the wrong order",
       "baseFile": "index-map-invalid-order.js",
       "sourceMapFile": "index-map-invalid-order.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapMissingMap",
+      "description": "Test that an index map that is missing a section map",
+      "baseFile": "index-map-missing-map.js",
+      "sourceMapFile": "index-map-missing-map.js.map",
       "sourceMapIsValid": false
     },
     {
