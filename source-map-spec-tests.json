@@ -71,6 +71,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "sourcesAndSourcesContentBothNull",
+      "description": "Test a source map that has both null sources and sourcesContent entries",
+      "baseFile": "sources-and-sources-content-both-null.js",
+      "sourceMapFile": "sources-and-sources-content-both-null.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "namesMissing",
       "description": "Test a source map that is missing a necessary names field",
       "baseFile": "names-missing.js",
