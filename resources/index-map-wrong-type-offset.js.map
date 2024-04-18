@@ -2,7 +2,7 @@
   "version": 3,
   "sections": [
     {
-      offset: "not an offset",
+      "offset": "not an offset",
       "map": {
         "version": 3,
         "names": [],
