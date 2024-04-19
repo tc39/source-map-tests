@@ -27,3 +27,6 @@ How to run in WebKit:
   * Run `git am <this-repo>/webkit/0001-Add-harness-for-source-maps-spec-tests.patch`
   * Run `Tools/Scripts/build-webkit` (depending on the platform you may need to pass `--gtk` or other flags)
   * Run `Tools/Scripts/run-webkit-tests LayoutTests/inspector/model/source-map-spec.html` (again, you may need `--gtk` on Linux)
+
+Mozilla [source-map](https://github.com/mozilla/source-map) library:
+  * There is a [branch](https://github.com/takikawa/source-map/tree/add-spec-tests) for adding the spec tests to the package.
