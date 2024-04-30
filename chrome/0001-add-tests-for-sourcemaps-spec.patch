@@ -1,7 +1,7 @@
 From 5a77ff79e4092740116e1c6871bd15fc5f560e66 Mon Sep 17 00:00:00 2001
 From: Agata Belkius <abelkius@gmail.com>
 Date: Fri, 19 Apr 2024 15:30:48 +0100
-Subject: [PATCH] add tests for sourcemaps spec
+Subject: [PATCH 1/2] add tests for sourcemaps spec
 
 ---
  front_end/BUILD.gn                            |   1 +
