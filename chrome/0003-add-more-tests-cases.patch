@@ -1,0 +1,108 @@
+From f07ac89859cef0b251c38310d0933092faf6a652 Mon Sep 17 00:00:00 2001
+From: Agata Belkius <abelkius@gmail.com>
+Date: Thu, 2 May 2024 11:09:27 +0100
+Subject: [PATCH 3/3] add more tests cases
+
+---
+ front_end/core/sdk/SourceMapSpec.test.ts | 65 +++++++++++++++++++++---
+ 1 file changed, 59 insertions(+), 6 deletions(-)
+
+diff --git a/front_end/core/sdk/SourceMapSpec.test.ts b/front_end/core/sdk/SourceMapSpec.test.ts
+index d8953d42fa..2d6818f785 100644
+--- a/front_end/core/sdk/SourceMapSpec.test.ts
++++ b/front_end/core/sdk/SourceMapSpec.test.ts
+@@ -60,18 +60,68 @@ describeWithEnvironment.only('SourceMapSpec', async () => {
+     baseFile,
+     sourceMapFile,
+     testActions,
+-    sourceMapIsValid
++    sourceMapIsValid,
++    name
+   }) => {
+     it(`tests ${sourceMapFile}`, async () => {
++      const consoleErrorSpy = sinon.spy(console, 'error');
++      const sourceMapContent = await loadSourceMapFromFixture(sourceMapFile);
++
++      // 1) check if an invalid sourcemap throws on SourceMap instance creation
++      if (!sourceMapIsValid && [
++        'sourcesMissing', 
++        'indexMapMissingOffset'
++      ].includes(name)) {
++        assert.throws(() => new SDK.SourceMap.SourceMap(
++          baseFile as Platform.DevToolsPath.UrlString, 
++          sourceMapFile as Platform.DevToolsPath.UrlString, 
++          sourceMapContent
++        ));
++        
++        return;
++      }
++
++      // 2) check if an invalid sourcemap throws on mapping creation
++      if (!sourceMapIsValid && [
++        'invalidVLQDueToNonBase64Character', 
++        'invalidMappingNotAString1',
++        'invalidMappingNotAString2',
++        'invalidMappingSegmentBadSeparator',
++        'invalidMappingSegmentWithZeroFields',
++        'invalidMappingSegmentWithTwoFields',
++        'invalidMappingSegmentWithThreeFields'
++      ].includes(name)) {
++        const sourceMap = new SDK.SourceMap.SourceMap(
++          baseFile as Platform.DevToolsPath.UrlString, 
++          sourceMapFile as Platform.DevToolsPath.UrlString, 
++          sourceMapContent
++        );
++        
++        // TODO - findEntry or just mappings should be used here? mappings is the culprit 
++        // but it is called from different other methods e.g: findEntry()
++        sourceMap.mappings();
++        assert.equal(consoleErrorSpy.calledWith("Failed to parse source map"), true);
++
++        return;
++      }
++
++      // 3) check if an invalid sourcemap can have the mapping created
+       if (!sourceMapIsValid) {
++        const sourceMap = new SDK.SourceMap.SourceMap(
++          baseFile as Platform.DevToolsPath.UrlString, 
++          sourceMapFile as Platform.DevToolsPath.UrlString, 
++          sourceMapContent
++        );
++        sourceMap.mappings();
+         // TODO - right now most of the failure scenarios are actually passing
+-        return;
++        assert.equal(consoleErrorSpy.notCalled, true);
++        console.warn('Invalid sourcemap passes basic validation');
+       }
++
+       
+-      // check if a valid sourcemap can be loaded and a SourceMap object created
++      // 4) check if a valid sourcemap can be parsed and a SourceMap instance created
+       const baseFileUrl = baseFile as Platform.DevToolsPath.UrlString;
+       const sourceMapFileUrl = sourceMapFile as Platform.DevToolsPath.UrlString;
+-      const sourceMapContent = await loadSourceMapFromFixture(sourceMapFile);
+       
+       assert.doesNotThrow(() => parseSourceMap(JSON.stringify(sourceMapContent)));
+       assert.doesNotThrow(() => new SDK.SourceMap.SourceMap(
+@@ -79,13 +129,16 @@ describeWithEnvironment.only('SourceMapSpec', async () => {
+         sourceMapFileUrl, 
+         sourceMapContent
+       ));
++
+       
+-      // check if the mappings are valid
++      // 5) check if the mappings are valid
+       const sourceMap = new SDK.SourceMap.SourceMap(
+         baseFileUrl, 
+         sourceMapFileUrl, 
+         sourceMapContent);
+-    
++        
++      assert.doesNotThrow(() => sourceMap.findEntry(1, 1));
++      
+       if (testActions !== undefined) {
+         testActions.forEach(({
+           actionType,
+-- 
+2.39.3 (Apple Git-145)
+
