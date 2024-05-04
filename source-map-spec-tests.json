@@ -781,6 +781,95 @@
           "mappedName": "foo"
         }
       ]
+    },
+    {
+      "name": "transitiveMapping",
+      "description": "Test a simple two-stage transitive mapping from a minified JS to a TypeScript source",
+      "baseFile": "transitive-mapping.js",
+      "sourceMapFile": "transitive-mapping.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMappingTransitive",
+          "generatedLine": 0,
+          "generatedColumn": 0,
+          "originalSource": "typescript-original.ts",
+          "intermediateMaps": ["transitive-mapping-original.js.map"],
+          "originalLine": 1,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMappingTransitive",
+          "generatedLine": 0,
+          "generatedColumn": 9,
+          "originalSource": "typescript-original.ts",
+          "intermediateMaps": ["transitive-mapping-original.js.map"],
+          "originalLine": 1,
+          "originalColumn": 9,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMappingTransitive",
+          "generatedLine": 0,
+          "generatedColumn": 13,
+          "originalSource": "typescript-original.ts",
+          "intermediateMaps": ["transitive-mapping-original.js.map"],
+          "originalLine": 1,
+          "originalColumn": 13,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMappingTransitive",
+          "generatedLine": 0,
+          "generatedColumn": 16,
+          "originalSource": "typescript-original.ts",
+          "intermediateMaps": ["transitive-mapping-original.js.map"],
+          "originalLine": 2,
+          "originalColumn": 2,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMappingTransitive",
+          "generatedLine": 0,
+          "generatedColumn": 23,
+          "originalSource": "typescript-original.ts",
+          "intermediateMaps": ["transitive-mapping-original.js.map"],
+          "originalLine": 2,
+          "originalColumn": 9,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMappingTransitive",
+          "generatedLine": 0,
+          "generatedColumn": 24,
+          "originalSource": "typescript-original.ts",
+          "intermediateMaps": ["transitive-mapping-original.js.map"],
+          "originalLine": 3,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMappingTransitive",
+          "generatedLine": 0,
+          "generatedColumn": 25,
+          "originalSource": "typescript-original.ts",
+          "intermediateMaps": ["transitive-mapping-original.js.map"],
+          "originalLine": 4,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMappingTransitive",
+          "generatedLine": 0,
+          "generatedColumn": 29,
+          "originalSource": "typescript-original.ts",
+          "intermediateMaps": ["transitive-mapping-original.js.map"],
+          "originalLine": 4,
+          "originalColumn": 4,
+          "mappedName": null
+        }
+      ]
     }
   ]
 }
