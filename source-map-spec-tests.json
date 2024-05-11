@@ -120,6 +120,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidVLQDueToMissingContinuationDigits",
+      "description": "Test a source map that has a mapping with an invalid VLQ that has a continuation bit but no continuing digits",
+      "baseFile": "invalid-vlq-missing-continuation.js",
+      "sourceMapFile": "invalid-vlq-missing-continuation.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "invalidMappingNotAString1",
       "description": "Test a source map that has an invalid mapping that is not a string (number)",
       "baseFile": "invalid-mapping-not-a-string-1.js",

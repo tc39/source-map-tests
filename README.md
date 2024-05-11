@@ -50,7 +50,7 @@ Mozilla [source-map](https://github.com/mozilla/source-map) library:
       - [ ] A VLQ with one digit and no continuation digits should decode.
       - [ ] A negative VLQ with the sign bit set to 1 should decode.
       - [ ] A VLQ with non-zero continuation bits (and more than one digit) should decode.
-      - [ ] A VLQ with a non-zero continuataion bit with no further digits should fail to decode.
+      - [X] A VLQ with a non-zero continuation bit with no further digits should fail to decode.
       - [ ] A VLQ should decode with the correct order of digits (least to most significant).
       - [x] A long VLQ with many trailing zero digits will decode.
     * [x] A VLQ exceeding the 32-bit size limit is invalid (note: the spec is unclear on the details of this limit)
