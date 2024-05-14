@@ -127,11 +127,11 @@ Mozilla [source-map](https://github.com/mozilla/source-map) library:
     * [X] The original column must be non-negative
     * [X] The name index must be non-negative
   - Relative VLQ values must be non-negative after adding to previous value
-    * [ ] The column must be non-negative
-    * [ ] The source index must be non-negative
-    * [ ] The original line must be non-negative
-    * [ ] The original column must be non-negative
-    * [ ] The name index must be non-negative
+    * [X] The column must be non-negative
+    * [X] The source index must be non-negative
+    * [X] The original line must be non-negative
+    * [X] The original column must be non-negative
+    * [X] The name index must be non-negative
 * Mappings semantics
   - [ ] A source map with no mappings does not map any position.
   - [ ] A single field segment gets mapped to the correct line and column.

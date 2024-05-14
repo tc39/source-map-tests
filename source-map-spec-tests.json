@@ -218,6 +218,41 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidMappingSegmentWithNegativeRelativeColumn",
+      "description": "Test a source map that has an invalid negative relative column field",
+      "baseFile": "invalid-mapping-segment-negative-relative-column.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-relative-column.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNegativeRelativeSourceIndex",
+      "description": "Test a source map that has an invalid negative relative source index field",
+      "baseFile": "invalid-mapping-segment-negative-relative-source-index.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-relative-source-index.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNegativeRelativeOriginalLine",
+      "description": "Test a source map that has an invalid negative relative original line field",
+      "baseFile": "invalid-mapping-segment-negative-relative-original-line.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-relative-original-line.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNegativeRelativeOriginalColumn",
+      "description": "Test a source map that has an invalid negative relative original column field",
+      "baseFile": "invalid-mapping-segment-negative-relative-original-column.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-relative-original-column.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithNegativeRelativeNameIndex",
+      "description": "Test a source map that has an invalid negative relative name index field",
+      "baseFile": "invalid-mapping-segment-negative-relative-name-index.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-relative-name-index.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "invalidMappingSegmentWithColumnExceeding32Bits",
       "description": "Test a source map that has a column field that exceeds 32 bits",
       "baseFile": "invalid-mapping-segment-column-too-large.js",
