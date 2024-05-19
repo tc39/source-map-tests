@@ -798,10 +798,10 @@
       ]
     },
     {
-      "name": "validMappingNullSources",
-      "description": "Test a source map that has null sources",
-      "baseFile": "valid-mapping-null-sources.js",
-      "sourceMapFile": "valid-mapping-null-sources.js.map",
+      "name": "sourcesNullSourcesContentNonNull",
+      "description": "Test a source map that has a null source but has a sourcesContent",
+      "baseFile": "sources-null-sources-content-non-null.js",
+      "sourceMapFile": "sources-null-sources-content-non-null.js.map",
       "sourceMapIsValid": true,
       "testActions": [
         {
