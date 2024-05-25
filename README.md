@@ -132,6 +132,14 @@ Mozilla [source-map](https://github.com/mozilla/source-map) library:
     * [X] The original line must be non-negative
     * [X] The original column must be non-negative
     * [X] The name index must be non-negative
+* Ignore list
+  - [X] An ignore list is optional, may be missing
+  - [X] An ignore list can't be a non-array value
+    * [X] An ignore list can be empty
+    * [X] An ignore list entry must be a number
+    * [X] An ignore list entry cannot be out-of-bounds of the sources array
+  - [X] Ignore list entries are detected and are present
+  - [X] Items not specified in the ignore list don't show up as ignored
 * Mappings semantics
   - [ ] A source map with no mappings does not map any position.
   - [ ] A single field segment gets mapped to the correct line and column.

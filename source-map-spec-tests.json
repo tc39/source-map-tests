@@ -106,6 +106,54 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "ignoreListEmpty",
+      "description": "Test a source map with an ignore list that has no items",
+      "baseFile": "ignore-list-empty.js",
+      "sourceMapFile": "ignore-list-empty.js.map",
+      "sourceMapIsValid": true
+    },
+    {
+      "name": "ignoreListValid1",
+      "description": "Test a source map with a simple valid ignore list",
+      "baseFile": "ignore-list-valid-1.js",
+      "sourceMapFile": "ignore-list-valid-1.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkIgnoreList",
+          "present": ["empty-original.js"]
+        }
+      ]
+    },
+    {
+      "name": "ignoreListWrongType1",
+      "description": "Test a source map with an ignore list with the wrong type of items",
+      "baseFile": "ignore-list-wrong-type-1.js",
+      "sourceMapFile": "ignore-list-wrong-type-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "ignoreListWrongType2",
+      "description": "Test a source map with an ignore list with the wrong type of items",
+      "baseFile": "ignore-list-wrong-type-2.js",
+      "sourceMapFile": "ignore-list-wrong-type-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "ignoreListWrongType3",
+      "description": "Test a source map with an ignore list that is not a list",
+      "baseFile": "ignore-list-wrong-type-3.js",
+      "sourceMapFile": "ignore-list-wrong-type-3.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "ignoreListOutOfBounds",
+      "description": "Test a source map with an ignore list with an item with an out-of-bounds index",
+      "baseFile": "ignore-list-out-of-bounds.js",
+      "sourceMapFile": "ignore-list-out-of-bounds.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "unrecognizedProperty",
       "description": "Test a source map that has an extra field not explicitly encoded in the spec",
       "baseFile": "unrecognized-property.js",
