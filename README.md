@@ -14,7 +14,7 @@ Source Map spec: https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze
 
 These test cases are still a work-in-progress 🚧.
 
-# Running the tests
+#### Running the tests
 
 How to run in Firefox:
   * Check out mozilla-unified (see [Firefox dev setup](https://firefox-source-docs.mozilla.org/setup/index.html) under "Setting up your machine" for details, note that you can use git via [git-cinnabar](https://github.com/glandium/git-cinnabar/))
@@ -33,14 +33,14 @@ How to run in WebKit:
 Mozilla [source-map](https://github.com/mozilla/source-map) library:
   * There is a [branch](https://github.com/takikawa/source-map/tree/add-spec-tests) for adding the spec tests to the package.
 
-# Goals of tests
+### Goals of tests
 
 * Thoroughly test all aspects of the source maps spec that can be tested.
 * Strictly follow the spec when determining test behavior.
 
-# Test coverage
+### Test coverage
 
-## Core spec
+#### Core spec
 
 * Encoding
   - [ ] Source map must be a valid JSON document.
@@ -161,6 +161,6 @@ Mozilla [source-map](https://github.com/mozilla/source-map) library:
 * Wasm support
   - [ ] Create versions of the tests that use a Wasm source.
 
-## Scopes Proposal
+### Scopes Proposal
 
 TODO
