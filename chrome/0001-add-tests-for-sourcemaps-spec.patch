@@ -1,0 +1,2070 @@
+From 5a77ff79e4092740116e1c6871bd15fc5f560e66 Mon Sep 17 00:00:00 2001
+From: Agata Belkius <abelkius@gmail.com>
+Date: Fri, 19 Apr 2024 15:30:48 +0100
+Subject: [PATCH 1/3] add tests for sourcemaps spec
+
+---
+ front_end/BUILD.gn                            |   1 +
+ front_end/core/sdk/BUILD.gn                   |   1 +
+ front_end/core/sdk/SourceMapSpec.test.ts      | 129 ++++
+ .../core/sdk/fixtures/sourcemaps/BUILD.gn     | 106 ++++
+ .../sourcemaps/basic-mapping-as-index-map.js  |   2 +
+ .../basic-mapping-as-index-map.js.map         |  23 +
+ .../sourcemaps/basic-mapping-original.js      |   8 +
+ .../sdk/fixtures/sourcemaps/basic-mapping.js  |   2 +
+ .../fixtures/sourcemaps/basic-mapping.js.map  |   6 +
+ .../index-map-invalid-base-mappings.js        |   1 +
+ .../index-map-invalid-base-mappings.js.map    |  15 +
+ .../sourcemaps/index-map-invalid-overlap.js   |   1 +
+ .../index-map-invalid-overlap.js.map          |  23 +
+ .../index-map-missing-offset-column.js        |   1 +
+ .../index-map-missing-offset-column.js.map    |  14 +
+ .../index-map-missing-offset-line.js          |   1 +
+ .../index-map-missing-offset-line.js.map      |  14 +
+ .../sourcemaps/index-map-missing-offset.js    |   1 +
+ .../index-map-missing-offset.js.map           |  13 +
+ .../index-map-offset-column-wrong-type.js     |   1 +
+ .../index-map-offset-column-wrong-type.js.map |  14 +
+ .../index-map-offset-line-wrong-type.js       |   1 +
+ .../index-map-offset-line-wrong-type.js.map   |  14 +
+ .../invalid-mapping-bad-separator.js          |   2 +
+ .../invalid-mapping-bad-separator.js.map      |   6 +
+ .../invalid-mapping-not-a-string-1.js         |   1 +
+ .../invalid-mapping-not-a-string-1.js.map     |   7 +
+ .../invalid-mapping-not-a-string-2.js         |   1 +
+ .../invalid-mapping-not-a-string-2.js.map     |   7 +
+ ...nvalid-mapping-segment-column-too-large.js |   1 +
+ ...id-mapping-segment-column-too-large.js.map |   7 +
+ ...apping-segment-name-index-out-of-bounds.js |   1 +
+ ...ng-segment-name-index-out-of-bounds.js.map |   7 +
+ ...id-mapping-segment-name-index-too-large.js |   1 +
+ ...apping-segment-name-index-too-large.js.map |   7 +
+ ...invalid-mapping-segment-negative-column.js |   1 +
+ ...lid-mapping-segment-negative-column.js.map |   7 +
+ ...lid-mapping-segment-negative-name-index.js |   1 +
+ ...mapping-segment-negative-name-index.js.map |   7 +
+ ...apping-segment-negative-original-column.js |   1 +
+ ...ng-segment-negative-original-column.js.map |   7 +
+ ...-mapping-segment-negative-original-line.js |   1 +
+ ...ping-segment-negative-original-line.js.map |   7 +
+ ...d-mapping-segment-negative-source-index.js |   1 +
+ ...pping-segment-negative-source-index.js.map |   7 +
+ ...pping-segment-original-column-too-large.js |   1 +
+ ...g-segment-original-column-too-large.js.map |   7 +
+ ...mapping-segment-original-line-too-large.js |   1 +
+ ...ing-segment-original-line-too-large.js.map |   7 +
+ ...ping-segment-source-index-out-of-bounds.js |   1 +
+ ...-segment-source-index-out-of-bounds.js.map |   7 +
+ ...-mapping-segment-source-index-too-large.js |   1 +
+ ...ping-segment-source-index-too-large.js.map |   7 +
+ ...valid-mapping-segment-with-three-fields.js |   2 +
+ ...d-mapping-segment-with-three-fields.js.map |   6 +
+ ...invalid-mapping-segment-with-two-fields.js |   2 +
+ ...lid-mapping-segment-with-two-fields.js.map |   6 +
+ ...nvalid-mapping-segment-with-zero-fields.js |   1 +
+ ...id-mapping-segment-with-zero-fields.js.map |   7 +
+ .../sourcemaps/invalid-vlq-non-base64-char.js |   1 +
+ .../invalid-vlq-non-base64-char.js.map        |   6 +
+ .../sdk/fixtures/sourcemaps/names-missing.js  |   1 +
+ .../fixtures/sourcemaps/names-missing.js.map  |   5 +
+ .../fixtures/sourcemaps/names-not-a-list-1.js |   1 +
+ .../sourcemaps/names-not-a-list-1.js.map      |   6 +
+ .../fixtures/sourcemaps/names-not-a-list-2.js |   1 +
+ .../sourcemaps/names-not-a-list-2.js.map      |   6 +
+ .../fixtures/sourcemaps/names-not-string.js   |   1 +
+ .../sourcemaps/names-not-string.js.map        |   6 +
+ .../sourcemaps/source-map-spec-tests.json     | 573 ++++++++++++++++++
+ .../fixtures/sourcemaps/sources-missing.js    |   1 +
+ .../sourcemaps/sources-missing.js.map         |   5 +
+ .../sourcemaps/sources-not-a-list-1.js        |   1 +
+ .../sourcemaps/sources-not-a-list-1.js.map    |   6 +
+ .../sourcemaps/sources-not-a-list-2.js        |   1 +
+ .../sourcemaps/sources-not-a-list-2.js.map    |   6 +
+ .../sourcemaps/sources-not-string-or-null.js  |   1 +
+ .../sources-not-string-or-null.js.map         |   6 +
+ .../sourcemaps/unrecognized-property.js       |   1 +
+ .../sourcemaps/unrecognized-property.js.map   |   8 +
+ .../valid-mapping-boundary-values.js          |   1 +
+ .../valid-mapping-boundary-values.js.map      |   7 +
+ .../sourcemaps/valid-mapping-empty-groups.js  |   1 +
+ .../valid-mapping-empty-groups.js.map         |   7 +
+ .../sourcemaps/valid-mapping-large-vlq.js     |   1 +
+ .../sourcemaps/valid-mapping-large-vlq.js.map |   6 +
+ .../sourcemaps/valid-mapping-null-sources.js  |   2 +
+ .../valid-mapping-null-sources.js.map         |   6 +
+ .../fixtures/sourcemaps/version-missing.js    |   1 +
+ .../sourcemaps/version-missing.js.map         |   5 +
+ .../sourcemaps/version-not-a-number.js        |   1 +
+ .../sourcemaps/version-not-a-number.js.map    |   6 +
+ .../sourcemaps/version-numeric-string.js      |   1 +
+ .../sourcemaps/version-numeric-string.js.map  |   6 +
+ .../fixtures/sourcemaps/version-too-high.js   |   1 +
+ .../sourcemaps/version-too-high.js.map        |   6 +
+ .../fixtures/sourcemaps/version-too-low.js    |   1 +
+ .../sourcemaps/version-too-low.js.map         |   6 +
+ .../sdk/fixtures/sourcemaps/version-valid.js  |   1 +
+ .../fixtures/sourcemaps/version-valid.js.map  |   6 +
+ 100 files changed, 1251 insertions(+)
+ create mode 100644 front_end/core/sdk/SourceMapSpec.test.ts
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/BUILD.gn
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/basic-mapping-as-index-map.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/basic-mapping-as-index-map.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/basic-mapping-original.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/basic-mapping.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/basic-mapping.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-base-mappings.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-base-mappings.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-overlap.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-overlap.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-column.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-column.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-line.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-line.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-offset-column-wrong-type.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-offset-column-wrong-type.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-offset-line-wrong-type.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/index-map-offset-line-wrong-type.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-bad-separator.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-bad-separator.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-1.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-1.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-2.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-2.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-column-too-large.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-column-too-large.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-out-of-bounds.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-out-of-bounds.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-too-large.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-too-large.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-column.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-column.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-name-index.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-name-index.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-column.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-column.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-line.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-line.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-source-index.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-source-index.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-column-too-large.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-column-too-large.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-line-too-large.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-line-too-large.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-out-of-bounds.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-out-of-bounds.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-too-large.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-too-large.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-vlq-non-base64-char.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/invalid-vlq-non-base64-char.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/names-missing.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/names-missing.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-1.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-1.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-2.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-2.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/names-not-string.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/names-not-string.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/source-map-spec-tests.json
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/sources-missing.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/sources-missing.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-1.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-1.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-2.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-2.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/sources-not-string-or-null.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/sources-not-string-or-null.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/unrecognized-property.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/unrecognized-property.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/valid-mapping-boundary-values.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/valid-mapping-boundary-values.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/valid-mapping-empty-groups.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/valid-mapping-empty-groups.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/valid-mapping-large-vlq.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/valid-mapping-large-vlq.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/valid-mapping-null-sources.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/valid-mapping-null-sources.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-missing.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-missing.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-not-a-number.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-not-a-number.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-numeric-string.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-numeric-string.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-too-high.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-too-high.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-too-low.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-too-low.js.map
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-valid.js
+ create mode 100644 front_end/core/sdk/fixtures/sourcemaps/version-valid.js.map
+
+diff --git a/front_end/BUILD.gn b/front_end/BUILD.gn
+index 85926fd08b..0dc146898c 100644
+--- a/front_end/BUILD.gn
++++ b/front_end/BUILD.gn
+@@ -106,6 +106,7 @@ group("unittests") {
+     "core/protocol_client:unittests",
+     "core/root:unittests",
+     "core/sdk:unittests",
++    "core/sdk/fixtures/sourcemaps",
+     "entrypoints/formatter_worker:unittests",
+     "entrypoints/heap_snapshot_worker:unittests",
+     "entrypoints/inspector_main:unittests",
+diff --git a/front_end/core/sdk/BUILD.gn b/front_end/core/sdk/BUILD.gn
+index 43ea1be19c..bdc88a7e04 100644
+--- a/front_end/core/sdk/BUILD.gn
++++ b/front_end/core/sdk/BUILD.gn
+@@ -163,6 +163,7 @@ ts_library("unittests") {
+     "SourceMap.test.ts",
+     "SourceMapManager.test.ts",
+     "SourceMapScopes.test.ts",
++    "SourceMapSpec.test.ts",
+     "StorageBucketsModel.test.ts",
+     "StorageKeyManager.test.ts",
+     "Target.test.ts",
+diff --git a/front_end/core/sdk/SourceMapSpec.test.ts b/front_end/core/sdk/SourceMapSpec.test.ts
+new file mode 100644
+index 0000000000..64f350d7f3
+--- /dev/null
++++ b/front_end/core/sdk/SourceMapSpec.test.ts
+@@ -0,0 +1,129 @@
++// Copyright 2024 The Chromium Authors. All rights reserved.
++// Use of this source code is governed by a BSD-style license that can be
++// found in the LICENSE file.
++
++
++/**
++ This file tests if devtools sourcemaps implementation is matching the sourcemaps spec.
++ Sourcemap Spec tests are using test data coming from: https://github.com/takikawa/source-map-tests
++
++ At the moment only basic mapping tests are implemented. Expected results:
++
++  ==== FAIL: SourceMapSpec/checks mappings for valid-mapping-null-sources.js.map
++  AssertionError: unexpected source URL: expected 'null' to equal null
++      at front_end/core/sdk/SourceMapSpec.test.ts:74:20 <- out/Default/gen/front_end/core/sdk/SourceMapSpec.test.js:25:32
++      at Array.forEach (<anonymous>)
++      at Context.<anonymous> (front_end/core/sdk/SourceMapSpec.test.ts:62:21 <- out/Default/gen/front_end/core/sdk/SourceMapSpec.test.js:21:29)
++
++  - expected
++  + actual
++
++  -[null]
++  +"null"
++  ==============================================================================
++
++  FAILED: 1 failed, 46 passed (0 skipped)
++  ERRORS DETECTED
++
++ **/ 
++
++const {assert} = chai;
++import type * as Platform from '../platform/platform.js';
++import {assertNotNullOrUndefined} from '../platform/platform.js';
++import { SourceMapV3 } from './SourceMap.js';
++import * as SDK from './sdk.js';
++import {describeWithEnvironment} from '../../testing/EnvironmentHelpers.js';
++
++interface TestSpec {
++  name: string;
++  description: string;
++  baseFile: string;
++  sourceMapFile: string;
++  sourceMapIsValid: boolean;
++  testActions?: TestAction[];
++} 
++
++interface TestAction {
++  actionType: string;
++  generatedLine: number;
++  generatedColumn: number;
++  originalSource: string;
++  originalLine: number;
++  originalColumn: number;
++  mappedName: null | string;
++}
++
++const testCases = await loadTestCasesFromFixture('source-map-spec-tests.json');
++
++describeWithEnvironment.only('SourceMapSpec', async () => {
++  testCases.forEach(async ({
++    baseFile,
++    sourceMapFile,
++    testActions,
++    sourceMapIsValid
++  }) => {
++    it(`checks mappings for ${sourceMapFile}`, async () => {
++      if (!sourceMapIsValid) {
++        return;
++      }
++      
++      const baseFileUrl = baseFile as Platform.DevToolsPath.UrlString;
++      const sourceMapFileUrl = sourceMapFile as Platform.DevToolsPath.UrlString;
++      const sourceMapContent = await loadSourceMapFromFixture(sourceMapFile);
++
++      const sourceMap = new SDK.SourceMap.SourceMap(
++        baseFileUrl, 
++        sourceMapFileUrl, 
++        sourceMapContent);
++    
++      
++      if (testActions !== undefined) {
++        testActions.forEach(({
++          actionType,
++          originalSource,
++          originalLine, 
++          originalColumn,
++          generatedLine,
++          generatedColumn
++        }) => {
++          if (actionType === "checkMapping" && sourceMapIsValid) {
++            const actual = sourceMap.findEntry(generatedLine, generatedColumn);
++            assertNotNullOrUndefined(actual);
++      
++            assert.strictEqual(actual.sourceURL, originalSource, 'unexpected source URL');
++            assert.strictEqual(actual.sourceLineNumber, originalLine, 'unexpected source line number');
++            assert.strictEqual(actual.sourceColumnNumber, originalColumn, 'unexpected source column number');
++          }
++        });
++      }
++    }); 
++  });
++});
++
++async function loadTestCasesFromFixture(filename: string): Promise<TestSpec[]> {
++  const testSpec = await getFixtureFileContents<{ tests: TestSpec[] }>(filename);
++  return testSpec?.tests ?? [];
++};
++
++async function loadSourceMapFromFixture(filename: string): Promise<SourceMapV3> {
++  return getFixtureFileContents<SourceMapV3>(filename);
++};
++
++async function getFixtureFileContents<T>(filename: string):
++    Promise<T> {
++  const url = new URL(`/front_end/core/sdk/fixtures/sourcemaps/${filename}`, window.location.origin);
++
++  const response = await fetch(url);
++
++  if (response.status !== 200) {
++    throw new Error(`Unable to load ${url}`);
++  }
++
++  const contentType = response.headers.get('content-type');
++  const isGzipEncoded = contentType !== null && contentType.includes('gzip');
++  let buffer = await response.arrayBuffer();
++
++  const decoder = new TextDecoder('utf-8');
++  const contents = JSON.parse(decoder.decode(buffer)) as T;
++  return contents;
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/BUILD.gn b/front_end/core/sdk/fixtures/sourcemaps/BUILD.gn
+new file mode 100644
+index 0000000000..f39bf7afc6
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/BUILD.gn
+@@ -0,0 +1,106 @@
++# Copyright 2022 The Chromium Authors. All rights reserved.
++# Use of this source code is governed by a BSD-style license that can be
++# found in the LICENSE file.
++
++import("../../../../../scripts/build/ninja/copy.gni")
++
++copy_to_gen("sourcemaps") {
++  sources = [
++    "basic-mapping-as-index-map.js",
++    "basic-mapping-as-index-map.js.map",
++    "basic-mapping-original.js",
++    "basic-mapping.js",
++    "basic-mapping.js.map",
++    "index-map-invalid-base-mappings.js",
++    "index-map-invalid-base-mappings.js.map",
++    "index-map-invalid-overlap.js",
++    "index-map-invalid-overlap.js.map",
++    "index-map-missing-offset-column.js",
++    "index-map-missing-offset-column.js.map",
++    "index-map-missing-offset-line.js",
++    "index-map-missing-offset-line.js.map",
++    "index-map-missing-offset.js",
++    "index-map-missing-offset.js.map",
++    "index-map-offset-column-wrong-type.js",
++    "index-map-offset-column-wrong-type.js.map",
++    "index-map-offset-line-wrong-type.js",
++    "index-map-offset-line-wrong-type.js.map",
++    "invalid-mapping-bad-separator.js",
++    "invalid-mapping-bad-separator.js.map",
++    "invalid-mapping-not-a-string-1.js",
++    "invalid-mapping-not-a-string-1.js.map",
++    "invalid-mapping-not-a-string-2.js",
++    "invalid-mapping-not-a-string-2.js.map",
++    "invalid-mapping-segment-column-too-large.js",
++    "invalid-mapping-segment-column-too-large.js.map",
++    "invalid-mapping-segment-name-index-out-of-bounds.js",
++    "invalid-mapping-segment-name-index-out-of-bounds.js.map",
++    "invalid-mapping-segment-name-index-too-large.js",
++    "invalid-mapping-segment-name-index-too-large.js.map",
++    "invalid-mapping-segment-negative-column.js",
++    "invalid-mapping-segment-negative-column.js.map",
++    "invalid-mapping-segment-negative-name-index.js",
++    "invalid-mapping-segment-negative-name-index.js.map",
++    "invalid-mapping-segment-negative-original-column.js",
++    "invalid-mapping-segment-negative-original-column.js.map",
++    "invalid-mapping-segment-negative-original-line.js",
++    "invalid-mapping-segment-negative-original-line.js.map",
++    "invalid-mapping-segment-negative-source-index.js",
++    "invalid-mapping-segment-negative-source-index.js.map",
++    "invalid-mapping-segment-original-column-too-large.js",
++    "invalid-mapping-segment-original-column-too-large.js.map",
++    "invalid-mapping-segment-original-line-too-large.js",
++    "invalid-mapping-segment-original-line-too-large.js.map",
++    "invalid-mapping-segment-source-index-out-of-bounds.js",
++    "invalid-mapping-segment-source-index-out-of-bounds.js.map",
++    "invalid-mapping-segment-source-index-too-large.js",
++    "invalid-mapping-segment-source-index-too-large.js.map",
++    "invalid-mapping-segment-with-three-fields.js",
++    "invalid-mapping-segment-with-three-fields.js.map",
++    "invalid-mapping-segment-with-two-fields.js",
++    "invalid-mapping-segment-with-two-fields.js.map",
++    "invalid-mapping-segment-with-zero-fields.js",
++    "invalid-mapping-segment-with-zero-fields.js.map",
++    "invalid-vlq-non-base64-char.js",
++    "invalid-vlq-non-base64-char.js.map",
++    "names-missing.js",
++    "names-missing.js.map",
++    "names-not-a-list-1.js",
++    "names-not-a-list-1.js.map",
++    "names-not-a-list-2.js",
++    "names-not-a-list-2.js.map",
++    "names-not-string.js",
++    "names-not-string.js.map",
++    "source-map-spec-tests.json",
++    "sources-missing.js",
++    "sources-missing.js.map",
++    "sources-not-a-list-1.js",
++    "sources-not-a-list-1.js.map",
++    "sources-not-a-list-2.js",
++    "sources-not-a-list-2.js.map",
++    "sources-not-string-or-null.js",
++    "sources-not-string-or-null.js.map",
++    "unrecognized-property.js",
++    "unrecognized-property.js.map",
++    "valid-mapping-boundary-values.js",
++    "valid-mapping-boundary-values.js.map",
++    "valid-mapping-empty-groups.js",
++    "valid-mapping-empty-groups.js.map",
++    "valid-mapping-large-vlq.js",
++    "valid-mapping-large-vlq.js.map",
++    "valid-mapping-null-sources.js",
++    "valid-mapping-null-sources.js.map",
++    "version-missing.js",
++    "version-missing.js.map",
++    "version-not-a-number.js",
++    "version-not-a-number.js.map",
++    "version-numeric-string.js",
++    "version-numeric-string.js.map",
++    "version-too-high.js",
++    "version-too-high.js.map",
++    "version-too-low.js",
++    "version-too-low.js.map",
++    "version-valid.js",
++    "version-valid.js.map",
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-as-index-map.js b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-as-index-map.js
+new file mode 100644
+index 0000000000..b9fae38043
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-as-index-map.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=basic-mapping-as-index-map.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-as-index-map.js.map b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-as-index-map.js.map
+new file mode 100644
+index 0000000000..0863d44e62
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-as-index-map.js.map
+@@ -0,0 +1,23 @@
++{
++  "version": 3,
++  "sections": [
++    {
++      "offset": { "line": 0, "column": 0 },
++      "map": {
++        "version": 3,
++        "names": ["foo","bar"],
++        "sources": ["basic-mapping-original.js"],
++        "mappings": "AAAA,SAASA,MACP,OAAO,EACT,CACA"
++      }
++    },
++    {
++      "offset": { "line": 0, "column": 34 },
++      "map": {
++        "version": 3,
++        "names": ["foo","bar"],
++        "sources": ["basic-mapping-original.js"],
++        "mappings": "AAGSC,MACP,OAAO,EACT,CACAD,MACAC"
++      }
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-original.js b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-original.js
+new file mode 100644
+index 0000000000..301b186cb1
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping-original.js
+@@ -0,0 +1,8 @@
++function foo() {
++  return 42;
++}
++function bar() {
++  return 24;
++}
++foo();
++bar();
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/basic-mapping.js b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping.js
+new file mode 100644
+index 0000000000..2e479a4175
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=basic-mapping.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/basic-mapping.js.map b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping.js.map
+new file mode 100644
+index 0000000000..12dc9679a4
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/basic-mapping.js.map
+@@ -0,0 +1,6 @@
++{
++  "version":3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings":"AAAA,SAASA,MACP,OAAO,EACT,CACA,SAASC,MACP,OAAO,EACT,CACAD,MACAC"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-base-mappings.js b/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-base-mappings.js
+new file mode 100644
+index 0000000000..e90bef083c
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-base-mappings.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=index-map-invalid-base-mappings.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-base-mappings.js.map b/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-base-mappings.js.map
+new file mode 100644
+index 0000000000..b489c1f080
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-base-mappings.js.map
+@@ -0,0 +1,15 @@
++{
++  "version": 3,
++  "mappings": "AAAA",
++  "sections": [
++    {
++      "offset": { "line": 0, "column": 0 },
++      "map": {
++        "version": 3,
++        "names": [],
++        "sources": ["empty-original.js"],
++        "mappings": "AAAA"
++      }
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-overlap.js b/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-overlap.js
+new file mode 100644
+index 0000000000..9aff8dc620
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-overlap.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=index-map-invalid-overlap.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-overlap.js.map b/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-overlap.js.map
+new file mode 100644
+index 0000000000..8d42546fd8
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-invalid-overlap.js.map
+@@ -0,0 +1,23 @@
++{
++  "version": 3,
++  "sections": [
++    {
++      "offset": { "line": 0, "column": 0 },
++      "map": {
++        "version": 3,
++        "names": [],
++        "sources": ["empty-original.js"],
++        "mappings": "AAAA"
++      }
++    },
++    {
++      "offset": { "line": 0, "column": 0 },
++      "map": {
++        "version": 3,
++        "names": [],
++        "sources": ["empty-original.js"],
++        "mappings": "AAAA"
++      }
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-column.js b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-column.js
+new file mode 100644
+index 0000000000..fe6917403f
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-column.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=index-map-missing-offset-column.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-column.js.map b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-column.js.map
+new file mode 100644
+index 0000000000..aa48bbb993
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-column.js.map
+@@ -0,0 +1,14 @@
++{
++  "version": 3,
++  "sections": [
++    {
++      "offset": { "line": 0  },
++      "map": {
++        "version": 3,
++        "names": [],
++        "sources": ["empty-original.js"],
++        "mappings": "AAAA"
++      }
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-line.js b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-line.js
+new file mode 100644
+index 0000000000..ba8614e412
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-line.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=index-map-missing-offset-line.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-line.js.map b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-line.js.map
+new file mode 100644
+index 0000000000..3d60444ea7
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset-line.js.map
+@@ -0,0 +1,14 @@
++{
++  "version": 3,
++  "sections": [
++    {
++      "offset": { "column": 0 },
++      "map": {
++        "version": 3,
++        "names": [],
++        "sources": ["empty-original.js"],
++        "mappings": "AAAA"
++      }
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset.js b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset.js
+new file mode 100644
+index 0000000000..9ca2cf3fb5
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=index-map-missing-offset.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset.js.map b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset.js.map
+new file mode 100644
+index 0000000000..7285138bf5
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-missing-offset.js.map
+@@ -0,0 +1,13 @@
++{
++  "version": 3,
++  "sections": [
++    {
++      "map": {
++        "version": 3,
++        "names": [],
++        "sources": ["empty-original.js"],
++        "mappings": "AAAA"
++      }
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-column-wrong-type.js b/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-column-wrong-type.js
+new file mode 100644
+index 0000000000..ed1e9ec5d5
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-column-wrong-type.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=index-map-offset-column-wrong-type.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-column-wrong-type.js.map b/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-column-wrong-type.js.map
+new file mode 100644
+index 0000000000..b43e79a9dd
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-column-wrong-type.js.map
+@@ -0,0 +1,14 @@
++{
++  "version": 3,
++  "sections": [
++    {
++      "offset": { "line": 0, "column": true },
++      "map": {
++        "version": 3,
++        "names": [],
++        "sources": ["empty-original.js"],
++        "mappings": "AAAA"
++      }
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-line-wrong-type.js b/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-line-wrong-type.js
+new file mode 100644
+index 0000000000..d58f2aff99
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-line-wrong-type.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=index-map-offset-line-wrong-type.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-line-wrong-type.js.map b/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-line-wrong-type.js.map
+new file mode 100644
+index 0000000000..81dbcd6ec4
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/index-map-offset-line-wrong-type.js.map
+@@ -0,0 +1,14 @@
++{
++  "version": 3,
++  "sections": [
++    {
++      "offset": { "line": true, "column": 0 },
++      "map": {
++        "version": 3,
++        "names": [],
++        "sources": ["empty-original.js"],
++        "mappings": "AAAA"
++      }
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-bad-separator.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-bad-separator.js
+new file mode 100644
+index 0000000000..25338aca30
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-bad-separator.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=invalid-mapping-bad-separator.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-bad-separator.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-bad-separator.js.map
+new file mode 100644
+index 0000000000..5f4f5b9233
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-bad-separator.js.map
+@@ -0,0 +1,6 @@
++{
++  "version": 3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings": "AAAA.SAASA:MACP"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-1.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-1.js
+new file mode 100644
+index 0000000000..cb38e2fe9d
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-1.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-not-a-string-1.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-1.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-1.js.map
+new file mode 100644
+index 0000000000..5bf3e2a9d8
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-1.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-not-a-string-1.js",
++  "sources": ["empty-original.js"],
++  "mappings": 5
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-2.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-2.js
+new file mode 100644
+index 0000000000..3d84abd6c6
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-2.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-not-a-string-2.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-2.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-2.js.map
+new file mode 100644
+index 0000000000..4527e7f764
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-not-a-string-2.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-not-a-string-2.js",
++  "sources": ["empty-original.js"],
++  "mappings": [1, 2, 3, 4]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-column-too-large.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-column-too-large.js
+new file mode 100644
+index 0000000000..55591f874b
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-column-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-column-too-large.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-column-too-large.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-column-too-large.js.map
+new file mode 100644
+index 0000000000..b4c059e015
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-column-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-column-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "ggggggE"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-out-of-bounds.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-out-of-bounds.js
+new file mode 100644
+index 0000000000..2a6b434eff
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-out-of-bounds.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-name-index-out-of-bounds.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-out-of-bounds.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-out-of-bounds.js.map
+new file mode 100644
+index 0000000000..8dd2ea6c2d
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-out-of-bounds.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": ["foo"],
++  "file": "invalid-mapping-segment-name-index-out-of-bounds.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAAC"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-too-large.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-too-large.js
+new file mode 100644
+index 0000000000..709e34dbd3
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-name-index-too-large.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-too-large.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-too-large.js.map
+new file mode 100644
+index 0000000000..c7bf5b98d1
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-name-index-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-name-index-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAAggggggE"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-column.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-column.js
+new file mode 100644
+index 0000000000..a202152d6f
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-column.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-column.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-column.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-column.js.map
+new file mode 100644
+index 0000000000..403878bfa4
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-column.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-column.js",
++  "sources": ["empty-original.js"],
++  "mappings": "F"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-name-index.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-name-index.js
+new file mode 100644
+index 0000000000..3e3f634204
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-name-index.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-name-index.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-name-index.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-name-index.js.map
+new file mode 100644
+index 0000000000..b94f63646e
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-name-index.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-name-index.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAAF"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-column.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-column.js
+new file mode 100644
+index 0000000000..f21d5342b3
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-column.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-original-column.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-column.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-column.js.map
+new file mode 100644
+index 0000000000..011c639d3f
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-column.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-original-column.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAF"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-line.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-line.js
+new file mode 100644
+index 0000000000..b37309601c
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-line.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-original-line.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-line.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-line.js.map
+new file mode 100644
+index 0000000000..e7ec993eeb
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-original-line.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-original-line.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAFA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-source-index.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-source-index.js
+new file mode 100644
+index 0000000000..6e05849b6a
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-source-index.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-source-index.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-source-index.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-source-index.js.map
+new file mode 100644
+index 0000000000..596c2f298b
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-negative-source-index.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-source-index.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AFAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-column-too-large.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-column-too-large.js
+new file mode 100644
+index 0000000000..0936ed7ea8
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-column-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-original-column-too-large.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-column-too-large.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-column-too-large.js.map
+new file mode 100644
+index 0000000000..ff2103fe24
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-column-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-original-column-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAggggggE"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-line-too-large.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-line-too-large.js
+new file mode 100644
+index 0000000000..9b3aa5a361
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-line-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-original-line-too-large.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-line-too-large.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-line-too-large.js.map
+new file mode 100644
+index 0000000000..890f1c71fc
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-original-line-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-original-line-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAggggggEA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-out-of-bounds.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-out-of-bounds.js
+new file mode 100644
+index 0000000000..2e5fbca268
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-out-of-bounds.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-source-index-out-of-bounds.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-out-of-bounds.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-out-of-bounds.js.map
+new file mode 100644
+index 0000000000..86dedb114f
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-out-of-bounds.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-source-index-out-of-bounds.js",
++  "sources": ["empty-original.js"],
++  "mappings": "ACAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-too-large.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-too-large.js
+new file mode 100644
+index 0000000000..3f4943e127
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-source-index-too-large.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-too-large.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-too-large.js.map
+new file mode 100644
+index 0000000000..e9f858c6e1
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-source-index-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-source-index-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AggggggEAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js
+new file mode 100644
+index 0000000000..4b868fac9c
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=invalid-mapping-three-fields.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js.map
+new file mode 100644
+index 0000000000..c2af1165ad
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js.map
+@@ -0,0 +1,6 @@
++{
++  "version": 3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings": "AAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js
+new file mode 100644
+index 0000000000..96045a7a11
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=invalid-mapping-two-fields.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js.map
+new file mode 100644
+index 0000000000..73cf00fa1c
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js.map
+@@ -0,0 +1,6 @@
++{
++  "version": 3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings": "AA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js
+new file mode 100644
+index 0000000000..9d5332a56c
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-column-with-zero-fields.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js.map
+new file mode 100644
+index 0000000000..5a34d25b64
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-with-zero-fields.js",
++  "sources": ["empty-original.js"],
++  "mappings": ",,,,"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-vlq-non-base64-char.js b/front_end/core/sdk/fixtures/sourcemaps/invalid-vlq-non-base64-char.js
+new file mode 100644
+index 0000000000..d1b20b41a2
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-vlq-non-base64-char.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-vlq-non-base64-char.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-vlq-non-base64-char.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-vlq-non-base64-char.js.map
+new file mode 100644
+index 0000000000..4fa1ac5768
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-vlq-non-base64-char.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": "A$%?!"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/names-missing.js b/front_end/core/sdk/fixtures/sourcemaps/names-missing.js
+new file mode 100644
+index 0000000000..58781fd887
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/names-missing.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=names-missing.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/names-missing.js.map b/front_end/core/sdk/fixtures/sourcemaps/names-missing.js.map
+new file mode 100644
+index 0000000000..82170bf784
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/names-missing.js.map
+@@ -0,0 +1,5 @@
++{
++  "version" : 3,
++  "sources": ["empty-original.js"],
++  "mappings": ""
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-1.js b/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-1.js
+new file mode 100644
+index 0000000000..dc65f1972b
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-1.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=names-not-a-list-1.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-1.js.map b/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-1.js.map
+new file mode 100644
+index 0000000000..fe1edaeb96
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-1.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": ["source.js"],
++  "names": "not a list",
++  "mappings": "AAAAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-2.js b/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-2.js
+new file mode 100644
+index 0000000000..d7251f78da
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-2.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=names-not-a-list-2.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-2.js.map b/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-2.js.map
+new file mode 100644
+index 0000000000..3388d2bb71
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/names-not-a-list-2.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": ["source.js"],
++  "names": { "foo": 3 },
++  "mappings": "AAAAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/names-not-string.js b/front_end/core/sdk/fixtures/sourcemaps/names-not-string.js
+new file mode 100644
+index 0000000000..8dc7b4811a
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/names-not-string.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=names-not-string.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/names-not-string.js.map b/front_end/core/sdk/fixtures/sourcemaps/names-not-string.js.map
+new file mode 100644
+index 0000000000..c0feb0739a
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/names-not-string.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": ["source.js"],
++  "names": [null, 3, true, false, {}, []],
++  "mappings": "AAAAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/source-map-spec-tests.json b/front_end/core/sdk/fixtures/sourcemaps/source-map-spec-tests.json
+new file mode 100644
+index 0000000000..7e7350b28e
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/source-map-spec-tests.json
+@@ -0,0 +1,573 @@
++{
++  "tests": [
++    {
++      "name": "versionValid",
++      "description": "Test a simple source map with a valid version number",
++      "baseFile": "version-valid.js",
++      "sourceMapFile": "version-valid.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "versionMissing",
++      "description": "Test a source map that is missing a version field",
++      "baseFile": "version-missing.js",
++      "sourceMapFile": "version-missing.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionNotANumber",
++      "description": "Test a source map with a version field that is not a number",
++      "baseFile": "version-not-a-number.js",
++      "sourceMapFile": "version-not-a-number.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionNumericString",
++      "description": "Test a source map with a version field that is a number as a string",
++      "baseFile": "version-numeric-string.js",
++      "sourceMapFile": "version-numeric-string.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooHigh",
++      "description": "Test a source map with an integer version field that is too high",
++      "baseFile": "version-too-high.js",
++      "sourceMapFile": "version-too-high.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooLow",
++      "description": "Test a source map with an integer version field that is too low",
++      "baseFile": "version-too-low.js",
++      "sourceMapFile": "version-too-low.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "sourcesMissing",
++      "description": "Test a source map that is missing a necessary sources field",
++      "baseFile": "sources-missing.js",
++      "sourceMapFile": "sources-missing.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "sourcesNotAList1",
++      "description": "Test a source map with a sources field that is not a valid list (string)",
++      "baseFile": "sources-not-a-list-1.js",
++      "sourceMapFile": "sources-not-a-list-1.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "sourcesNotAList2",
++      "description": "Test a source map with a sources field that is not a valid list (object)",
++      "baseFile": "sources-not-a-list-2.js",
++      "sourceMapFile": "sources-not-a-list-2.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "sourcesNotStringOrNull",
++      "description": "Test a source map with a sources list that has non-string and non-null items",
++      "baseFile": "sources-not-string-or-null.js",
++      "sourceMapFile": "sources-not-string-or-null.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "namesMissing",
++      "description": "Test a source map that is missing a necessary names field",
++      "baseFile": "names-missing.js",
++      "sourceMapFile": "names-missing.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "namesNotAList1",
++      "description": "Test a source map with a names field that is not a valid list (string)",
++      "baseFile": "names-not-a-list-1.js",
++      "sourceMapFile": "names-not-a-list-1.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "namesNotAList2",
++      "description": "Test a source map with a names field that is not a valid list (object)",
++      "baseFile": "names-not-a-list-2.js",
++      "sourceMapFile": "names-not-a-list-2.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "namesNotString",
++      "description": "Test a source map with a names list that has non-string items",
++      "baseFile": "names-not-string.js",
++      "sourceMapFile": "names-not-string.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "unrecognizedProperty",
++      "description": "Test a source map that has an extra field not explicitly encoded in the spec",
++      "baseFile": "unrecognized-property.js",
++      "sourceMapFile": "unrecognized-property.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "invalidVLQDueToNonBase64Character",
++      "description": "Test a source map that has a mapping with an invalid non-base64 character",
++      "baseFile": "invalid-vlq-non-base64-char.js",
++      "sourceMapFile": "invalid-vlq-non-base64-char.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingNotAString1",
++      "description": "Test a source map that has an invalid mapping that is not a string (number)",
++      "baseFile": "invalid-mapping-not-a-string-1.js",
++      "sourceMapFile": "invalid-mapping-not-a-string-1.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingNotAString2",
++      "description": "Test a source map that has an invalid mapping that is not a string (array)",
++      "baseFile": "invalid-mapping-not-a-string-2.js",
++      "sourceMapFile": "invalid-mapping-not-a-string-2.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentBadSeparator",
++      "description": "Test a source map that uses separator characters not recognized in the spec",
++      "baseFile": "invalid-mapping-bad-separator.js",
++      "sourceMapFile": "invalid-mapping-bad-separator.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithZeroFields",
++      "description": "Test a source map that has the wrong number (zero) of segments fields",
++      "baseFile": "invalid-mapping-segment-with-zero-fields.js",
++      "sourceMapFile": "invalid-mapping-segment-with-zero-fields.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithTwoFields",
++      "description": "Test a source map that has the wrong number (two) of segments fields",
++      "baseFile": "invalid-mapping-segment-with-two-fields.js",
++      "sourceMapFile": "invalid-mapping-segment-with-two-fields.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithThreeFields",
++      "description": "Test a source map that has the wrong number (three) of segments fields",
++      "baseFile": "invalid-mapping-segment-with-three-fields.js",
++      "sourceMapFile": "invalid-mapping-segment-with-three-fields.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithSourceIndexOutOfBounds",
++      "description": "Test a source map that has a source index field that is out of bounds of the sources field",
++      "baseFile": "invalid-mapping-segment-source-index-out-of-bounds.js",
++      "sourceMapFile": "invalid-mapping-segment-source-index-out-of-bounds.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNameIndexOutOfBounds",
++      "description": "Test a source map that has a name index field that is out of bounds of the names field",
++      "baseFile": "invalid-mapping-segment-name-index-out-of-bounds.js",
++      "sourceMapFile": "invalid-mapping-segment-name-index-out-of-bounds.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeColumn",
++      "description": "Test a source map that has an invalid negative non-relative column field",
++      "baseFile": "invalid-mapping-segment-negative-column.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-column.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeSourceIndex",
++      "description": "Test a source map that has an invalid negative non-relative source index field",
++      "baseFile": "invalid-mapping-segment-negative-source-index.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-source-index.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeOriginalLine",
++      "description": "Test a source map that has an invalid negative non-relative original line field",
++      "baseFile": "invalid-mapping-segment-negative-original-line.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-original-line.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeOriginalColumn",
++      "description": "Test a source map that has an invalid negative non-relative original column field",
++      "baseFile": "invalid-mapping-segment-negative-original-column.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-original-column.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeNameIndex",
++      "description": "Test a source map that has an invalid negative non-relative name index field",
++      "baseFile": "invalid-mapping-segment-negative-name-index.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-name-index.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithColumnExceeding32Bits",
++      "description": "Test a source map that has a column field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-column-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-column-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithSourceIndexExceeding32Bits",
++      "description": "Test a source map that has a source index field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-source-index-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-source-index-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithOriginalLineExceeding32Bits",
++      "description": "Test a source map that has a original line field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-original-line-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-original-line-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithOriginalColumnExceeding32Bits",
++      "description": "Test a source map that has an original column field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-original-column-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-original-column-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNameIndexExceeding32Bits",
++      "description": "Test a source map that has a name index field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-name-index-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-name-index-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "validMappingFieldsWith32BitMaxValues",
++      "description": "Test a source map that has segment fields with max values representable in 32 bits",
++      "baseFile": "valid-mapping-boundary-values.js",
++      "sourceMapFile": "valid-mapping-boundary-values.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "validMappingLargeVLQ",
++      "description": "Test a source map that has a segment field VLQ that is very long but within 32-bits",
++      "baseFile": "valid-mapping-large-vlq.js",
++      "sourceMapFile": "valid-mapping-large-vlq.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "validMappingEmptyGroups",
++      "description": "Test a source map with a mapping that has many empty groups",
++      "baseFile": "valid-mapping-empty-groups.js",
++      "sourceMapFile": "valid-mapping-empty-groups.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "indexMapInvalidBaseMapings",
++      "description": "Test that an index map cannot also have a regular mappings field",
++      "baseFile": "index-map-invalid-base-mappings.js",
++      "sourceMapFile": "index-map-invalid-base-mappings.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "indexMapInvalidOverlap",
++      "description": "Test that an invalid index map with multiple sections that overlap",
++      "baseFile": "index-map-invalid-overlap.js",
++      "sourceMapFile": "index-map-invalid-overlap.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "indexMapMissingOffset",
++      "description": "Test that an index map that is missing a section offset",
++      "baseFile": "index-map-missing-offset.js",
++      "sourceMapFile": "index-map-missing-offset.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "indexMapMissingOffsetLine",
++      "description": "Test that an index map that is missing a section offset's line field",
++      "baseFile": "index-map-missing-offset-line.js",
++      "sourceMapFile": "index-map-missing-offset-line.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "indexMapMissingOffsetColumn",
++      "description": "Test that an index map that is missing a section offset's column field",
++      "baseFile": "index-map-missing-offset-column.js",
++      "sourceMapFile": "index-map-missing-offset-column.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "indexMapOffsetLineWrongType",
++      "description": "Test that an index map that has an offset line field with the wrong type of value",
++      "baseFile": "index-map-offset-line-wrong-type.js",
++      "sourceMapFile": "index-map-offset-line-wrong-type.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "indexMapOffsetColumnWrongType",
++      "description": "Test that an index map that has an offset column field with the wrong type of value",
++      "baseFile": "index-map-offset-column-wrong-type.js",
++      "sourceMapFile": "index-map-offset-column-wrong-type.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "basicMapping",
++      "description": "Test a simple source map that has several valid mappings",
++      "baseFile": "basic-mapping.js",
++      "sourceMapFile": "basic-mapping.js.map",
++      "sourceMapIsValid": true,
++      "testActions": [
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 0,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 9,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 9,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 15,
++          "originalLine": 1,
++          "originalColumn": 2,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 22,
++          "originalLine": 1,
++          "originalColumn": 9,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 24,
++          "originalLine": 2,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 25,
++          "originalLine": 3,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 34,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 3,
++          "originalColumn": 9,
++          "mappedName": "bar"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 40,
++          "originalLine": 4,
++          "originalColumn": 2,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 47,
++          "originalLine": 4,
++          "originalColumn": 9,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 49,
++          "originalLine": 5,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 50,
++          "originalLine": 6,
++          "originalColumn": 0,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 56,
++          "originalLine": 7,
++          "originalColumn": 0,
++          "mappedName": "bar"
++        }
++      ]
++    },
++    {
++      "name": "basicMappingWithIndexMap",
++      "description": "Test a version of basic-mapping.js.map that is split into sections with an index map",
++      "baseFile": "basic-mapping-as-index-map.js",
++      "sourceMapFile": "basic-mapping-as-index-map.js.map",
++      "sourceMapIsValid": true,
++      "testActions": [
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 0,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 9,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 9,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 15,
++          "originalLine": 1,
++          "originalColumn": 2,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 22,
++          "originalLine": 1,
++          "originalColumn": 9,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 24,
++          "originalLine": 2,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 25,
++          "originalLine": 3,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 34,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 3,
++          "originalColumn": 9,
++          "mappedName": "bar"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 40,
++          "originalLine": 4,
++          "originalColumn": 2,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 47,
++          "originalLine": 4,
++          "originalColumn": 9,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 49,
++          "originalLine": 5,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 50,
++          "originalLine": 6,
++          "originalColumn": 0,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 56,
++          "originalLine": 7,
++          "originalColumn": 0,
++          "mappedName": "bar"
++        }
++      ]
++    },
++    {
++      "name": "validMappingNullSources",
++      "description": "Test a source map that has null sources",
++      "baseFile": "valid-mapping-null-sources.js",
++      "sourceMapFile": "valid-mapping-null-sources.js.map",
++      "sourceMapIsValid": true,
++      "testActions": [
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 0,
++          "originalSource": null,
++          "originalLine": 0,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 9,
++          "originalSource": null,
++          "originalLine": 0,
++          "originalColumn": 9,
++          "mappedName": "foo"
++        }
++      ]
++    }
++  ]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/sources-missing.js b/front_end/core/sdk/fixtures/sourcemaps/sources-missing.js
+new file mode 100644
+index 0000000000..779b865e27
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/sources-missing.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=sources-missing.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/sources-missing.js.map b/front_end/core/sdk/fixtures/sourcemaps/sources-missing.js.map
+new file mode 100644
+index 0000000000..92aff4fb0e
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/sources-missing.js.map
+@@ -0,0 +1,5 @@
++{
++  "version" : 3,
++  "names": ["foo"],
++  "mappings": ""
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-1.js b/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-1.js
+new file mode 100644
+index 0000000000..7e33b7e867
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-1.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=sources-not-a-list-1.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-1.js.map b/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-1.js.map
+new file mode 100644
+index 0000000000..26330517b9
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-1.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": "not a list",
++  "names": ["foo"],
++  "mappings": "AAAAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-2.js b/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-2.js
+new file mode 100644
+index 0000000000..4021f763fc
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-2.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=sources-not-a-list-2.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-2.js.map b/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-2.js.map
+new file mode 100644
+index 0000000000..2ed85962fd
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/sources-not-a-list-2.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": { "source.js": 3 },
++  "names": ["foo"],
++  "mappings": "AAAAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/sources-not-string-or-null.js b/front_end/core/sdk/fixtures/sourcemaps/sources-not-string-or-null.js
+new file mode 100644
+index 0000000000..7dca97a1da
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/sources-not-string-or-null.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=sources-not-string-or-null.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/sources-not-string-or-null.js.map b/front_end/core/sdk/fixtures/sourcemaps/sources-not-string-or-null.js.map
+new file mode 100644
+index 0000000000..db25561966
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/sources-not-string-or-null.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": [3, {}, true, false, []],
++  "names": ["foo"],
++  "mappings": "AAAAA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/unrecognized-property.js b/front_end/core/sdk/fixtures/sourcemaps/unrecognized-property.js
+new file mode 100644
+index 0000000000..19dfb0e2e6
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/unrecognized-property.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=unrecognized-property.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/unrecognized-property.js.map b/front_end/core/sdk/fixtures/sourcemaps/unrecognized-property.js.map
+new file mode 100644
+index 0000000000..40bee558a4
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/unrecognized-property.js.map
+@@ -0,0 +1,8 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": "",
++  "foobar": 42,
++  "unusedProperty": [1, 2, 3, 4]
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-boundary-values.js b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-boundary-values.js
+new file mode 100644
+index 0000000000..3c49709e05
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-boundary-values.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=valid-mapping-boundary-values.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-boundary-values.js.map b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-boundary-values.js.map
+new file mode 100644
+index 0000000000..4dd836e63d
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-boundary-values.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": ["foo"],
++  "file": "valid-mapping-boundary-values.js",
++  "sources": ["empty-original.js"],
++  "mappings": "+/////DA+/////D+/////DA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-empty-groups.js b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-empty-groups.js
+new file mode 100644
+index 0000000000..a2b767b619
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-empty-groups.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=valid-mapping-empty-groups.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-empty-groups.js.map b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-empty-groups.js.map
+new file mode 100644
+index 0000000000..53be4ae4ae
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-empty-groups.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "valid-mapping-empty-groups.js",
++  "sources": ["empty-original.js"],
++  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-large-vlq.js b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-large-vlq.js
+new file mode 100644
+index 0000000000..b0cd897813
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-large-vlq.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=valid-mapping-large-vlq.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-large-vlq.js.map b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-large-vlq.js.map
+new file mode 100644
+index 0000000000..76e18704c4
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-large-vlq.js.map
+@@ -0,0 +1,6 @@
++{
++  "version": 3,
++  "names": [],
++  "sources": ["valid-mapping-large-vlq.js"],
++  "mappings": "igggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-null-sources.js b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-null-sources.js
+new file mode 100644
+index 0000000000..ee2acf0f5b
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-null-sources.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=valid-mapping-null-sources.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-null-sources.js.map b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-null-sources.js.map
+new file mode 100644
+index 0000000000..199cda9369
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/valid-mapping-null-sources.js.map
+@@ -0,0 +1,6 @@
++{
++  "version":3,
++  "names": ["foo"],
++  "sources": [null],
++  "mappings":"AAAA,SAASA"
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-missing.js b/front_end/core/sdk/fixtures/sourcemaps/version-missing.js
+new file mode 100644
+index 0000000000..c32d1f1a1c
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-missing.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-missing.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-missing.js.map b/front_end/core/sdk/fixtures/sourcemaps/version-missing.js.map
+new file mode 100644
+index 0000000000..49d8ce766e
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-missing.js.map
+@@ -0,0 +1,5 @@
++{
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-not-a-number.js b/front_end/core/sdk/fixtures/sourcemaps/version-not-a-number.js
+new file mode 100644
+index 0000000000..ae2342e2ff
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-not-a-number.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-not-a-number.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-not-a-number.js.map b/front_end/core/sdk/fixtures/sourcemaps/version-not-a-number.js.map
+new file mode 100644
+index 0000000000..a584d6e695
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-not-a-number.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3foo",
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-numeric-string.js b/front_end/core/sdk/fixtures/sourcemaps/version-numeric-string.js
+new file mode 100644
+index 0000000000..a55170885d
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-numeric-string.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-numeric-string.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-numeric-string.js.map b/front_end/core/sdk/fixtures/sourcemaps/version-numeric-string.js.map
+new file mode 100644
+index 0000000000..dbe52a7d0d
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-numeric-string.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3",
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-too-high.js b/front_end/core/sdk/fixtures/sourcemaps/version-too-high.js
+new file mode 100644
+index 0000000000..55f4e1a298
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-too-high.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-too-high.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-too-high.js.map b/front_end/core/sdk/fixtures/sourcemaps/version-too-high.js.map
+new file mode 100644
+index 0000000000..ee23be32ff
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-too-high.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 4,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-too-low.js b/front_end/core/sdk/fixtures/sourcemaps/version-too-low.js
+new file mode 100644
+index 0000000000..d9642920b3
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-too-low.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-too-low.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-too-low.js.map b/front_end/core/sdk/fixtures/sourcemaps/version-too-low.js.map
+new file mode 100644
+index 0000000000..64ca7a6e2e
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-too-low.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 2,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-valid.js b/front_end/core/sdk/fixtures/sourcemaps/version-valid.js
+new file mode 100644
+index 0000000000..82d0bfa1eb
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-valid.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-valid.js.map
+diff --git a/front_end/core/sdk/fixtures/sourcemaps/version-valid.js.map b/front_end/core/sdk/fixtures/sourcemaps/version-valid.js.map
+new file mode 100644
+index 0000000000..1a163052d8
+--- /dev/null
++++ b/front_end/core/sdk/fixtures/sourcemaps/version-valid.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+-- 
+2.39.3 (Apple Git-145)
+

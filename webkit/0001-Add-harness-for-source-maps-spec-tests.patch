@@ -1,0 +1,1649 @@
+From d2ac7108de0b2a76e072ba8d7d4a9e733d3782ef Mon Sep 17 00:00:00 2001
+From: Asumu Takikawa <asumu@igalia.com>
+Date: Mon, 11 Mar 2024 13:41:31 -0700
+Subject: [PATCH] Add harness for source maps spec tests
+
+Need a short description (OOPS!).
+Need the bug URL (OOPS!).
+
+Reviewed by NOBODY (OOPS!).
+
+Explanation of why this fixes the bug (OOPS!).
+
+* LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js.map: Added.
+* LayoutTests/inspector/model/resources/basic-mapping-original.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/basic-mapping.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/basic-mapping.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js: Added.
+* LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js.map: Added.
+* LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js: Added.
+* LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js.map: Added.
+* LayoutTests/inspector/model/resources/names-missing.js: Added.
+* LayoutTests/inspector/model/resources/names-missing.js.map: Added.
+* LayoutTests/inspector/model/resources/names-not-a-list-1.js: Added.
+* LayoutTests/inspector/model/resources/names-not-a-list-1.js.map: Added.
+* LayoutTests/inspector/model/resources/names-not-a-list-2.js: Added.
+* LayoutTests/inspector/model/resources/names-not-a-list-2.js.map: Added.
+* LayoutTests/inspector/model/resources/source-map-spec-tests.json: Added.
+* LayoutTests/inspector/model/resources/sources-missing.js: Added.
+* LayoutTests/inspector/model/resources/sources-missing.js.map: Added.
+* LayoutTests/inspector/model/resources/sources-not-a-list-1.js: Added.
+* LayoutTests/inspector/model/resources/sources-not-a-list-1.js.map: Added.
+* LayoutTests/inspector/model/resources/sources-not-a-list-2.js: Added.
+* LayoutTests/inspector/model/resources/sources-not-a-list-2.js.map: Added.
+* LayoutTests/inspector/model/resources/unrecognized-property.js: Added.
+* LayoutTests/inspector/model/resources/unrecognized-property.js.map: Added.
+* LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js: Added.
+* LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js.map: Added.
+* LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js: Added.
+* LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js.map: Added.
+* LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js: Added.
+* LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js.map: Added.
+* LayoutTests/inspector/model/resources/valid-mapping-null-sources.js: Added.
+(foo):
+(bar):
+* LayoutTests/inspector/model/resources/valid-mapping-null-sources.js.map: Added.
+* LayoutTests/inspector/model/resources/version-not-a-number.js: Added.
+* LayoutTests/inspector/model/resources/version-not-a-number.js.map: Added.
+* LayoutTests/inspector/model/resources/version-numeric-string.js: Added.
+* LayoutTests/inspector/model/resources/version-numeric-string.js.map: Added.
+* LayoutTests/inspector/model/resources/version-too-high.js: Added.
+* LayoutTests/inspector/model/resources/version-too-high.js.map: Added.
+* LayoutTests/inspector/model/resources/version-too-low.js: Added.
+* LayoutTests/inspector/model/resources/version-too-low.js.map: Added.
+* LayoutTests/inspector/model/resources/version-valid.js: Added.
+* LayoutTests/inspector/model/resources/version-valid.js.map: Added.
+* LayoutTests/inspector/model/source-map-spec-expected.txt: Added.
+* LayoutTests/inspector/model/source-map-spec.html: Added.
+---
+ .../resources/basic-mapping-as-index-map.js   |   2 +
+ .../basic-mapping-as-index-map.js.map         |  23 +
+ .../model/resources/basic-mapping-original.js |   8 +
+ .../model/resources/basic-mapping.js          |   2 +
+ .../model/resources/basic-mapping.js.map      |   6 +
+ .../invalid-mapping-bad-separator.js          |   2 +
+ .../invalid-mapping-bad-separator.js.map      |   6 +
+ .../invalid-mapping-not-a-string-1.js         |   1 +
+ .../invalid-mapping-not-a-string-1.js.map     |   7 +
+ .../invalid-mapping-not-a-string-2.js         |   1 +
+ .../invalid-mapping-not-a-string-2.js.map     |   7 +
+ ...nvalid-mapping-segment-column-too-large.js |   1 +
+ ...id-mapping-segment-column-too-large.js.map |   7 +
+ ...apping-segment-name-index-out-of-bounds.js |   1 +
+ ...ng-segment-name-index-out-of-bounds.js.map |   7 +
+ ...id-mapping-segment-name-index-too-large.js |   1 +
+ ...apping-segment-name-index-too-large.js.map |   7 +
+ ...invalid-mapping-segment-negative-column.js |   1 +
+ ...lid-mapping-segment-negative-column.js.map |   7 +
+ ...lid-mapping-segment-negative-name-index.js |   1 +
+ ...mapping-segment-negative-name-index.js.map |   7 +
+ ...apping-segment-negative-original-column.js |   1 +
+ ...ng-segment-negative-original-column.js.map |   7 +
+ ...-mapping-segment-negative-original-line.js |   1 +
+ ...ping-segment-negative-original-line.js.map |   7 +
+ ...d-mapping-segment-negative-source-index.js |   1 +
+ ...pping-segment-negative-source-index.js.map |   7 +
+ ...pping-segment-original-column-too-large.js |   1 +
+ ...g-segment-original-column-too-large.js.map |   7 +
+ ...mapping-segment-original-line-too-large.js |   1 +
+ ...ing-segment-original-line-too-large.js.map |   7 +
+ ...ping-segment-source-index-out-of-bounds.js |   1 +
+ ...-segment-source-index-out-of-bounds.js.map |   7 +
+ ...-mapping-segment-source-index-too-large.js |   1 +
+ ...ping-segment-source-index-too-large.js.map |   7 +
+ ...valid-mapping-segment-with-three-fields.js |   2 +
+ ...d-mapping-segment-with-three-fields.js.map |   6 +
+ ...invalid-mapping-segment-with-two-fields.js |   2 +
+ ...lid-mapping-segment-with-two-fields.js.map |   6 +
+ ...nvalid-mapping-segment-with-zero-fields.js |   1 +
+ ...id-mapping-segment-with-zero-fields.js.map |   7 +
+ .../resources/invalid-vlq-non-base64-char.js  |   1 +
+ .../invalid-vlq-non-base64-char.js.map        |   6 +
+ .../model/resources/names-missing.js          |   1 +
+ .../model/resources/names-missing.js.map      |   5 +
+ .../model/resources/names-not-a-list-1.js     |   1 +
+ .../model/resources/names-not-a-list-1.js.map |   6 +
+ .../model/resources/names-not-a-list-2.js     |   1 +
+ .../model/resources/names-not-a-list-2.js.map |   6 +
+ .../resources/source-map-spec-tests.json      | 503 ++++++++++++++++++
+ .../model/resources/sources-missing.js        |   1 +
+ .../model/resources/sources-missing.js.map    |   5 +
+ .../model/resources/sources-not-a-list-1.js   |   1 +
+ .../resources/sources-not-a-list-1.js.map     |   6 +
+ .../model/resources/sources-not-a-list-2.js   |   1 +
+ .../resources/sources-not-a-list-2.js.map     |   6 +
+ .../model/resources/unrecognized-property.js  |   1 +
+ .../resources/unrecognized-property.js.map    |   8 +
+ .../valid-mapping-boundary-values.js          |   1 +
+ .../valid-mapping-boundary-values.js.map      |   7 +
+ .../resources/valid-mapping-empty-groups.js   |   1 +
+ .../valid-mapping-empty-groups.js.map         |   7 +
+ .../resources/valid-mapping-large-vlq.js      |   1 +
+ .../resources/valid-mapping-large-vlq.js.map  |   6 +
+ .../resources/valid-mapping-null-sources.js   |   2 +
+ .../valid-mapping-null-sources.js.map         |   6 +
+ .../model/resources/version-not-a-number.js   |   1 +
+ .../resources/version-not-a-number.js.map     |   6 +
+ .../model/resources/version-numeric-string.js |   1 +
+ .../resources/version-numeric-string.js.map   |   6 +
+ .../model/resources/version-too-high.js       |   1 +
+ .../model/resources/version-too-high.js.map   |   6 +
+ .../model/resources/version-too-low.js        |   1 +
+ .../model/resources/version-too-low.js.map    |   6 +
+ .../model/resources/version-valid.js          |   1 +
+ .../model/resources/version-valid.js.map      |   6 +
+ .../model/source-map-spec-expected.txt        |  22 +
+ .../inspector/model/source-map-spec.html      |  83 +++
+ 78 files changed, 915 insertions(+)
+ create mode 100644 LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js
+ create mode 100644 LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/basic-mapping-original.js
+ create mode 100644 LayoutTests/inspector/model/resources/basic-mapping.js
+ create mode 100644 LayoutTests/inspector/model/resources/basic-mapping.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js
+ create mode 100644 LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/names-missing.js
+ create mode 100644 LayoutTests/inspector/model/resources/names-missing.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/names-not-a-list-1.js
+ create mode 100644 LayoutTests/inspector/model/resources/names-not-a-list-1.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/names-not-a-list-2.js
+ create mode 100644 LayoutTests/inspector/model/resources/names-not-a-list-2.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/source-map-spec-tests.json
+ create mode 100644 LayoutTests/inspector/model/resources/sources-missing.js
+ create mode 100644 LayoutTests/inspector/model/resources/sources-missing.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/sources-not-a-list-1.js
+ create mode 100644 LayoutTests/inspector/model/resources/sources-not-a-list-1.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/sources-not-a-list-2.js
+ create mode 100644 LayoutTests/inspector/model/resources/sources-not-a-list-2.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/unrecognized-property.js
+ create mode 100644 LayoutTests/inspector/model/resources/unrecognized-property.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js
+ create mode 100644 LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js
+ create mode 100644 LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js
+ create mode 100644 LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/valid-mapping-null-sources.js
+ create mode 100644 LayoutTests/inspector/model/resources/valid-mapping-null-sources.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-not-a-number.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-not-a-number.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-numeric-string.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-numeric-string.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-too-high.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-too-high.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-too-low.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-too-low.js.map
+ create mode 100644 LayoutTests/inspector/model/resources/version-valid.js
+ create mode 100644 LayoutTests/inspector/model/resources/version-valid.js.map
+ create mode 100644 LayoutTests/inspector/model/source-map-spec-expected.txt
+ create mode 100644 LayoutTests/inspector/model/source-map-spec.html
+
+diff --git a/LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js b/LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js
+new file mode 100644
+index 000000000000..b9fae380437d
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=basic-mapping-as-index-map.js.map
+diff --git a/LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js.map b/LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js.map
+new file mode 100644
+index 000000000000..12053a5698a6
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/basic-mapping-as-index-map.js.map
+@@ -0,0 +1,23 @@
++{
++  "version": "3",
++  "sections": [
++    {
++      "offset": { "line": 0, "column": 0 },
++      "map": {
++        "version": "3",
++        "names": ["foo","bar"],
++        "sources": ["basic-mapping-original.js"],
++        "mappings": "AAAA,SAASA,MACP,OAAO,EACT,CACA"
++      }
++    },
++    {
++      "offset": { "line": 0, "column": 34 },
++      "map": {
++        "version": "3",
++        "names": ["foo","bar"],
++        "sources": ["basic-mapping-original.js"],
++        "mappings": "AAGSC,MACP,OAAO,EACT,CACAD,MACAC"
++      }
++    }
++  ]
++}
+diff --git a/LayoutTests/inspector/model/resources/basic-mapping-original.js b/LayoutTests/inspector/model/resources/basic-mapping-original.js
+new file mode 100644
+index 000000000000..301b186cb15e
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/basic-mapping-original.js
+@@ -0,0 +1,8 @@
++function foo() {
++  return 42;
++}
++function bar() {
++  return 24;
++}
++foo();
++bar();
+diff --git a/LayoutTests/inspector/model/resources/basic-mapping.js b/LayoutTests/inspector/model/resources/basic-mapping.js
+new file mode 100644
+index 000000000000..2e479a4175b8
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/basic-mapping.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=basic-mapping.js.map
+diff --git a/LayoutTests/inspector/model/resources/basic-mapping.js.map b/LayoutTests/inspector/model/resources/basic-mapping.js.map
+new file mode 100644
+index 000000000000..12dc9679a4b1
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/basic-mapping.js.map
+@@ -0,0 +1,6 @@
++{
++  "version":3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings":"AAAA,SAASA,MACP,OAAO,EACT,CACA,SAASC,MACP,OAAO,EACT,CACAD,MACAC"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js b/LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js
+new file mode 100644
+index 000000000000..25338aca30ce
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=invalid-mapping-bad-separator.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js.map
+new file mode 100644
+index 000000000000..5f4f5b92330a
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-bad-separator.js.map
+@@ -0,0 +1,6 @@
++{
++  "version": 3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings": "AAAA.SAASA:MACP"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js b/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js
+new file mode 100644
+index 000000000000..cb38e2fe9d7b
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-not-a-string-1.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js.map
+new file mode 100644
+index 000000000000..5bf3e2a9d85b
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-1.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-not-a-string-1.js",
++  "sources": ["empty-original.js"],
++  "mappings": 5
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js b/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js
+new file mode 100644
+index 000000000000..3d84abd6c6b4
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-not-a-string-2.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js.map
+new file mode 100644
+index 000000000000..4527e7f7641c
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-not-a-string-2.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-not-a-string-2.js",
++  "sources": ["empty-original.js"],
++  "mappings": [1, 2, 3, 4]
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js
+new file mode 100644
+index 000000000000..55591f874b1b
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-column-too-large.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js.map
+new file mode 100644
+index 000000000000..b4c059e0151b
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-column-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-column-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "ggggggE"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js
+new file mode 100644
+index 000000000000..2a6b434eff58
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-name-index-out-of-bounds.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js.map
+new file mode 100644
+index 000000000000..8dd2ea6c2da0
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-out-of-bounds.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": ["foo"],
++  "file": "invalid-mapping-segment-name-index-out-of-bounds.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAAC"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js
+new file mode 100644
+index 000000000000..709e34dbd326
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-name-index-too-large.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js.map
+new file mode 100644
+index 000000000000..c7bf5b98d120
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-name-index-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-name-index-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAAggggggE"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js
+new file mode 100644
+index 000000000000..a202152d6fdf
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-column.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js.map
+new file mode 100644
+index 000000000000..403878bfa47a
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-column.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-column.js",
++  "sources": ["empty-original.js"],
++  "mappings": "F"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js
+new file mode 100644
+index 000000000000..3e3f63420467
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-name-index.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js.map
+new file mode 100644
+index 000000000000..b94f63646e46
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-name-index.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-name-index.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAAF"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js
+new file mode 100644
+index 000000000000..f21d5342b395
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-original-column.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js.map
+new file mode 100644
+index 000000000000..011c639d3f91
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-column.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-original-column.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAF"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js
+new file mode 100644
+index 000000000000..b37309601ce0
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-original-line.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js.map
+new file mode 100644
+index 000000000000..e7ec993eebda
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-original-line.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-original-line.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAFA"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js
+new file mode 100644
+index 000000000000..6e05849b6a03
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-negative-source-index.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js.map
+new file mode 100644
+index 000000000000..596c2f298bbe
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-negative-source-index.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-negative-source-index.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AFAA"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js
+new file mode 100644
+index 000000000000..0936ed7ea8fd
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-original-column-too-large.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js.map
+new file mode 100644
+index 000000000000..ff2103fe24fe
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-column-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-original-column-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAAggggggE"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js
+new file mode 100644
+index 000000000000..9b3aa5a361ae
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-original-line-too-large.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js.map
+new file mode 100644
+index 000000000000..890f1c71fc5b
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-original-line-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-original-line-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AAggggggEA"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js
+new file mode 100644
+index 000000000000..2e5fbca26825
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-source-index-out-of-bounds.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js.map
+new file mode 100644
+index 000000000000..86dedb114fa9
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-out-of-bounds.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-source-index-out-of-bounds.js",
++  "sources": ["empty-original.js"],
++  "mappings": "ACAA"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js
+new file mode 100644
+index 000000000000..3f4943e1272d
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-source-index-too-large.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js.map
+new file mode 100644
+index 000000000000..e9f858c6e15d
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-source-index-too-large.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-source-index-too-large.js",
++  "sources": ["empty-original.js"],
++  "mappings": "AggggggEAA"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js
+new file mode 100644
+index 000000000000..4b868fac9c5e
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=invalid-mapping-three-fields.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js.map
+new file mode 100644
+index 000000000000..c2af1165ad8f
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js.map
+@@ -0,0 +1,6 @@
++{
++  "version": 3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings": "AAA"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js
+new file mode 100644
+index 000000000000..96045a7a11dd
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=invalid-mapping-two-fields.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js.map
+new file mode 100644
+index 000000000000..73cf00fa1c96
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js.map
+@@ -0,0 +1,6 @@
++{
++  "version": 3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings": "AA"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js
+new file mode 100644
+index 000000000000..9d5332a56ca5
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-mapping-segment-column-with-zero-fields.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js.map
+new file mode 100644
+index 000000000000..5a34d25b645e
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "invalid-mapping-segment-with-zero-fields.js",
++  "sources": ["empty-original.js"],
++  "mappings": ",,,,"
++}
+diff --git a/LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js b/LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js
+new file mode 100644
+index 000000000000..d1b20b41a29f
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=invalid-vlq-non-base64-char.js.map
+diff --git a/LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js.map b/LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js.map
+new file mode 100644
+index 000000000000..4fa1ac576885
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/invalid-vlq-non-base64-char.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": "A$%?!"
++}
+diff --git a/LayoutTests/inspector/model/resources/names-missing.js b/LayoutTests/inspector/model/resources/names-missing.js
+new file mode 100644
+index 000000000000..58781fd88705
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/names-missing.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=names-missing.js.map
+diff --git a/LayoutTests/inspector/model/resources/names-missing.js.map b/LayoutTests/inspector/model/resources/names-missing.js.map
+new file mode 100644
+index 000000000000..7dc1b929e485
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/names-missing.js.map
+@@ -0,0 +1,5 @@
++{
++  "version" : "3",
++  "sources": ["empty-original.js"],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/names-not-a-list-1.js b/LayoutTests/inspector/model/resources/names-not-a-list-1.js
+new file mode 100644
+index 000000000000..dc65f1972b5a
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/names-not-a-list-1.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=names-not-a-list-1.js.map
+diff --git a/LayoutTests/inspector/model/resources/names-not-a-list-1.js.map b/LayoutTests/inspector/model/resources/names-not-a-list-1.js.map
+new file mode 100644
+index 000000000000..843f7cc2e6fd
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/names-not-a-list-1.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3",
++  "sources": ["source.js"],
++  "names": "not a list",
++  "mappings": "AAAAA"
++}
+diff --git a/LayoutTests/inspector/model/resources/names-not-a-list-2.js b/LayoutTests/inspector/model/resources/names-not-a-list-2.js
+new file mode 100644
+index 000000000000..d7251f78da84
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/names-not-a-list-2.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=names-not-a-list-2.js.map
+diff --git a/LayoutTests/inspector/model/resources/names-not-a-list-2.js.map b/LayoutTests/inspector/model/resources/names-not-a-list-2.js.map
+new file mode 100644
+index 000000000000..cd7a42a74c4f
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/names-not-a-list-2.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3",
++  "sources": ["source.js"],
++  "names": { "foo": 3 },
++  "mappings": "AAAAA"
++}
+diff --git a/LayoutTests/inspector/model/resources/source-map-spec-tests.json b/LayoutTests/inspector/model/resources/source-map-spec-tests.json
+new file mode 100644
+index 000000000000..3091a3c93273
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/source-map-spec-tests.json
+@@ -0,0 +1,503 @@
++{
++  "tests": [
++    {
++      "name": "versionValid",
++      "description": "Test a simple source map with a valid version number",
++      "baseFile": "version-valid.js",
++      "sourceMapFile": "version-valid.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "versionNotANumber",
++      "description": "Test a source map with a version field that is not a number",
++      "baseFile": "version-not-a-number.js",
++      "sourceMapFile": "version-not-a-number.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionNumericString",
++      "description": "Test a source map with a version field that is a number as a string",
++      "baseFile": "version-numeric-string.js",
++      "sourceMapFile": "version-numeric-string.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooHigh",
++      "description": "Test a source map with an integer version field that is too high",
++      "baseFile": "version-too-high.js",
++      "sourceMapFile": "version-too-high.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooLow",
++      "description": "Test a source map with an integer version field that is too low",
++      "baseFile": "version-too-low.js",
++      "sourceMapFile": "version-too-low.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "sourcesMissing",
++      "description": "Test a source map that is missing a necessary sources field",
++      "baseFile": "sources-missing.js",
++      "sourceMapFile": "sources-missing.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "sourcesNotAList1",
++      "description": "Test a source map with a sources field that is not a valid list (string)",
++      "baseFile": "sources-not-a-list-1.js",
++      "sourceMapFile": "sources-not-a-list-1.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "sourcesNotAList2",
++      "description": "Test a source map with a sources field that is not a valid list (object)",
++      "baseFile": "sources-not-a-list-2.js",
++      "sourceMapFile": "sources-not-a-list-2.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "namesMissing",
++      "description": "Test a source map that is missing a necessary names field",
++      "baseFile": "names-missing.js",
++      "sourceMapFile": "names-missing.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "namesNotAList1",
++      "description": "Test a source map with a names field that is not a valid list (string)",
++      "baseFile": "names-not-a-list-1.js",
++      "sourceMapFile": "names-not-a-list-1.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "namesNotAList2",
++      "description": "Test a source map with a names field that is not a valid list (object)",
++      "baseFile": "names-not-a-list-2.js",
++      "sourceMapFile": "names-not-a-list-2.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "unrecognizedProperty",
++      "description": "Test a source map that has an extra field not explicitly encoded in the spec",
++      "baseFile": "unrecognized-property.js",
++      "sourceMapFile": "unrecognized-property.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "invalidVLQDueToNonBase64Character",
++      "description": "Test a source map that has a mapping with an invalid non-base64 character",
++      "baseFile": "invalid-vlq-non-base64-char.js",
++      "sourceMapFile": "invalid-vlq-non-base64-char.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingNotAString1",
++      "description": "Test a source map that has an invalid mapping that is not a string (number)",
++      "baseFile": "invalid-mapping-not-a-string-1.js",
++      "sourceMapFile": "invalid-mapping-not-a-string-1.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingNotAString2",
++      "description": "Test a source map that has an invalid mapping that is not a string (array)",
++      "baseFile": "invalid-mapping-not-a-string-2.js",
++      "sourceMapFile": "invalid-mapping-not-a-string-2.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentBadSeparator",
++      "description": "Test a source map that uses separator characters not recognized in the spec",
++      "baseFile": "invalid-mapping-bad-separator.js",
++      "sourceMapFile": "invalid-mapping-bad-separator.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithZeroFields",
++      "description": "Test a source map that has the wrong number (zero) of segments fields",
++      "baseFile": "invalid-mapping-segment-with-zero-fields.js",
++      "sourceMapFile": "invalid-mapping-segment-with-zero-fields.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithTwoFields",
++      "description": "Test a source map that has the wrong number (two) of segments fields",
++      "baseFile": "invalid-mapping-segment-with-two-fields.js",
++      "sourceMapFile": "invalid-mapping-segment-with-two-fields.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithThreeFields",
++      "description": "Test a source map that has the wrong number (three) of segments fields",
++      "baseFile": "invalid-mapping-segment-with-three-fields.js",
++      "sourceMapFile": "invalid-mapping-segment-with-three-fields.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithSourceIndexOutOfBounds",
++      "description": "Test a source map that has a source index field that is out of bounds of the sources field",
++      "baseFile": "invalid-mapping-segment-source-index-out-of-bounds.js",
++      "sourceMapFile": "invalid-mapping-segment-source-index-out-of-bounds.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNameIndexOutOfBounds",
++      "description": "Test a source map that has a name index field that is out of bounds of the names field",
++      "baseFile": "invalid-mapping-segment-name-index-out-of-bounds.js",
++      "sourceMapFile": "invalid-mapping-segment-name-index-out-of-bounds.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeColumn",
++      "description": "Test a source map that has an invalid negative non-relative column field",
++      "baseFile": "invalid-mapping-segment-negative-column.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-column.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeSourceIndex",
++      "description": "Test a source map that has an invalid negative non-relative source index field",
++      "baseFile": "invalid-mapping-segment-negative-source-index.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-source-index.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeOriginalLine",
++      "description": "Test a source map that has an invalid negative non-relative original line field",
++      "baseFile": "invalid-mapping-segment-negative-original-line.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-original-line.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeOriginalColumn",
++      "description": "Test a source map that has an invalid negative non-relative original column field",
++      "baseFile": "invalid-mapping-segment-negative-original-column.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-original-column.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNegativeNameIndex",
++      "description": "Test a source map that has an invalid negative non-relative name index field",
++      "baseFile": "invalid-mapping-segment-negative-name-index.js",
++      "sourceMapFile": "invalid-mapping-segment-negative-name-index.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithColumnExceeding32Bits",
++      "description": "Test a source map that has a column field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-column-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-column-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithSourceIndexExceeding32Bits",
++      "description": "Test a source map that has a source index field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-source-index-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-source-index-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithOriginalLineExceeding32Bits",
++      "description": "Test a source map that has a original line field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-original-line-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-original-line-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithOriginalColumnExceeding32Bits",
++      "description": "Test a source map that has an original column field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-original-column-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-original-column-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "invalidMappingSegmentWithNameIndexExceeding32Bits",
++      "description": "Test a source map that has a name index field that exceeds 32 bits",
++      "baseFile": "invalid-mapping-segment-name-index-too-large.js",
++      "sourceMapFile": "invalid-mapping-segment-name-index-too-large.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "validMappingFieldsWith32BitMaxValues",
++      "description": "Test a source map that has segment fields with max values representable in 32 bits",
++      "baseFile": "valid-mapping-boundary-values.js",
++      "sourceMapFile": "valid-mapping-boundary-values.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "validMappingLargeVLQ",
++      "description": "Test a source map that has a segment field VLQ that is very long but within 32-bits",
++      "baseFile": "valid-mapping-large-vlq.js",
++      "sourceMapFile": "valid-mapping-large-vlq.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "validMappingEmptyGroups",
++      "description": "Test a source map with a mapping that has many empty groups",
++      "baseFile": "valid-mapping-empty-groups.js",
++      "sourceMapFile": "valid-mapping-empty-groups.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "basicMapping",
++      "description": "Test a simple source map that has several valid mappings",
++      "baseFile": "basic-mapping.js",
++      "sourceMapFile": "basic-mapping.js.map",
++      "sourceMapIsValid": true,
++      "testActions": [
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 0,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 9,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 9,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 15,
++          "originalLine": 1,
++          "originalColumn": 2,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 22,
++          "originalLine": 1,
++          "originalColumn": 9,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 24,
++          "originalLine": 2,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 25,
++          "originalLine": 3,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 34,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 3,
++          "originalColumn": 9,
++          "mappedName": "bar"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 40,
++          "originalLine": 4,
++          "originalColumn": 2,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 47,
++          "originalLine": 4,
++          "originalColumn": 9,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 49,
++          "originalLine": 5,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 50,
++          "originalLine": 6,
++          "originalColumn": 0,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 56,
++          "originalLine": 7,
++          "originalColumn": 0,
++          "mappedName": "bar"
++        }
++      ]
++    },
++    {
++      "name": "basicMappingWithIndexMap",
++      "description": "Test a version of basic-mapping.js.map that is split into sections with an index map",
++      "baseFile": "basic-mapping-as-index-map.js",
++      "sourceMapFile": "basic-mapping-as-index-map.js.map",
++      "sourceMapIsValid": true,
++      "testActions": [
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 0,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 9,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 9,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 15,
++          "originalLine": 1,
++          "originalColumn": 2,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 22,
++          "originalLine": 1,
++          "originalColumn": 9,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 24,
++          "originalLine": 2,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 25,
++          "originalLine": 3,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 34,
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 3,
++          "originalColumn": 9,
++          "mappedName": "bar"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 40,
++          "originalLine": 4,
++          "originalColumn": 2,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 47,
++          "originalLine": 4,
++          "originalColumn": 9,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 49,
++          "originalLine": 5,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 50,
++          "originalLine": 6,
++          "originalColumn": 0,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "generatedLine": 0,
++          "generatedColumn": 56,
++          "originalLine": 7,
++          "originalColumn": 0,
++          "mappedName": "bar"
++        }
++      ]
++    },
++    {
++      "name": "validMappingNullSources",
++      "description": "Test a source map that has null sources",
++      "baseFile": "valid-mapping-null-sources.js",
++      "sourceMapFile": "valid-mapping-null-sources.js.map",
++      "sourceMapIsValid": true,
++      "testActions": [
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 0,
++          "originalSource": null,
++          "originalLine": 0,
++          "originalColumn": 0,
++          "mappedName": null
++        },
++        {
++          "actionType": "checkMapping",
++          "generatedLine": 0,
++          "generatedColumn": 9,
++          "originalSource": null,
++          "originalLine": 0,
++          "originalColumn": 9,
++          "mappedName": "foo"
++        }
++      ]
++    }
++  ]
++}
+diff --git a/LayoutTests/inspector/model/resources/sources-missing.js b/LayoutTests/inspector/model/resources/sources-missing.js
+new file mode 100644
+index 000000000000..779b865e2769
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/sources-missing.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=sources-missing.js.map
+diff --git a/LayoutTests/inspector/model/resources/sources-missing.js.map b/LayoutTests/inspector/model/resources/sources-missing.js.map
+new file mode 100644
+index 000000000000..61122fcb3f25
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/sources-missing.js.map
+@@ -0,0 +1,5 @@
++{
++  "version" : "3",
++  "names": ["foo"],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/sources-not-a-list-1.js b/LayoutTests/inspector/model/resources/sources-not-a-list-1.js
+new file mode 100644
+index 000000000000..7e33b7e86725
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/sources-not-a-list-1.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=sources-not-a-list-1.js.map
+diff --git a/LayoutTests/inspector/model/resources/sources-not-a-list-1.js.map b/LayoutTests/inspector/model/resources/sources-not-a-list-1.js.map
+new file mode 100644
+index 000000000000..b2e24787bc16
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/sources-not-a-list-1.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3",
++  "sources": "not a list",
++  "names": ["foo"],
++  "mappings": "AAAAA"
++}
+diff --git a/LayoutTests/inspector/model/resources/sources-not-a-list-2.js b/LayoutTests/inspector/model/resources/sources-not-a-list-2.js
+new file mode 100644
+index 000000000000..4021f763fc88
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/sources-not-a-list-2.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=sources-not-a-list-2.js.map
+diff --git a/LayoutTests/inspector/model/resources/sources-not-a-list-2.js.map b/LayoutTests/inspector/model/resources/sources-not-a-list-2.js.map
+new file mode 100644
+index 000000000000..6a6a8635729c
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/sources-not-a-list-2.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3",
++  "sources": { "source.js": 3 },
++  "names": ["foo"],
++  "mappings": "AAAAA"
++}
+diff --git a/LayoutTests/inspector/model/resources/unrecognized-property.js b/LayoutTests/inspector/model/resources/unrecognized-property.js
+new file mode 100644
+index 000000000000..19dfb0e2e6c7
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/unrecognized-property.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=unrecognized-property.js.map
+diff --git a/LayoutTests/inspector/model/resources/unrecognized-property.js.map b/LayoutTests/inspector/model/resources/unrecognized-property.js.map
+new file mode 100644
+index 000000000000..40bee558a4ff
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/unrecognized-property.js.map
+@@ -0,0 +1,8 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": "",
++  "foobar": 42,
++  "unusedProperty": [1, 2, 3, 4]
++}
+diff --git a/LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js b/LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js
+new file mode 100644
+index 000000000000..3c49709e05ac
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=valid-mapping-boundary-values.js.map
+diff --git a/LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js.map b/LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js.map
+new file mode 100644
+index 000000000000..4dd836e63d8f
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/valid-mapping-boundary-values.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": ["foo"],
++  "file": "valid-mapping-boundary-values.js",
++  "sources": ["empty-original.js"],
++  "mappings": "+/////DA+/////D+/////DA"
++}
+diff --git a/LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js b/LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js
+new file mode 100644
+index 000000000000..a2b767b619a0
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=valid-mapping-empty-groups.js.map
+diff --git a/LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js.map b/LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js.map
+new file mode 100644
+index 000000000000..53be4ae4ae91
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/valid-mapping-empty-groups.js.map
+@@ -0,0 +1,7 @@
++{
++  "version": 3,
++  "names": [],
++  "file": "valid-mapping-empty-groups.js",
++  "sources": ["empty-original.js"],
++  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
++}
+diff --git a/LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js b/LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js
+new file mode 100644
+index 000000000000..b0cd8978132a
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=valid-mapping-large-vlq.js.map
+diff --git a/LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js.map b/LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js.map
+new file mode 100644
+index 000000000000..76e18704c4b1
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/valid-mapping-large-vlq.js.map
+@@ -0,0 +1,6 @@
++{
++  "version": 3,
++  "names": [],
++  "sources": ["valid-mapping-large-vlq.js"],
++  "mappings": "igggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggA"
++}
+diff --git a/LayoutTests/inspector/model/resources/valid-mapping-null-sources.js b/LayoutTests/inspector/model/resources/valid-mapping-null-sources.js
+new file mode 100644
+index 000000000000..ee2acf0f5b2f
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/valid-mapping-null-sources.js
+@@ -0,0 +1,2 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
++//# sourceMappingURL=valid-mapping-null-sources.js.map
+diff --git a/LayoutTests/inspector/model/resources/valid-mapping-null-sources.js.map b/LayoutTests/inspector/model/resources/valid-mapping-null-sources.js.map
+new file mode 100644
+index 000000000000..199cda936955
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/valid-mapping-null-sources.js.map
+@@ -0,0 +1,6 @@
++{
++  "version":3,
++  "names": ["foo"],
++  "sources": [null],
++  "mappings":"AAAA,SAASA"
++}
+diff --git a/LayoutTests/inspector/model/resources/version-not-a-number.js b/LayoutTests/inspector/model/resources/version-not-a-number.js
+new file mode 100644
+index 000000000000..ae2342e2ffe5
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-not-a-number.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-not-a-number.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-not-a-number.js.map b/LayoutTests/inspector/model/resources/version-not-a-number.js.map
+new file mode 100644
+index 000000000000..a584d6e69511
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-not-a-number.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3foo",
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/version-numeric-string.js b/LayoutTests/inspector/model/resources/version-numeric-string.js
+new file mode 100644
+index 000000000000..a55170885da6
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-numeric-string.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-numeric-string.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-numeric-string.js.map b/LayoutTests/inspector/model/resources/version-numeric-string.js.map
+new file mode 100644
+index 000000000000..dbe52a7d0df6
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-numeric-string.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3",
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/version-too-high.js b/LayoutTests/inspector/model/resources/version-too-high.js
+new file mode 100644
+index 000000000000..55f4e1a298fa
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-too-high.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-too-high.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-too-high.js.map b/LayoutTests/inspector/model/resources/version-too-high.js.map
+new file mode 100644
+index 000000000000..ee23be32ff27
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-too-high.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 4,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/version-too-low.js b/LayoutTests/inspector/model/resources/version-too-low.js
+new file mode 100644
+index 000000000000..d9642920b313
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-too-low.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-too-low.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-too-low.js.map b/LayoutTests/inspector/model/resources/version-too-low.js.map
+new file mode 100644
+index 000000000000..64ca7a6e2e92
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-too-low.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 2,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/resources/version-valid.js b/LayoutTests/inspector/model/resources/version-valid.js
+new file mode 100644
+index 000000000000..82d0bfa1eb2a
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-valid.js
+@@ -0,0 +1 @@
++//# sourceMappingURL=version-valid.js.map
+diff --git a/LayoutTests/inspector/model/resources/version-valid.js.map b/LayoutTests/inspector/model/resources/version-valid.js.map
+new file mode 100644
+index 000000000000..1a163052d8fc
+--- /dev/null
++++ b/LayoutTests/inspector/model/resources/version-valid.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/LayoutTests/inspector/model/source-map-spec-expected.txt b/LayoutTests/inspector/model/source-map-spec-expected.txt
+new file mode 100644
+index 000000000000..c74ab5bcfb32
+--- /dev/null
++++ b/LayoutTests/inspector/model/source-map-spec-expected.txt
+@@ -0,0 +1,22 @@
++Ensure a source map loads for resources with sourceMappingURLs.
++
++
++== Running test suite: SourceMapSpec
++-- Running test case: SourceMapSpec
++PASS: Resource should have loaded 1 SourceMap.
++PASS: SourceMap should be a WI.SourceMap instance.
++PASS: Resource may or may not load a SourceMap.
++PASS: Resource may or may not load a SourceMap.
++PASS: Resource may or may not load a SourceMap.
++PASS: Resource may or may not load a SourceMap.
++PASS: Resource should have loaded 1 SourceMap.
++PASS: SourceMap should be a WI.SourceMap instance.
++PASS: Resource should have loaded 1 SourceMap.
++PASS: SourceMap should be a WI.SourceMap instance.
++PASS: expectEqual(0, 0)
++PASS: expectEqual(9, 9)
++PASS: expectEqual("basic-mapping-original.js", "basic-mapping-original.js")
++PASS: expectEqual(3, 3)
++PASS: expectEqual(9, 9)
++PASS: expectEqual("basic-mapping-original.js", "basic-mapping-original.js")
++
+diff --git a/LayoutTests/inspector/model/source-map-spec.html b/LayoutTests/inspector/model/source-map-spec.html
+new file mode 100644
+index 000000000000..b30b1dd526fc
+--- /dev/null
++++ b/LayoutTests/inspector/model/source-map-spec.html
+@@ -0,0 +1,83 @@
++<!DOCTYPE html>
++<html>
++<head>
++<script src="../../http/tests/inspector/resources/inspector-test.js"></script>
++<script>
++function triggerScriptResource(scriptName) {
++    let script = document.createElement("script");
++    script.src = `resources/${scriptName}`;
++    document.body.appendChild(script);
++}
++
++async function setup()
++{
++    const response = await fetch("resources/source-map-spec-tests.json");
++    const json = await response.json();
++    TestPage.dispatchEventToFrontend("TestDescriptionsFetched", {json});
++}
++
++
++function test()
++{
++    function checkMapping(resource, testCase, action)
++    {
++        const location = resource.createSourceCodeLocation(action.generatedLine, action.generatedColumn);
++        InspectorTest.expectEqual(location.displayLineNumber, action.originalLine, "Original line should match");
++        InspectorTest.expectEqual(location.displayColumnNumber, action.originalColumn, "Original column should match");
++        InspectorTest.expectEqual(location.displaySourceCode.displayName, action.originalSource, "Original source should match");
++    }
++
++    function withTimeout(promise, seconds)
++    {
++        return Promise.race([promise, new Promise((resolve, reject) => {
++            setTimeout(resolve, seconds);
++        })]);
++    }
++
++    let suite = InspectorTest.createAsyncSuite("SourceMapSpec");
++
++    suite.addTestCase({
++        name: "SourceMapSpec",
++        description: "Run test cases from the source maps spec test suite",
++        async test(resolve, reject) {
++            InspectorTest.evaluateInPage("setup()");
++            const event = await InspectorTest.awaitEvent("TestDescriptionsFetched");
++            const testDescriptions = event.data.json;
++
++            for (const testCase of testDescriptions.tests) {
++                InspectorTest.log(testCase.name);
++                InspectorTest.evaluateInPage(`triggerScriptResource('${testCase.baseFile}')`);
++                let resourceEvent = await WI.Frame.awaitEvent(WI.Frame.Event.ResourceWasAdded);
++                let resource = resourceEvent.data.resource;
++                let sourceMapEvent = await withTimeout(resource.awaitEvent(WI.SourceCode.Event.SourceMapAdded), 50);
++
++                if (testCase.sourceMapIsValid) {
++                    InspectorTest.expectEqual(resource.sourceMaps.length, 1, "Resource should have loaded 1 SourceMap.");
++                    InspectorTest.expectThat(resource.sourceMaps[0] instanceof WI.SourceMap, "SourceMap should be a WI.SourceMap instance.");
++                    if (!(resource.sourceMaps[0] instanceof WI.SourceMap)) {
++                        continue;
++                    }
++                } else {
++                    const hasFailedSourceMap = WI.networkManager.isSourceMapURL(absoluteURL(testCase.sourceMapFile, resource.displayURL));
++                    InspectorTest.expectThat(hasFailedSourceMap, "Expected that there is an associated failed source map URL");
++                    InspectorTest.expectEqual(resource.sourceMaps.length, 0, "Expected no source map resource loaded");
++                }
++
++                if (testCase.testActions) {
++                  for (const action of testCase.testActions) {
++                    if (action.actionType === "checkMapping")
++                      checkMapping(resource, testCase, action);
++                  }
++                }
++            }
++        }
++    });
++
++    suite.runTestCasesAndFinish();
++}
++</script>
++</head>
++<body onload="runTest()">
++<p>Ensure a source map loads for resources with sourceMappingURLs.</p>
++</body>
++</html>
+-- 
+2.39.2
+

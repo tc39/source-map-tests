@@ -1,0 +1,337 @@
+From 8327515870d595ab04a111f6c37b84eab8a5010c Mon Sep 17 00:00:00 2001
+From: Asumu Takikawa <asumu@igalia.com>
+Date: Tue, 27 Feb 2024 18:22:45 -0800
+Subject: [PATCH] WIP Firefox source map spec tests
+
+---
+ .../test/browser/browser.toml                 |  2 +
+ .../test/browser/browser_spec-source-map.js   | 68 +++++++++++++++++++
+ .../fixtures/basic-mapping-original.js        |  8 +++
+ .../test/browser/fixtures/basic-mapping.js    |  1 +
+ .../browser/fixtures/basic-mapping.js.map     |  6 ++
+ .../fixtures/source-map-spec-tests.json       | 60 ++++++++++++++++
+ .../browser/fixtures/unrecognized-property.js |  1 +
+ .../fixtures/unrecognized-property.js.map     |  8 +++
+ .../browser/fixtures/version-not-a-number.js  |  1 +
+ .../fixtures/version-not-a-number.js.map      |  6 ++
+ .../test/browser/fixtures/version-numbers.js  |  6 ++
+ .../test/browser/fixtures/version-too-high.js |  1 +
+ .../browser/fixtures/version-too-high.js.map  |  6 ++
+ .../test/browser/fixtures/version-too-low.js  |  1 +
+ .../browser/fixtures/version-too-low.js.map   |  6 ++
+ .../test/browser/fixtures/version-valid.js    |  1 +
+ .../browser/fixtures/version-valid.js.map     |  6 ++
+ 17 files changed, 188 insertions(+)
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping-original.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping.js.map
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/source-map-spec-tests.json
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/unrecognized-property.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/unrecognized-property.js.map
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js.map
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js.map
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js
+ create mode 100644 devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js.map
+
+diff --git a/devtools/client/shared/source-map-loader/test/browser/browser.toml b/devtools/client/shared/source-map-loader/test/browser/browser.toml
+index 5a602e9eeb893..a670ab0acee89 100644
+--- a/devtools/client/shared/source-map-loader/test/browser/browser.toml
++++ b/devtools/client/shared/source-map-loader/test/browser/browser.toml
+@@ -19,3 +19,5 @@ skip-if = [
+   "http3", # Bug 1829298
+   "http2",
+ ]
++
++["browser_spec-source-map.js"]
+diff --git a/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js b/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
+new file mode 100644
+index 0000000000000..34695d6bd395b
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/browser_spec-source-map.js
+@@ -0,0 +1,68 @@
++"use strict";
++
++const {
++  generatedToOriginalId,
++} = require("resource://devtools/client/shared/source-map-loader/utils/index.js");
++
++async function isValidSourceMap(base) {
++  try {
++    await fetchFixtureSourceMap(base);
++  } catch (exn) {
++    return false;
++  }
++  return true;
++}
++
++async function checkMapping(testCase, action) {
++  const originalId = generatedToOriginalId(testCase.baseFile, `${URL_ROOT_SSL}fixtures/${action.originalSource}`);
++  const generatedLoc = await gSourceMapLoader.getGeneratedLocation({
++    sourceId: originalId,
++    line: action.originalLine + 1,
++    column: action.originalColumn,
++  });
++  Assert.ok(generatedLoc !== null, "Location lookup should not return null");
++  Assert.equal(testCase.baseFile, generatedLoc.sourceId);
++  Assert.equal(action.generatedLine + 1, generatedLoc.line);
++  Assert.equal(action.generatedColumn, generatedLoc.column);
++}
++
++const SPEC_TESTS_URI = `${URL_ROOT_SSL}fixtures/source-map-spec-tests.json`
++const testDescriptions = JSON.parse(read(SPEC_TESTS_URI));
++
++for (const testCase of testDescriptions.tests) {
++  async function testFunction() {
++      const baseName = testCase.baseFile.substring(0, testCase.baseFile.indexOf(".js"));
++      Assert.equal(testCase.sourceMapIsValid, await isValidSourceMap(baseName));
++
++      if (testCase.testActions) {
++        for (const action of testCase.testActions) {
++          if (action.actionType === "checkMapping")
++            await checkMapping(testCase, action);
++        }
++      }
++  };
++  Object.defineProperty(testFunction, "name", { value: testCase.name });
++  add_task(testFunction);
++}
++
++function read(srcChromeURL) {
++  const scriptableStream = Cc[
++    "@mozilla.org/scriptableinputstream;1"
++  ].getService(Ci.nsIScriptableInputStream);
++
++  const channel = NetUtil.newChannel({
++    uri: srcChromeURL,
++    loadUsingSystemPrincipal: true,
++  });
++  const input = channel.open();
++  scriptableStream.init(input);
++
++  let data = "";
++  while (input.available()) {
++    data = data.concat(scriptableStream.read(input.available()));
++  }
++  scriptableStream.close();
++  input.close();
++
++  return data;
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping-original.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping-original.js
+new file mode 100644
+index 0000000000000..301b186cb15e6
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping-original.js
+@@ -0,0 +1,8 @@
++function foo() {
++  return 42;
++}
++function bar() {
++  return 24;
++}
++foo();
++bar();
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping.js
+new file mode 100644
+index 0000000000000..9df72406be544
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping.js
+@@ -0,0 +1 @@
++function foo(){return 42}function bar(){return 24}foo();bar();
+\ No newline at end of file
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping.js.map
+new file mode 100644
+index 0000000000000..12dc9679a4b1d
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/basic-mapping.js.map
+@@ -0,0 +1,6 @@
++{
++  "version":3,
++  "names": ["foo","bar"],
++  "sources": ["basic-mapping-original.js"],
++  "mappings":"AAAA,SAASA,MACP,OAAO,EACT,CACA,SAASC,MACP,OAAO,EACT,CACAD,MACAC"
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/source-map-spec-tests.json b/devtools/client/shared/source-map-loader/test/browser/fixtures/source-map-spec-tests.json
+new file mode 100644
+index 0000000000000..16d8442811655
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/source-map-spec-tests.json
+@@ -0,0 +1,60 @@
++{
++  "tests": [
++    {
++      "name": "versionValid",
++      "baseFile": "version-valid.js",
++      "sourceMapFile": "version-valid.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "versionNotANumber",
++      "baseFile": "version-not-a-number.js",
++      "sourceMapFile": "version-not-a-number.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooHigh",
++      "baseFile": "version-too-high.js",
++      "sourceMapFile": "version-too-high.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "versionTooLow",
++      "baseFile": "version-too-low.js",
++      "sourceMapFile": "version-too-low.js.map",
++      "sourceMapIsValid": false
++    },
++    {
++      "name": "unrecognizedProperty",
++      "baseFile": "unrecognized-property.js",
++      "sourceMapFile": "unrecognized-property.js.map",
++      "sourceMapIsValid": true
++    },
++    {
++      "name": "basicMapping",
++      "baseFile": "basic-mapping.js",
++      "sourceMapFile": "basic-mapping.js.map",
++      "sourceMapIsValid": true,
++      "testActions": [
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 0,
++          "originalColumn": 9,
++          "generatedLine": 0,
++          "generatedColumn": 9,
++          "mappedName": "foo"
++        },
++        {
++          "actionType": "checkMapping",
++          "originalSource": "basic-mapping-original.js",
++          "originalLine": 3,
++          "originalColumn": 9,
++          "generatedLine": 0,
++          "generatedColumn": 34,
++          "mappedName": "bar"
++        }
++      ]
++    }
++  ]
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/unrecognized-property.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/unrecognized-property.js
+new file mode 100644
+index 0000000000000..47303d1fcf302
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/unrecognized-property.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=unrecognized-property.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/unrecognized-property.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/unrecognized-property.js.map
+new file mode 100644
+index 0000000000000..40bee558a4ff9
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/unrecognized-property.js.map
+@@ -0,0 +1,8 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": "",
++  "foobar": 42,
++  "unusedProperty": [1, 2, 3, 4]
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js
+new file mode 100644
+index 0000000000000..5382a716e3a21
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=version-not-a-number.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map
+new file mode 100644
+index 0000000000000..a584d6e695117
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-not-a-number.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : "3foo",
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js
+new file mode 100644
+index 0000000000000..e79993b659db6
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-numbers.js
+@@ -0,0 +1,6 @@
++// Test that invalid version numbers are rejected.
++
++assert(isValidSourceMap("./version-valid.map"));
++assert(!isValidSourceMap("./version-not-a-number.map"));
++assert(!isValidSourceMap("./version-too-low.map"));
++assert(!isValidSourceMap("./version-too-high.map"));
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js
+new file mode 100644
+index 0000000000000..04bfe7f62b7b9
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=version-too-high.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js.map
+new file mode 100644
+index 0000000000000..ee23be32ff278
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-high.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 4,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js
+new file mode 100644
+index 0000000000000..54b3526c6b5e2
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=version-too-low.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js.map
+new file mode 100644
+index 0000000000000..64ca7a6e2e928
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-too-low.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 2,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js
+new file mode 100644
+index 0000000000000..f8541f9efdc71
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js
+@@ -0,0 +1 @@
++// # sourceMappingURL=version-valid.js.map
+diff --git a/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js.map b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js.map
+new file mode 100644
+index 0000000000000..1a163052d8fc8
+--- /dev/null
++++ b/devtools/client/shared/source-map-loader/test/browser/fixtures/version-valid.js.map
+@@ -0,0 +1,6 @@
++{
++  "version" : 3,
++  "sources": [],
++  "names": [],
++  "mappings": ""
++}
+-- 
+2.39.2
+

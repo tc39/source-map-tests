@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "names": [],
+  "file": "invalid-mapping-segment-source-index-out-of-bounds.js",
+  "sources": ["empty-original.js"],
+  "mappings": "ACAA"
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="../../http/tests/inspector/resources/inspector-test.js"></script>
+<script>
+function triggerScriptResource(scriptName) {
+    let script = document.createElement("script");
+    script.src = `resources/${scriptName}`;
+    document.body.appendChild(script);
+}
+
+async function setup()
+{
+    const response = await fetch("resources/source-map-spec-tests.json");
+    const json = await response.json();
+    TestPage.dispatchEventToFrontend("TestDescriptionsFetched", {json});
+}
+
+
+function test()
+{
+    function checkMapping(resource, testCase, action)
+    {
+        const location = resource.createSourceCodeLocation(action.generatedLine, action.generatedColumn);
+        InspectorTest.expectEqual(location.displayLineNumber, action.originalLine, "Original line should match");
+        InspectorTest.expectEqual(location.displayColumnNumber, action.originalColumn, "Original column should match");
+        InspectorTest.expectEqual(location.displaySourceCode.displayName, action.originalSource, "Original source should match");
+    }
+
+    function withTimeout(promise, seconds)
+    {
+        return Promise.race([promise, new Promise((resolve, reject) => {
+            setTimeout(resolve, seconds);
+        })]);
+    }
+
+    let suite = InspectorTest.createAsyncSuite("SourceMapSpec");
+
+    suite.addTestCase({
+        name: "SourceMapSpec",
+        description: "Run test cases from the source maps spec test suite",
+        async test(resolve, reject) {
+            InspectorTest.evaluateInPage("setup()");
+            const event = await InspectorTest.awaitEvent("TestDescriptionsFetched");
+            const testDescriptions = event.data.json;
+
+            for (const testCase of testDescriptions.tests) {
+                InspectorTest.log(testCase.name);
+                InspectorTest.evaluateInPage(`triggerScriptResource('${testCase.baseFile}')`);
+                let resourceEvent = await WI.Frame.awaitEvent(WI.Frame.Event.ResourceWasAdded);
+                let resource = resourceEvent.data.resource;
+                let sourceMapEvent = await withTimeout(resource.awaitEvent(WI.SourceCode.Event.SourceMapAdded), 50);
+
+                if (testCase.sourceMapIsValid) {
+                    InspectorTest.expectEqual(resource.sourceMaps.length, 1, "Resource should have loaded 1 SourceMap.");
+                    InspectorTest.expectThat(resource.sourceMaps[0] instanceof WI.SourceMap, "SourceMap should be a WI.SourceMap instance.");
+                    if (!(resource.sourceMaps[0] instanceof WI.SourceMap)) {
+                        continue;
+                    }
+                } else {
+                    const hasFailedSourceMap = WI.networkManager.isSourceMapURL(absoluteURL(testCase.sourceMapFile, resource.displayURL));
+                    InspectorTest.expectThat(hasFailedSourceMap, "Expected that there is an associated failed source map URL");
+                    InspectorTest.expectEqual(resource.sourceMaps.length, 0, "Expected no source map resource loaded");
+                }
+
+                if (testCase.testActions) {
+                  for (const action of testCase.testActions) {
+                    if (action.actionType === "checkMapping")
+                      checkMapping(resource, testCase, action);
+                  }
+                }
+            }
+        }
+    });
+
+    suite.runTestCasesAndFinish();
+}
+</script>
+</head>
+<body onload="runTest()">
+<p>Ensure a source map loads for resources with sourceMappingURLs.</p>
+</body>
+</html>

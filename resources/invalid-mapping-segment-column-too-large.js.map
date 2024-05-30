@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "names": [],
+  "file": "invalid-mapping-segment-column-too-large.js",
+  "sources": ["empty-original.js"],
+  "mappings": "ggggggE"
+}
