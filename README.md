@@ -26,6 +26,23 @@ How to run in WebKit:
 For Firefox, see the Mozilla [source-map](https://github.com/mozilla/source-map) library:
   * There is a [branch](https://github.com/takikawa/source-map/tree/add-spec-tests) for adding the spec tests to the package.
 
+How to run in Chrome Devtools:
+1. Setup:
+    * Install depot_tools following this [depot_tools guide](https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up)
+    * Check out [Chrome Devtools](https://chromium.googlesource.com/devtools/devtools-frontend):
+    * Run `gclient config https://chromium.googlesource.com/devtools/devtools-frontend --unmanaged`
+    * Run `cd devtools-frontend`
+    * Run `gclient sync`
+    * Run `gn gen out/Default`
+2. Build:
+    * Run `autoninja -C out/Default`
+3. Test:
+    * Run `npm run auto-unittest`
+4. Apply patches from this repo:
+    * Run `git apply <path to .patch file>` in `devtools-frontend` repo
+
+More information about running Chrome Devtools without building Chromium can be found [here](https://chromium.googlesource.com/devtools/devtools-frontend/+/refs/heads/chromium/3965/README.md)
+
 ### Goals of tests
 
 * Thoroughly test all aspects of the source maps spec that can be tested.
