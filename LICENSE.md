@@ -1,4 +1,4 @@
-The "Software" is protected by copyright and is being made available under the “BSD License”, included below. No patent license is granted, nor is a patent license commitment made, by implication, estoppel or otherwise.
+The Source Map Tests suite ("Software") is protected by copyright and is being made available under the  "BSD License", included below. This Software may be subject to third party rights (rights from parties other than Ecma International), including patent rights, and no licenses under such third party rights are granted under this license even if the third party concerned is a member of Ecma International. SEE THE ECMA CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT https://www.ecma-international.org/ipr FOR INFORMATION REGARDING THE LICENSING OF PATENT CLAIMS THAT ARE REQUIRED TO IMPLEMENT ECMA INTERNATIONAL STANDARDS*.
 
 Copyright (c) 2024, Ecma International
 All rights reserved.
