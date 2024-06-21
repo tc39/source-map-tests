@@ -147,10 +147,24 @@
       "sourceMapIsValid": false
     },
     {
-      "name": "ignoreListOutOfBounds",
-      "description": "Test a source map with an ignore list with an item with an out-of-bounds index",
-      "baseFile": "ignore-list-out-of-bounds.js",
-      "sourceMapFile": "ignore-list-out-of-bounds.js.map",
+      "name": "ignoreListWrongType4",
+      "description": "Test a source map with an ignore list with a negative index",
+      "baseFile": "ignore-list-wrong-type-4.js",
+      "sourceMapFile": "ignore-list-wrong-type-4.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "ignoreListOutOfBounds1",
+      "description": "Test a source map with an ignore list with an item with an out-of-bounds index (too big)",
+      "baseFile": "ignore-list-out-of-bounds-1.js",
+      "sourceMapFile": "ignore-list-out-of-bounds-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "ignoreListOutOfBounds2",
+      "description": "Test a source map with an ignore list with an item with an out-of-bounds index (too low)",
+      "baseFile": "ignore-list-out-of-bounds-2.js",
+      "sourceMapFile": "ignore-list-out-of-bounds-2.js.map",
       "sourceMapIsValid": false
     },
     {
