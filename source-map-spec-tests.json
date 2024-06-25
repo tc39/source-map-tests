@@ -79,10 +79,10 @@
     },
     {
       "name": "namesMissing",
-      "description": "Test a source map that is missing a necessary names field",
+      "description": "Test a source map that is missing the optional names field",
       "baseFile": "names-missing.js",
       "sourceMapFile": "names-missing.js.map",
-      "sourceMapIsValid": false
+      "sourceMapIsValid": true
     },
     {
       "name": "namesNotAList1",
