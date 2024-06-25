@@ -78,6 +78,34 @@
       "sourceMapIsValid": true
     },
     {
+      "name": "fileNotAString1",
+      "description": "Test a source map with a file field that is not a valid string",
+      "baseFile": "file-not-a-string-1.js",
+      "sourceMapFile": "file-not-a-string-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "fileNotAString2",
+      "description": "Test a source map with a file field that is not a valid string",
+      "baseFile": "file-not-a-string-2.js",
+      "sourceMapFile": "file-not-a-string-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "sourceRootNotAString1",
+      "description": "Test a source map with a sourceRoot field that is not a valid string",
+      "baseFile": "source-root-not-a-string-1.js",
+      "sourceMapFile": "source-root-not-a-string-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "sourceRootNotAString2",
+      "description": "Test a source map with a sourceRoot field that is not a valid string",
+      "baseFile": "source-root-not-a-string-2.js",
+      "sourceMapFile": "source-root-not-a-string-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "namesMissing",
       "description": "Test a source map that is missing a necessary names field",
       "baseFile": "names-missing.js",
@@ -357,6 +385,13 @@
       "sourceMapIsValid": true
     },
     {
+      "name": "validMappingEmptyString",
+      "description": "Test a source map with an empty string mapping",
+      "baseFile": "valid-mapping-empty-string.js",
+      "sourceMapFile": "valid-mapping-empty-string.js.map",
+      "sourceMapIsValid": true
+    },
+    {
       "name": "indexMapWrongTypeSections",
       "description": "Test an index map with a sections field with the wrong type",
       "baseFile": "index-map-wrong-type-sections.js",
@@ -406,6 +441,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "indexMapInvalidSubMap",
+      "description": "Test that an index map that has an invalid section map",
+      "baseFile": "index-map-invalid-sub-map.js",
+      "sourceMapFile": "index-map-invalid-sub-map.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "indexMapMissingOffset",
       "description": "Test that an index map that is missing a section offset",
       "baseFile": "index-map-missing-offset.js",
@@ -438,6 +480,27 @@
       "description": "Test that an index map that has an offset column field with the wrong type of value",
       "baseFile": "index-map-offset-column-wrong-type.js",
       "sourceMapFile": "index-map-offset-column-wrong-type.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapEmptySections",
+      "description": "Test a trivial index map with no sections",
+      "baseFile": "index-map-empty-sections.js",
+      "sourceMapFile": "index-map-empty-sections.js.map",
+      "sourceMapIsValid": true
+    },
+    {
+      "name": "indexMapFileWrongType1",
+      "description": "Test an index map with a file field with the wrong type",
+      "baseFile": "index-map-file-wrong-type-1.js",
+      "sourceMapFile": "index-map-file-wrong-type-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "indexMapFileWrongType2",
+      "description": "Test an index map with a file field with the wrong type",
+      "baseFile": "index-map-file-wrong-type-2.js",
+      "sourceMapFile": "index-map-file-wrong-type-2.js.map",
       "sourceMapIsValid": false
     },
     {
@@ -558,10 +621,181 @@
       ]
     },
     {
+      "name": "sourceRootResolution",
+      "description": "Similar to basic mapping test, but test resoultion of sources with a sourceRoot field",
+      "baseFile": "source-root-resolution.js",
+      "sourceMapFile": "source-root-resolution.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 0,
+          "originalSource": "theroot/basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 9,
+          "originalSource": "theroot/basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 9,
+          "mappedName": "foo"
+        }
+      ]
+    },
+    {
+      "name": "sourceResolutionAbsoluteURL",
+      "description": "Test resoultion of sources with absolute URLs",
+      "baseFile": "source-resolution-absolute-url.js",
+      "sourceMapFile": "source-resolution-absolute-url.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 0,
+          "originalSource": "/baz/quux/basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 9,
+          "originalSource": "/baz/quux/basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 9,
+          "mappedName": "foo"
+        }
+      ]
+    },
+    {
       "name": "basicMappingWithIndexMap",
       "description": "Test a version of basic-mapping.js.map that is split into sections with an index map",
       "baseFile": "basic-mapping-as-index-map.js",
       "sourceMapFile": "basic-mapping-as-index-map.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 0,
+          "originalSource": "basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 9,
+          "originalSource": "basic-mapping-original.js",
+          "originalLine": 0,
+          "originalColumn": 9,
+          "mappedName": "foo"
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 15,
+          "originalLine": 1,
+          "originalColumn": 2,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 22,
+          "originalLine": 1,
+          "originalColumn": 9,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 24,
+          "originalLine": 2,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 25,
+          "originalLine": 3,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 34,
+          "originalSource": "basic-mapping-original.js",
+          "originalLine": 3,
+          "originalColumn": 9,
+          "mappedName": "bar"
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 40,
+          "originalLine": 4,
+          "originalColumn": 2,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 47,
+          "originalLine": 4,
+          "originalColumn": 9,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 49,
+          "originalLine": 5,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 50,
+          "originalLine": 6,
+          "originalColumn": 0,
+          "mappedName": "foo"
+        },
+        {
+          "actionType": "checkMapping",
+          "originalSource": "basic-mapping-original.js",
+          "generatedLine": 0,
+          "generatedColumn": 56,
+          "originalLine": 7,
+          "originalColumn": 0,
+          "mappedName": "bar"
+        }
+      ]
+    },
+    {
+      "name": "indexMapWithMissingFile",
+      "description": "Same as the basic mapping index map test but without the optional file field",
+      "baseFile": "index-map-missing-file.js",
+      "sourceMapFile": "index-map-missing-file.js.map",
       "sourceMapIsValid": true,
       "testActions": [
         {
@@ -1074,6 +1308,231 @@
           "originalLine": 4,
           "originalColumn": 4,
           "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "vlqValidSingleDigit",
+      "description": "Test VLQ decoding for a single digit, no continuation VLQ",
+      "baseFile": "vlq-valid-single-digit.js",
+      "sourceMapFile": "vlq-valid-single-digit.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 15,
+          "originalSource": "vlq-valid-single-digit-original.js",
+          "originalLine": 0,
+          "originalColumn": 0,
+          "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "vlqValidNegativeDigit",
+      "description": "Test VLQ decoding where there's a negative digit, no continuation bit",
+      "baseFile": "vlq-valid-negative-digit.js",
+      "sourceMapFile": "vlq-valid-negative-digit.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 2,
+          "generatedColumn": 15,
+          "originalSource": "vlq-valid-negative-digit-original.js",
+          "originalLine": 1,
+          "originalColumn": 2,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 2,
+          "generatedColumn": 2,
+          "originalSource": "vlq-valid-negative-digit-original.js",
+          "originalLine": 1,
+          "originalColumn": 1,
+          "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "vlqValidContinuationBitPresent1",
+      "description": "Test VLQ decoding where continuation bits are present (continuations are leading zero)",
+      "baseFile": "vlq-valid-continuation-bit-present-1.js",
+      "sourceMapFile": "vlq-valid-continuation-bit-present-1.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 15,
+          "originalSource": "vlq-valid-continuation-bit-present-1-original.js",
+          "originalLine": 0,
+          "originalColumn": 1,
+          "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "vlqValidContinuationBitPresent2",
+      "description": "Test VLQ decoding where continuation bits are present (continuations have non-zero bits)",
+      "baseFile": "vlq-valid-continuation-bit-present-2.js",
+      "sourceMapFile": "vlq-valid-continuation-bit-present-2.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 2,
+          "generatedColumn": 16,
+          "originalSource": "vlq-valid-continuation-bit-present-2-original.js",
+          "originalLine": 1,
+          "originalColumn": 1,
+          "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "mappingSemanticsSingleFieldSegment",
+      "description": "Test mapping semantics for a single field segment mapping",
+      "baseFile": "mapping-semantics-single-field-segment.js",
+      "sourceMapFile": "mapping-semantics-single-field-segment.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 0,
+          "originalSource": "mapping-semantics-single-field-segment-original.js",
+          "originalLine": 0,
+          "originalColumn": 1,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 2,
+          "originalSource": null,
+          "originalLine": null,
+          "originalColumn": null,
+          "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "mappingSemanticsFourFieldSegment",
+      "description": "Test mapping semantics for a four field segment mapping",
+      "baseFile": "mapping-semantics-four-field-segment.js",
+      "sourceMapFile": "mapping-semantics-four-field-segment.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 1,
+          "originalSource": "mapping-semantics-four-field-segment-original.js",
+          "originalLine": 2,
+          "originalColumn": 2,
+          "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "mappingSemanticsFiveFieldSegment",
+      "description": "Test mapping semantics for a five field segment mapping",
+      "baseFile": "mapping-semantics-five-field-segment.js",
+      "sourceMapFile": "mapping-semantics-five-field-segment.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 1,
+          "originalSource": "mapping-semantics-five-field-segment-original.js",
+          "originalLine": 2,
+          "originalColumn": 2,
+          "mappedName": "foo"
+        }
+      ]
+    },
+    {
+      "name": "mappingSemanticsColumnReset",
+      "description": "Test that the generated column field resets to zero on new lines",
+      "baseFile": "mapping-semantics-column-reset.js",
+      "sourceMapFile": "mapping-semantics-column-reset.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 1,
+          "originalSource": "mapping-semantics-column-reset-original.js",
+          "originalLine": 0,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 1,
+          "generatedColumn": 1,
+          "originalSource": "mapping-semantics-column-reset-original.js",
+          "originalLine": 1,
+          "originalColumn": 0,
+          "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "mappingSemanticsRelative1",
+      "description": "Test that fields are calculated relative to previous ones",
+      "baseFile": "mapping-semantics-relative-1.js",
+      "sourceMapFile": "mapping-semantics-relative-1.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 1,
+          "originalSource": "mapping-semantics-relative-1-original.js",
+          "originalLine": 0,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 5,
+          "originalSource": "mapping-semantics-relative-1-original.js",
+          "originalLine": 0,
+          "originalColumn": 4,
+          "mappedName": null
+        }
+      ]
+    },
+    {
+      "name": "mappingSemanticsRelative2",
+      "description": "Test that fields are calculated relative to previous ones, across lines",
+      "baseFile": "mapping-semantics-relative-2.js",
+      "sourceMapFile": "mapping-semantics-relative-2.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 0,
+          "generatedColumn": 1,
+          "originalSource": "mapping-semantics-relative-2-original.js",
+          "originalLine": 0,
+          "originalColumn": 2,
+          "mappedName": "foo"
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 1,
+          "generatedColumn": 2,
+          "originalSource": "mapping-semantics-relative-2-original.js",
+          "originalLine": 1,
+          "originalColumn": 2,
+          "mappedName": "bar"
         }
       ]
     }
