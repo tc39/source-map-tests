@@ -1,4 +1,4 @@
 
 
-  4            3
-//# sourceMappingURL=vlq-valid-single-digit.js.map
+  4;           3
+//# sourceMappingURL=vlq-valid-negative-digit.js.map
