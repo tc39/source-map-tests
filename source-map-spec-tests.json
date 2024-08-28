@@ -210,6 +210,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidVLQDueToNonBase64CharacterPadding",
+      "description": "Test a source map that has a mapping with an invalid padding character =",
+      "baseFile": "invalid-vlq-non-base64-char-padding.js",
+      "sourceMapFile": "invalid-vlq-non-base64-char-padding.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "invalidVLQDueToMissingContinuationDigits",
       "description": "Test a source map that has a mapping with an invalid VLQ that has a continuation bit but no continuing digits",
       "baseFile": "invalid-vlq-missing-continuation.js",
