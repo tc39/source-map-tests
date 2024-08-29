@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "names": ["foo", "bar"],
+  "names": [],
   "sources": ["unused", "mapping-semantics-relative-1-original.js"],
-  "sourcesContent": ["", "foo bar"],
+  "sourcesContent": ["", "42; 24;"],
   "mappings": "CCAA,IAAI"
 }
