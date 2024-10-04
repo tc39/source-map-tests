@@ -43,6 +43,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "mappingsMissing",
+      "description": "Test a source map that is missing a necessary mappings field",
+      "baseFile": "mappings-missing.js",
+      "sourceMapFile": "mappings-missing.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "sourcesMissing",
       "description": "Test a source map that is missing a necessary sources field",
       "baseFile": "sources-missing.js",
@@ -68,6 +75,34 @@
       "description": "Test a source map with a sources list that has non-string and non-null items",
       "baseFile": "sources-not-string-or-null.js",
       "sourceMapFile": "sources-not-string-or-null.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "sourcesContentMissing",
+      "description": "Test a source map that is missing an optional sourcesContent field",
+      "baseFile": "sources-content-missing.js",
+      "sourceMapFile": "sources-content-missing.js.map",
+      "sourceMapIsValid": true
+    },
+    {
+      "name": "sourcesContentNotAList1",
+      "description": "Test a source map with a sourcesContent field that is not a valid list (string)",
+      "baseFile": "sources-content-not-a-list-1.js",
+      "sourceMapFile": "sources-content-not-a-list-1.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "sourcesContentNotAList2",
+      "description": "Test a source map with a sourcesContent field that is not a valid list (object)",
+      "baseFile": "sources-content-not-a-list-2.js",
+      "sourceMapFile": "sources-content-not-a-list-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "sourcesContentNotStringOrNull",
+      "description": "Test a source map with a sourcesContent list that has non-string and non-null items",
+      "baseFile": "sources-not-string-or-null.js",
+      "sourceMapFile": "sources-content-not-string-or-null.js.map",
       "sourceMapIsValid": false
     },
     {
