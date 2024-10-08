@@ -1708,7 +1708,7 @@ index 0000000000..4b868fac9c
 +++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js
 @@ -0,0 +1,2 @@
 +function foo(){return 42}function bar(){return 24}foo();bar();
-+//# sourceMappingURL=invalid-mapping-three-fields.js.map
++//# sourceMappingURL=invalid-mapping-segment-with-three-fields.js.map
 diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js.map
 new file mode 100644
 index 0000000000..c2af1165ad
@@ -1728,7 +1728,7 @@ index 0000000000..96045a7a11
 +++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js
 @@ -0,0 +1,2 @@
 +function foo(){return 42}function bar(){return 24}foo();bar();
-+//# sourceMappingURL=invalid-mapping-two-fields.js.map
++//# sourceMappingURL=invalid-mapping-segment-with-two-fields.js.map
 diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js.map
 new file mode 100644
 index 0000000000..73cf00fa1c
@@ -1747,7 +1747,7 @@ index 0000000000..9d5332a56c
 --- /dev/null
 +++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js
 @@ -0,0 +1 @@
-+//# sourceMappingURL=invalid-mapping-segment-column-with-zero-fields.js.map
++//# sourceMappingURL=invalid-mapping-segment-with-zero-fields.js.map
 diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js.map
 new file mode 100644
 index 0000000000..5a34d25b64

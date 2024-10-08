@@ -2591,7 +2591,7 @@ index 000000000000..c5fbd4baa8b0
 ++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js
 +@@ -0,0 +1,2 @@
 ++function foo(){return 42}function bar(){return 24}foo();bar();
-++//# sourceMappingURL=invalid-mapping-three-fields.js.map
+++//# sourceMappingURL=invalid-mapping-segment-with-three-fields.js.map
 +diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-three-fields.js.map
 +new file mode 100644
 +index 0000000000..c2af1165ad
@@ -2611,7 +2611,7 @@ index 000000000000..c5fbd4baa8b0
 ++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js
 +@@ -0,0 +1,2 @@
 ++function foo(){return 42}function bar(){return 24}foo();bar();
-++//# sourceMappingURL=invalid-mapping-two-fields.js.map
+++//# sourceMappingURL=invalid-mapping-segment-with-two-fields.js.map
 +diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-two-fields.js.map
 +new file mode 100644
 +index 0000000000..73cf00fa1c
@@ -2630,7 +2630,7 @@ index 000000000000..c5fbd4baa8b0
 +--- /dev/null
 ++++ b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js
 +@@ -0,0 +1 @@
-++//# sourceMappingURL=invalid-mapping-segment-column-with-zero-fields.js.map
+++//# sourceMappingURL=invalid-mapping-segment-with-zero-fields.js.map
 +diff --git a/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js.map b/front_end/core/sdk/fixtures/sourcemaps/invalid-mapping-segment-with-zero-fields.js.map
 +new file mode 100644
 +index 0000000000..5a34d25b64
@@ -5478,7 +5478,7 @@ index 000000000000..35db5acc432b
 --- /dev/null
 +++ b/LayoutTests/imported/tg4/source-map-tests/resources/ignore-list-wrong-type-4.js
 @@ -0,0 +1 @@
-+//# sourceMappingURL=ignore-list-out-of-bounds-3.js.map
++//# sourceMappingURL=ignore-list-wrong-type-4.js.map
 diff --git a/LayoutTests/imported/tg4/source-map-tests/resources/ignore-list-wrong-type-4.js.map b/LayoutTests/imported/tg4/source-map-tests/resources/ignore-list-wrong-type-4.js.map
 new file mode 100644
 index 000000000000..c1a27efe980d
@@ -6393,7 +6393,7 @@ index 000000000000..4b868fac9c5e
 +++ b/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-three-fields.js
 @@ -0,0 +1,2 @@
 +function foo(){return 42}function bar(){return 24}foo();bar();
-+//# sourceMappingURL=invalid-mapping-three-fields.js.map
++//# sourceMappingURL=invalid-mapping-segment-with-three-fields.js.map
 diff --git a/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-three-fields.js.map b/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-three-fields.js.map
 new file mode 100644
 index 000000000000..c2af1165ad8f
@@ -6413,7 +6413,7 @@ index 000000000000..96045a7a11dd
 +++ b/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-two-fields.js
 @@ -0,0 +1,2 @@
 +function foo(){return 42}function bar(){return 24}foo();bar();
-+//# sourceMappingURL=invalid-mapping-two-fields.js.map
++//# sourceMappingURL=invalid-mapping-segment-with-two-fields.js.map
 diff --git a/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-two-fields.js.map b/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-two-fields.js.map
 new file mode 100644
 index 000000000000..73cf00fa1c96
@@ -6432,7 +6432,7 @@ index 000000000000..9d5332a56ca5
 --- /dev/null
 +++ b/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-zero-fields.js
 @@ -0,0 +1 @@
-+//# sourceMappingURL=invalid-mapping-segment-column-with-zero-fields.js.map
++//# sourceMappingURL=invalid-mapping-segment-with-zero-fields.js.map
 diff --git a/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-zero-fields.js.map b/LayoutTests/imported/tg4/source-map-tests/resources/invalid-mapping-segment-with-zero-fields.js.map
 new file mode 100644
 index 000000000000..5a34d25b645e
@@ -6747,7 +6747,7 @@ index 000000000000..f176f3143a4a
 --- /dev/null
 +++ b/LayoutTests/imported/tg4/source-map-tests/resources/source-root-not-a-string-2.js
 @@ -0,0 +1 @@
-+//# sourceMappingURL=source-root-not-a-string-1.js.map
++//# sourceMappingURL=source-root-not-a-string-2.js.map
 diff --git a/LayoutTests/imported/tg4/source-map-tests/resources/source-root-not-a-string-2.js.map b/LayoutTests/imported/tg4/source-map-tests/resources/source-root-not-a-string-2.js.map
 new file mode 100644
 index 000000000000..d5705ebfb8e9
@@ -6782,7 +6782,7 @@ index 000000000000..b2067265c02e
 +  "file": "source-root-resolution.js",
 +  "names": ["foo", "bar"],
 +  "sources": ["basic-mapping-original.js"],
-+  "sourcesContent": "function foo() {\n return 42;\n }\n function bar() {\n return 24;\n }\n foo();\n bar();",
++  "sourcesContent": ["function foo() {\n return 42;\n }\n function bar() {\n return 24;\n }\n foo();\n bar();"],
 +  "mappings": "AAAA,SAASA"
 +}
 diff --git a/LayoutTests/imported/tg4/source-map-tests/resources/sources-and-sources-content-both-null.js b/LayoutTests/imported/tg4/source-map-tests/resources/sources-and-sources-content-both-null.js
@@ -9513,7 +9513,7 @@ index 000000000000..050bf042bac6
 ++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js
 +@@ -0,0 +1,2 @@
 ++function foo(){return 42}function bar(){return 24}foo();bar();
-++//# sourceMappingURL=invalid-mapping-three-fields.js.map
+++//# sourceMappingURL=invalid-mapping-segment-with-three-fields.js.map
 +diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-three-fields.js.map
 +new file mode 100644
 +index 000000000000..c2af1165ad8f
@@ -9533,7 +9533,7 @@ index 000000000000..050bf042bac6
 ++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js
 +@@ -0,0 +1,2 @@
 ++function foo(){return 42}function bar(){return 24}foo();bar();
-++//# sourceMappingURL=invalid-mapping-two-fields.js.map
+++//# sourceMappingURL=invalid-mapping-segment-with-two-fields.js.map
 +diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-two-fields.js.map
 +new file mode 100644
 +index 000000000000..73cf00fa1c96
@@ -9552,7 +9552,7 @@ index 000000000000..050bf042bac6
 +--- /dev/null
 ++++ b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js
 +@@ -0,0 +1 @@
-++//# sourceMappingURL=invalid-mapping-segment-column-with-zero-fields.js.map
+++//# sourceMappingURL=invalid-mapping-segment-with-zero-fields.js.map
 +diff --git a/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js.map b/LayoutTests/inspector/model/resources/invalid-mapping-segment-with-zero-fields.js.map
 +new file mode 100644
 +index 000000000000..5a34d25b645e
