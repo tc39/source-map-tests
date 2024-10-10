@@ -3,5 +3,6 @@
   "names": ["foo"],
   "file": "valid-mapping-boundary-values.js",
   "sources": ["empty-original.js"],
+  "sourcesContent": [""],
   "mappings": "+/////DA+/////D+/////DA"
 }

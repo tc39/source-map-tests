@@ -7,6 +7,7 @@
         "version": 3,
         "names": [],
         "sources": ["empty-original.js"],
+        "sourcesContent": [""],
         "mappings": "AAAA"
       }
     }

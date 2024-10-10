@@ -3,5 +3,6 @@
   "names": [],
   "file": "invalid-mapping-segment-negative-original-column.js",
   "sources": ["empty-original.js"],
+  "sourcesContent": [""],
   "mappings": "AAAF"
 }
