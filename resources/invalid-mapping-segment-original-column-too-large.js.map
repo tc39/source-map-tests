@@ -3,5 +3,6 @@
   "names": [],
   "file": "invalid-mapping-segment-original-column-too-large.js",
   "sources": ["empty-original.js"],
+  "sourcesContent": [""],
   "mappings": "AAAggggggE"
 }

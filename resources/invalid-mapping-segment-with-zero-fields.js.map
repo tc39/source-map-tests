@@ -3,5 +3,6 @@
   "names": [],
   "file": "invalid-mapping-segment-with-zero-fields.js",
   "sources": ["empty-original.js"],
+  "sourcesContent": [""],
   "mappings": ",,,,"
 }

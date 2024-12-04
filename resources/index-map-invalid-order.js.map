@@ -6,7 +6,8 @@
       "map": {
         "version": 3,
         "names": [],
-        "sources": ["empty-original.js"],
+        "sources": ["empty-original-1.js"],
+        "sourcesContent": [""],
         "mappings": "AAAA"
       }
     },
@@ -15,7 +16,8 @@
       "map": {
         "version": 3,
         "names": [],
-        "sources": ["empty-original.js"],
+        "sources": ["empty-original-2.js"],
+        "sourcesContent": [""],
         "mappings": "AAAA"
       }
     }
