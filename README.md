@@ -53,3 +53,8 @@ How to run in Chrome Devtools:
     * Run `git apply <path to .patch file>` in `devtools-frontend` repo
 
 More information about running Chrome Devtools without building Chromium can be found [here](https://chromium.googlesource.com/devtools/devtools-frontend/+/refs/heads/chromium/3965/README.md)
+
+#### Node.js
+
+Follow the [running Node.js tests guide](https://github.com/nodejs/node/blob/main/BUILDING.md#running-tests) to build Node.js and run tests locally.
+Read more about running the source map tests at [here](https://github.com/nodejs/node/tree/main/test/test426).
