@@ -44,6 +44,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "rangeMappingsOutOfRange2",
+      "description": "Test an invalid range mapping which has more lines than the normal mappings",
+      "baseFile": "out-of-range-2.js",
+      "sourceMapFile": "out-of-range-2.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "rangeMappingsEmpty",
       "description": "Test a trivial range mapping that is the empty string",
       "baseFile": "empty-string.js",
@@ -94,6 +101,60 @@
       ]
     },
     {
+      "name": "rangeMappingsMultipleMappings",
+      "description": "Test a case where multiple mappings are range mappings",
+      "baseFile": "multiple-mappings.js",
+      "sourceMapFile": "multiple-mappings.js.map",
+      "sourceMapIsValid": true,
+      "testActions": [
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 1,
+          "generatedColumn": 1,
+          "originalSource": "multiple-mappings-original.js",
+          "originalLine": 0,
+          "originalColumn": 0,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 1,
+          "generatedColumn": 2,
+          "originalSource": "multiple-mappings-original.js",
+          "originalLine": 0,
+          "originalColumn": 1,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 1,
+          "generatedColumn": 16,
+          "originalSource": "multiple-mappings-original.js",
+          "originalLine": 0,
+          "originalColumn": 16,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 1,
+          "generatedColumn": 18,
+          "originalSource": "multiple-mappings-original.js",
+          "originalLine": 0,
+          "originalColumn": 18,
+          "mappedName": null
+        },
+        {
+          "actionType": "checkMapping",
+          "generatedLine": 1,
+          "generatedColumn": 35,
+          "originalSource": "multiple-mappings-original.js",
+          "originalLine": 0,
+          "originalColumn": 36,
+          "mappedName": null
+        }
+      ]
+    },
+    {
       "name": "rangeMappingsNewline",
       "description": "Test rangeMappings entry continues through newlines",
       "baseFile": "newline-semantics.js",
@@ -123,17 +184,17 @@
           "generatedLine": 1,
           "generatedColumn": 0,
           "originalSource": "newline-semantics-original.js",
-          "originalLine": 0,
-          "originalColumn": 7,
+          "originalLine": 1,
+          "originalColumn": 0,
           "mappedName": null
         },
         {
           "actionType": "checkMapping",
           "generatedLine": 1,
-          "generatedColumn": 5,
+          "generatedColumn": 2,
           "originalSource": "newline-semantics-original.js",
-          "originalLine": 0,
-          "originalColumn": 12,
+          "originalLine": 1,
+          "originalColumn": 2,
           "mappedName": null
         }
       ]
