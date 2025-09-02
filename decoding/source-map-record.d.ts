@@ -21,7 +21,7 @@ interface SourceRecord {
  */
 interface MappingRecord {
   generatedPosition: PositionRecord;
-  originalPosition: OriginalPositionRecord;
+  originalPosition: OriginalPositionRecord|null;
   name: string|null;
 }
 

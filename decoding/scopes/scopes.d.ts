@@ -10,7 +10,7 @@ interface SourceRecord {
 }
 
 /**
- * Corresponds to a [Original Scope Record](https://tc39.es/ecma426/pr/196/#sec-original-scope-record-type)
+ * Corresponds to a [Original Scope Record](https://tc39.es/ecma426/branch/proposal-scopes/#sec-original-scope-record-type)
  */
 interface OriginalScopeRecord {
   start: PositionRecord;
@@ -23,7 +23,7 @@ interface OriginalScopeRecord {
 }
 
 /**
- * Corresponds to a [Generated Range Record](https://tc39.es/ecma426/pr/196/#sec-original-scope-record-type)
+ * Corresponds to a [Generated Range Record](https://tc39.es/ecma426/branch/proposal-scopes/#sec-generated-range-record-type)
  */
 interface GeneratedRangeRecord {
   start: PositionRecord;
@@ -32,7 +32,7 @@ interface GeneratedRangeRecord {
    * An index into a flattened list of {@link OriginalScopeRecord}. The flattened list is obtained by iterating
    * {@link SourceMapRecord.sources} from `0` to `SourceMapRecord.sources.length` and traverse each {@link SourceRecord.scope} in [pre-order](https://en.wikipedia.org/wiki/Tree_traversal#Pre-order,_NLR).
    */
-  definitionIndex: number;
+  definitionIndex: number|null;
   stackFrameType: 'none'|'original'|'hidden';
   bindings: BindingRecord[][];
   callSite: OriginalPositionRecord|null;
@@ -40,7 +40,7 @@ interface GeneratedRangeRecord {
 }
 
 /**
- * Corresponds to a [Binding Record](https://tc39.es/ecma426/pr/196/#sec-binding-record-type)
+ * Corresponds to a [Binding Record](https://tc39.es/ecma426/branch/proposal-scopes/#sec-binding-record-type)
  */
 interface BindingRecord {
   from: PositionRecord;
