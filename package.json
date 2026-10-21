@@ -6,6 +6,6 @@
     "check-types": "node scripts/build-npm-package.js && node scripts/check-types.js"
   },
   "devDependencies": {
-    "typescript": "7.1.0-dev.20261014.1"
+    "typescript": "7.1.0-beta"
   }
 }
