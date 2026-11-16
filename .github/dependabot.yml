@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # Tooling for building and type-checking the npm package.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      npm-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
