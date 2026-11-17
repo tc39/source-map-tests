@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "names": [],
+  "file": "newline-nonzero-column.js",
+  "sources": ["newline-nonzero-column-original.js"],
+  "sourcesContent": ["abc1234\n5678"],
+  "mappings": "CAAG",
+  "rangeMappings": "A"
+}
