@@ -385,6 +385,13 @@
       "sourceMapIsValid": false
     },
     {
+      "name": "invalidMappingSegmentWithNegativeZeroColumn",
+      "description": "Test a source map that has a column field encoded as negative zero, which decodes to -2^31",
+      "baseFile": "invalid-mapping-segment-negative-zero-column.js",
+      "sourceMapFile": "invalid-mapping-segment-negative-zero-column.js.map",
+      "sourceMapIsValid": false
+    },
+    {
       "name": "invalidMappingSegmentWithColumnExceeding32Bits",
       "description": "Test a source map that has a column field that exceeds 32 bits",
       "baseFile": "invalid-mapping-segment-column-too-large.js",
@@ -417,6 +424,13 @@
       "description": "Test a source map that has a name index field that exceeds 32 bits",
       "baseFile": "invalid-mapping-segment-name-index-too-large.js",
       "sourceMapFile": "invalid-mapping-segment-name-index-too-large.js.map",
+      "sourceMapIsValid": false
+    },
+    {
+      "name": "invalidMappingSegmentWithColumnExceeding32BitsLongVLQ",
+      "description": "Test a source map that has a column field that exceeds 32 bits, where the excess bits only appear after many continuation digits",
+      "baseFile": "invalid-mapping-segment-column-too-large-long-vlq.js",
+      "sourceMapFile": "invalid-mapping-segment-column-too-large-long-vlq.js.map",
       "sourceMapIsValid": false
     },
     {
